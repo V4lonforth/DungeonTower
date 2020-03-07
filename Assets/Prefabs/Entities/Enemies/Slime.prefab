@@ -190,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036574099718412990}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9091845, y: -0.11334798, z: -1.2434082}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5503117680992460036}
@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff04d71c5e7f0e41a5f839c05f514cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingTime: 0.1
   necklace:
     text: {fileID: 4658429542872663764}
     maxHealth: 3
@@ -402,8 +403,6 @@ MonoBehaviour:
   damageText: {fileID: 7110505638535703015}
   armorText: {fileID: 0}
   animatedSprite: {fileID: 2318149054017695747}
-  attackEffect: {fileID: 0}
-  movingTime: 0.1
 --- !u!95 &9044970186666008475
 Animator:
   serializedVersion: 3

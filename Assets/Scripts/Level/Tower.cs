@@ -23,35 +23,26 @@ public class Tower : MonoBehaviour
     public Lava Lava { get; set; }
     public Navigator Navigator { get; set; }
 
+    public TurnController TurnController { get; private set; }
+
     protected void Awake()
     {
+        TurnController = new TurnController(this);
         Lava = GetComponentInChildren<Lava>();
     }
 
     public void Interact(Vector2Int position)
     {
         if (MathHelper.InRange(position, Size))
-            Player.Interact(Cells[position.y, position.x]);
-    }
-
-    public void StartTurn()
-    {
-        foreach (Cell cell in Cells)
         {
-            if (cell.Entity is EnemyEntity enemy)
-                enemy.StartTurn();
+            Player.Target = Cells[position.y, position.x];
+            if (TurnController.AbleToMakeMove)
+                Player.MakeMove();
         }
     }
 
-    public void EndTurn()
+    public void StartLevel()
     {
-        foreach (Cell cell in Cells)
-        {
-            if (cell.Entity is EnemyEntity enemy)
-                enemy.EndTurn();
-        }
-        Lava.EndTurn();
-
-        StartTurn();
+        TurnController.PrepareMove();
     }
 }

@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
     public Cell Cell { get; protected set; }
     public Room Room => Cell.Room;
     public Tower Tower => Room.Tower;
+    public TurnController TurnController => Tower.TurnController;
+
+    public float movingTime;
 
     public static Entity Instantiate(GameObject prefab, Cell cell)
     {
@@ -13,17 +17,42 @@ public abstract class Entity : MonoBehaviour
         cell.Entity = entity;
         return entity;
     }
+    
+    private IEnumerator MoveToParentCell(float movingTimeLeft)
+    {
+        while (movingTimeLeft > 0f)
+        {
+            if (Time.deltaTime >= movingTimeLeft)
+            {
+                movingTimeLeft = 0f;
+                StopMoving();
+            }
+            else
+            {
+                transform.position += (Cell.transform.position - transform.position) * (Time.deltaTime / movingTimeLeft);
+                movingTimeLeft -= Time.deltaTime;
+                yield return null;
+            }
+        }
+    }
+
+    protected virtual void StopMoving()
+    {
+        transform.position = Cell.transform.position;
+    }
 
     public virtual void MoveTo(Cell cell)
     {
+        if (Cell != null && Cell.Entity == this)
+            Cell.Entity = null;
         cell.Entity = this;
         Cell = cell;
-        transform.position = cell.transform.position;
+
+        StartCoroutine(MoveToParentCell(movingTime));
     }
 
     public virtual void Replace(Cell cell)
     {
-        Cell.Entity = null;
         cell.Entity?.Destroy();
         MoveTo(cell);
     }
@@ -36,7 +65,7 @@ public abstract class Entity : MonoBehaviour
             MoveTo(cell);
         }
         else
-            Replace(cell);
+            MoveTo(cell);
     }
 
     public virtual void Destroy()

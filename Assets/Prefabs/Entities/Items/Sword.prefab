@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e88a0fffbd57304c98c2901c1f8a249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingTime: 0.1
   weapon:
     text: {fileID: 3210253881515172328}
     damage: 5

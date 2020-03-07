@@ -19,7 +19,7 @@ public class Lava : MonoBehaviour
         tower = GetComponentInParent<Tower>();
     }
 
-    public void EndTurn()
+    public void FinishMove()
     {
         turnsToRiseLeft -= 1;
         if (turnsToRiseLeft <= 0)

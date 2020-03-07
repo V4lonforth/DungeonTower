@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc581f4d075df143bb24ca8a0ae9382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingTime: 0.1
   armor:
     text: {fileID: 2312952435029933052}
     armor: 8

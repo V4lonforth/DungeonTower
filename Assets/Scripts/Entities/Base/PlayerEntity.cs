@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerEntity : CreatureEntity
 {
+    public Cell Target { get; set; }
+
     public int Gold { get; private set; }
     private Text goldText;
 
@@ -25,6 +27,7 @@ public class PlayerEntity : CreatureEntity
         Tower.Concealer.RevealConnectedRooms(Cell);
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
+        Tower.StartLevel();
     }
 
     public override void Die()
@@ -32,19 +35,9 @@ public class PlayerEntity : CreatureEntity
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public override void Replace(Cell cell)
-    {
-        CheckNearbyEnemies();
-        base.Replace(cell);
-    }
-    public override void Swap(Cell cell)
-    {
-        CheckNearbyEnemies();
-        base.Swap(cell);
-    }
-
     public override void MoveTo(Cell cell)
     {
+        CheckNearbyEnemies();
         base.MoveTo(cell);
         Tower.Concealer.RevealConnectedRooms(cell);
         Tower.Navigator.CreateMap(cell);
@@ -55,28 +48,73 @@ public class PlayerEntity : CreatureEntity
     {
         foreach (Cell cell in Cell.ConnectedCells)
             if (cell && cell.Entity is EnemyEntity enemy)
-                enemy.EndTurn();
+                enemy.MakeMove();
     }
 
-    public override void Interact(Cell cell)
+    protected override void Interact(CreatureEntity creature)
     {
-        if (CanInteract(cell))
-        {
-            if (cell.Entity is GoldEntity gold)
-            {
-                FaceCell(cell);
-                Collect(gold.gold);
-                Replace(cell);
-            }
-            else if (!(cell.Entity is PlayerEntity player))
-                base.Interact(cell);
-            Tower.EndTurn();
-        }
+        if (creature is EnemyEntity enemy)
+            Attack(enemy);
+        else
+            FinishMove();
+    }
+
+    protected override void Interact(ItemEntity item)
+    {
+        if (item is ArmorEntity armor)
+            Equip(armor.armor);
+        else if (item is WeaponEntity weapon)
+            Equip(weapon.weapon);
+        else if (item is NecklaceEntity necklace)
+            Equip(necklace.necklace);
+        else if (item is GoldEntity gold)
+            Collect(gold.gold);
+        Replace(item.Cell);
+    }
+
+    private void Equip(ArmorItem armorItem)
+    {
+        armor = armorItem;
+        armor.text = armorText;
+        armor.Awake();
+    }
+    private void Equip(WeaponItem weaponItem)
+    {
+        weapon = weaponItem;
+        weapon.text = damageText;
+        weapon.Awake();
+    }
+    private void Equip(NecklaceItem necklaceItem)
+    {
+        necklace = necklaceItem;
+        necklace.text = healthText;
+        necklace.Awake();
     }
 
     private void Collect(GoldItem gold)
     {
         Gold += gold.Amount;
         goldText.text = Gold.ToString();
+    }
+
+    public override void MakeMove()
+    {
+        if (Target != null)
+        {
+            Cell target = Target;
+            Target = null;
+            MakeMove(target);
+        }
+    }
+
+    public override void PrepareMove()
+    {
+        if (Target != null)
+            MakeMove();
+    }
+
+    public override void FinishMove()
+    {
+        TurnController.FinishPlayerMove();
     }
 }

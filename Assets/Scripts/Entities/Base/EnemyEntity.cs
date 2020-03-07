@@ -17,9 +17,10 @@
     {
         Destroy();
         Cell.Room.Tower.Filler.GenerateGold(Cell);
+        FinishMove();
     }
 
-    public void StartTurn()
+    public override void PrepareMove()
     {
         moved = false;
     }
@@ -30,26 +31,11 @@
         {
             aggroed = true;
             moved = true;
+            FinishMove();
         }
     }
 
-    public override void Interact(Cell cell)
-    {
-        if (CanInteract(cell))
-        {
-            if (cell.Entity is ItemEntity)
-            {
-                FaceCell(cell);
-                Swap(cell);
-            }
-            else
-            {
-                base.Interact(cell);
-            }
-        }
-    }
-
-    public void EndTurn()
+    public override void MakeMove()
     {
         if (!moved)
         {
@@ -58,21 +44,47 @@
             {
                 foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
                 {
+                    bool madeMove = false;
                     Cell cell = Cell.ConnectedCells[direction];
                     if (cell.Entity is PlayerEntity player)
-                        Interact(cell);
+                    {
+                        MakeMove(cell);
+                        madeMove = true;
+                        break;
+                    }
                     else
                     {
                         if (cell.Entity is EnemyEntity enemy)
-                            enemy.EndTurn();
+                            enemy.MakeMove();
                         if (!(cell.Entity is EnemyEntity))
                         {
-                            Interact(cell);
+                            MakeMove(cell);
+                            madeMove = true;
                             break;
                         }
                     }
+                    if (!madeMove)
+                        FinishMove();
                 }
             }
+            else
+                FinishMove();
         }
+    }
+
+    protected override void Interact(ItemEntity item)
+    {
+        FaceCell(item.Cell);
+        Swap(item.Cell);
+    }
+
+    protected override void Interact(CreatureEntity creature)
+    {
+        Attack(creature);
+    }
+
+    public override void FinishMove()
+    {
+        TurnController.FinishEnemyMove();
     }
 }

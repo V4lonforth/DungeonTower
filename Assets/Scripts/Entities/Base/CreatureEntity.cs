@@ -13,11 +13,8 @@ public abstract class CreatureEntity : Entity
     public TextMeshPro armorText;
 
     public SpriteRenderer animatedSprite;
-    public AttackEffect attackEffect;
 
-    public float movingTime;
-    private float movingTimeLeft;
-
+    private AttackEffect attackEffect;
     private Animator animator;
     
     protected void Awake()
@@ -29,79 +26,9 @@ public abstract class CreatureEntity : Entity
         attackEffect = GetComponentInChildren<AttackEffect>();
     }
 
-    protected void Update()
-    {
-        if (movingTimeLeft > 0f)
-        {
-            if (Time.deltaTime >= movingTimeLeft)
-            {
-                movingTimeLeft = 0f;
-                transform.position = Cell.transform.position;
-            }
-            else
-            {
-                transform.position += (Cell.transform.position - transform.position) * (Time.deltaTime / movingTimeLeft);
-                movingTimeLeft -= Time.deltaTime;
-            }
-        }
-    }
-
-    public virtual void Interact(Cell cell)
-    {
-        FaceCell(cell);
-        if (cell.Entity is null)
-            Replace(cell);
-        else if (cell.Entity is ItemEntity item)
-            Interact(item);
-        else if (cell.Entity is CreatureEntity creature)
-            Interact(creature);
-    }
-
-    protected void Interact(CreatureEntity creature)
+    protected void Attack(CreatureEntity creature)
     {
         attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
-    }
-
-    protected void Interact(ItemEntity item)
-    {
-        if (item is ArmorEntity armor)
-            Equip(armor.armor);
-        else if (item is WeaponEntity weapon)
-            Equip(weapon.weapon);
-        else if (item is NecklaceEntity necklace)
-            Equip(necklace.necklace);
-        Replace(item.Cell);
-    }
-
-    protected void Equip(ArmorItem armorItem)
-    {
-        armor = armorItem;
-        armor.text = armorText;
-        armor.Awake();
-    }
-    protected void Equip(WeaponItem weaponItem)
-    {
-        weapon = weaponItem;
-        weapon.text = damageText;
-        weapon.Awake();
-    }
-    protected void Equip(NecklaceItem necklaceItem)
-    {
-        necklace = necklaceItem;
-        necklace.text = healthText;
-        necklace.Awake();
-    }
-
-    public override void MoveTo(Cell cell)
-    {
-        cell.Entity = this;
-        Cell = cell;
-        movingTimeLeft += movingTime;
-    }
-
-    public void EndAnimation()
-    {
-        attackEffect.End();
     }
 
     protected void FaceCell(Cell cell)
@@ -113,10 +40,43 @@ public abstract class CreatureEntity : Entity
             animatedSprite.flipX = false;
     }
 
-    protected virtual bool CanInteract(Cell cell)
+    public void FinishAttackAnimation()
+    {
+        attackEffect.End();
+        FinishMove();
+    }
+
+    protected override void StopMoving()
+    {
+        base.StopMoving();
+        FinishMove();
+    }
+
+    protected bool CanInteract(Cell cell)
     {
         return Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
     }
 
+    protected void MakeMove(Cell cell)
+    {
+        if (CanInteract(cell))
+        {
+            FaceCell(cell);
+
+            if (cell.Entity is null)
+                MoveTo(cell);
+            else if (cell.Entity is ItemEntity item)
+                Interact(item);
+            else if (cell.Entity is CreatureEntity creature)
+                Interact(creature);
+        }
+    }
+
+    protected abstract void Interact(ItemEntity item);
+    protected abstract void Interact(CreatureEntity creature);
+
+    public abstract void MakeMove();
+    public abstract void PrepareMove();
+    public abstract void FinishMove();
     public abstract void Die();
 }
