@@ -8,7 +8,7 @@ public class AttackEffect : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInParent<Animator>();
     }
     private void Start()
     {
@@ -29,5 +29,6 @@ public class AttackEffect : MonoBehaviour
     {
         gameObject.SetActive(false);
         endAttack?.Invoke();
+        endAttack = null;
     }
 }

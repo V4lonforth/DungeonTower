@@ -99,6 +99,11 @@ public abstract class CreatureEntity : Entity
         movingTimeLeft += movingTime;
     }
 
+    public void EndAnimation()
+    {
+        attackEffect.End();
+    }
+
     protected void FaceCell(Cell cell)
     {
         Direction direction = Cell.GetDirectionToCell(cell);
