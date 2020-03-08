@@ -9,9 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2358176071935276182}
-  - component: {fileID: 704505896920005130}
   - component: {fileID: 5012898225555041119}
   - component: {fileID: 8102635722847420575}
+  - component: {fileID: 79729867894627734}
+  - component: {fileID: 4305487178628697394}
+  - component: {fileID: 660778774782975776}
+  - component: {fileID: 5725026516896302022}
+  - component: {fileID: 1789895499057625743}
   m_Layer: 0
   m_Name: VikingPlayer
   m_TagString: Untagged
@@ -36,36 +40,10 @@ Transform:
   - {fileID: 8815820964424677651}
   - {fileID: 4091619223915118193}
   - {fileID: 6495456814224069565}
+  - {fileID: 5398248504765593389}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &704505896920005130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677155915308444074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ed72f71196d2bf47807f8e7ff050e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  necklace:
-    text: {fileID: 3704684567426521848}
-    maxHealth: 18
-  armor:
-    text: {fileID: 5826173403933236531}
-    armor: 0
-  weapon:
-    text: {fileID: 2285339560530887688}
-    damage: 3
-  healthText: {fileID: 3704684567426521848}
-  damageText: {fileID: 2285339560530887688}
-  armorText: {fileID: 5826173403933236531}
-  animatedSprite: {fileID: 2116251420474943497}
-  attackEffect: {fileID: 0}
-  movingTime: 0.1
 --- !u!95 &5012898225555041119
 Animator:
   serializedVersion: 3
@@ -135,6 +113,76 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &79729867894627734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed72f71196d2bf47807f8e7ff050e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatedSprite: {fileID: 2116251420474943497}
+--- !u!114 &4305487178628697394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8fe619fab155247a6f7c96ed2b4e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultWeapon: {fileID: 1789235635080328517}
+  defaultArmour: {fileID: 0}
+--- !u!114 &660778774782975776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c6e4178f4d2b64fa45b020db5b0c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponItem: {fileID: 1789235635080328517}
+  text: {fileID: 2285339560530887688}
+--- !u!114 &5725026516896302022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b005cab79f8fc45b6667e735428def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 18
+  value: 0
+  text: {fileID: 3704684567426521848}
+--- !u!114 &1789895499057625743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68769893baed8424f80180c17d065388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorItem: {fileID: 0}
+  text: {fileID: 5826173403933236531}
 --- !u!1 &2280690995866697862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,3 +1289,47 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &8336300956173510535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5398248504765593389}
+  - component: {fileID: 1789235635080328517}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5398248504765593389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8336300956173510535}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2358176071935276182}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1789235635080328517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8336300956173510535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e5a18a547574d47a07e4b331ba2c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 3

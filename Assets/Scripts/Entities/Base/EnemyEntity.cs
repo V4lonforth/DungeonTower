@@ -6,19 +6,12 @@
     private float multiplier;
     private bool isAnimated;
 
-    public void SetMultiplier(float multiplier)
-    {
-        this.multiplier = multiplier;
-        necklace.SetMultiplier(multiplier);
-        weapon.SetMultiplier(multiplier);
-        armor?.SetMultiplier(multiplier);
-    }
-
     public override void Die()
     {
+        FinishMove();
+        TurnController.StopEnemyMakingMove(this);
         Destroy();
         Cell.Room.Tower.Filler.GenerateGold(Cell);
-        FinishMove();
     }
 
     public override void PrepareMove()
@@ -41,8 +34,6 @@
         if (!moved)
         {
             moved = true;
-            isAnimated = true;
-            TurnController.StartEnemyAnimation();
             if (aggroed)
             {
                 foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
@@ -75,6 +66,20 @@
         }
     }
 
+    public override void MoveTo(Cell cell)
+    {
+        isAnimated = true;
+        TurnController.StartEnemyAnimation(this);
+        base.MoveTo(cell);
+    }
+
+    protected override void Attack(CreatureEntity creature)
+    {
+        isAnimated = true;
+        TurnController.StartEnemyAnimation(this);
+        base.Attack(creature);
+    }
+
     protected override void Interact(ItemEntity item)
     {
         FaceCell(item.Cell);
@@ -88,10 +93,9 @@
 
     public override void FinishMove()
     {
-        TurnController.FinishEnemyMove();
         if (isAnimated)
         {
-            TurnController.FinishEnemyAnimation();
+            TurnController.FinishEnemyAnimation(this);
             isAnimated = false;
         }
     }

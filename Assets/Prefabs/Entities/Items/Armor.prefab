@@ -90,6 +90,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3182350779492573188}
+  - component: {fileID: 5026020185943794741}
+  - component: {fileID: 3424625144400802962}
   m_Layer: 0
   m_Name: Armor
   m_TagString: Untagged
@@ -112,3 +114,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5026020185943794741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563039525762108147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca43e326bb0b7e4a83e3241eb3fa9c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3424625144400802962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563039525762108147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c74582a9dc7a2d478a70a674c812e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 8
+  value: 0

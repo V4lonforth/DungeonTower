@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using TMPro;
 
 public class PlayerEntity : CreatureEntity
 {
-    public Cell Target { get; set; }
+    public Cell Target { get; private set; }
 
-    public int Gold { get; private set; }
-    private Text goldText;
-
-    public static PlayerEntity Instantiate(GameObject prefab, Cell cell, Text goldText)
+    public Inventory Inventory { get; private set; }
+    
+    public static PlayerEntity Instantiate(GameObject prefab, Cell cell, TextMeshPro goldText)
     {
         PlayerEntity player = (PlayerEntity)Instantiate(prefab, cell).GetComponent<Entity>();
-        player.goldText = goldText;
+        player.Inventory.SetText(goldText);
         return player;
     }
 
@@ -21,6 +20,7 @@ public class PlayerEntity : CreatureEntity
     {
         base.Awake();
         Camera.main.GetComponent<CameraFollower>().followedObject = transform;
+        Inventory = GetComponent<Inventory>();
     }
 
     protected void Start()
@@ -29,6 +29,13 @@ public class PlayerEntity : CreatureEntity
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
         Tower.StartLevel();
+    }
+
+    public void SetTarget(Cell cell)
+    {
+        Target = cell;
+        if (TurnController.AbleToMakeMove)
+            MakeMove();
     }
 
     public override void Die()
@@ -64,53 +71,25 @@ public class PlayerEntity : CreatureEntity
                 enemy.MakeMove();
     }
 
+    protected override void Attack(CreatureEntity creature)
+    {
+        base.Attack(creature);
+        creature.Cell.Room.AggroEnemies();
+    }
+
     protected override void Interact(CreatureEntity creature)
     {
         if (creature is EnemyEntity enemy)
-        {
             Attack(enemy);
-            enemy.Cell.Room.AggroEnemies();
-        }
         else
             FinishMove();
     }
 
     protected override void Interact(ItemEntity item)
     {
-        if (item.item is ArmorItem armor)
-            Equip(armor);
-        else if (item.item is WeaponItem weapon)
-            Equip(weapon);
-        else if (item.item is NecklaceItem necklace)
-            Equip(necklace);
-        else if (item.item is GoldItem gold)
-            Collect(gold);
-        Replace(item.Cell);
-    }
-
-    private void Equip(ArmorItem armorItem)
-    {
-        armor = armorItem;
-        armor.text = armorText;
-        armor.Awake();
-    }
-    private void Equip(WeaponItem weaponItem)
-    {
-        weapon = weaponItem;
-        weapon.text = damageText;
-        weapon.Awake();
-    }
-    private void Equip(NecklaceItem necklaceItem)
-    {
-        necklace = necklaceItem;
-        necklace.text = healthText;
-        necklace.Awake();
-    }
-
-    private void Collect(GoldItem gold)
-    {
-        Gold += gold.Amount;
-        goldText.text = Gold.ToString();
+        Cell cell = item.Cell;
+        item.Item.Use(this);
+        MoveTo(cell);
     }
 
     public override void MakeMove()

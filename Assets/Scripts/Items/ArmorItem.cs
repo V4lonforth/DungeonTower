@@ -1,51 +1,16 @@
-﻿using System;
-using UnityEngine;
-using TMPro;
-
-[Serializable]
-public class ArmorItem : Item
+﻿public class ArmorItem : Item
 {
-    public int armor;
+    public int maxValue;
+    public int value;
 
-    public ArmorItem(int armor, TextMeshPro text) : base(text)
+    private void Awake()
     {
-        this.armor = armor;
-        Awake();
+        value = maxValue;
     }
 
-    public override Item Clone()
+    public override void Use(PlayerEntity player)
     {
-        return new ArmorItem(armor, text);
-    }
-
-    public void Awake()
-    {
-        UpdateText();
-    }
-
-    private void UpdateText()
-    {
-        UpdateText(armor);
-    }
-
-    public override void SetMultiplier(float multiplier)
-    {
-        armor = Mathf.RoundToInt(multiplier * armor);
-        UpdateText();
-    }
-
-    public bool TakeDamage(int damage, out int damageLeft)
-    {
-        armor -= damage;
-        if (armor <= 0)
-        {
-            damageLeft = -armor;
-            armor = 0;
-            UpdateText();
-            return true;
-        }
-        damageLeft = 0;
-        UpdateText();
-        return false;
+        player.Armor.Equip(this);
+        player.Inventory.Equip(this);
     }
 }

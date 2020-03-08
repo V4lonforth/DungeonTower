@@ -1,15 +1,20 @@
-﻿public class TurnController
+﻿using System.Collections.Generic;
+
+public class TurnController
 {
     public bool AbleToMakeMove { get; private set; }
-    public bool CurrentlyAnimated => enemiesAnimated > 0;
+    public bool CurrentlyAnimated => enemiesAnimated.Count > 0;
 
     private Tower tower;
-    private int enemiesMakingMove;
-    private int enemiesAnimated;
+    private List<EnemyEntity> enemiesMakingMove;
+    private List<EnemyEntity> enemiesAnimated;
 
     public TurnController(Tower tower)
     {
         this.tower = tower;
+
+        enemiesMakingMove = new List<EnemyEntity>();
+        enemiesAnimated = new List<EnemyEntity>();
     }
 
     public void PrepareMove()
@@ -20,7 +25,7 @@
             if (cell.Entity is EnemyEntity enemy)
             {
                 enemy.PrepareMove();
-                enemiesMakingMove++;
+                enemiesMakingMove.Add(enemy);
             }
         }
         tower.Player.PrepareMove();
@@ -33,17 +38,11 @@
 
     public void FinishPlayerMove()
     {
-        foreach (Cell cell in tower.Cells)
-        {
-            if (cell.Entity is EnemyEntity enemy)
-                enemy.MakeMove();
-        }
-    }
-
-    public void FinishEnemyMove()
-    {
-        enemiesMakingMove--;
-        if (enemiesMakingMove == 0)
+        for (int i = 0; i < enemiesMakingMove.Count; i++)
+            if (enemiesMakingMove[i] != null)
+                enemiesMakingMove[i].MakeMove();
+        enemiesMakingMove.Clear();
+        if (enemiesAnimated.Count == 0)
         {
             FinishMove();
         }
@@ -55,12 +54,23 @@
         PrepareMove();
     }
 
-    public void StartEnemyAnimation()
+    public void StopEnemyMakingMove(EnemyEntity enemy)
     {
-        enemiesAnimated++;
+        enemiesMakingMove.Remove(enemy);
     }
-    public void FinishEnemyAnimation()
+    public void StartEnemyAnimation(EnemyEntity enemy)
     {
-        enemiesAnimated--;
+        enemiesAnimated.Add(enemy);
+    }
+    public void FinishEnemyAnimation(EnemyEntity enemy)
+    {
+        if (!enemiesAnimated.Remove(enemy))
+        {
+            return;
+        }
+        if (enemiesAnimated.Count == 0)
+        {
+            FinishMove();
+        }
     }
 }

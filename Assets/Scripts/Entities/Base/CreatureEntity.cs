@@ -1,34 +1,29 @@
 ﻿using System.Linq;
 using UnityEngine;
-using TMPro;
 
 public abstract class CreatureEntity : Entity
 {
-    public NecklaceItem necklace;
-    public ArmorItem armor;
-    public WeaponItem weapon;
-
-    public TextMeshPro healthText;
-    public TextMeshPro damageText;
-    public TextMeshPro armorText;
-
     public SpriteRenderer animatedSprite;
+
+    public Health Health { get; private set; }
+    public Armor Armor { get; private set; }
+    public Weapon Weapon { get; private set; }
 
     private AttackEffect attackEffect;
     private Animator animator;
     
     protected void Awake()
     {
-        necklace?.Awake();
-        armor?.Awake();
-        weapon?.Awake();
-
         attackEffect = GetComponentInChildren<AttackEffect>();
+
+        Health = GetComponent<Health>();
+        Armor = GetComponent<Armor>();
+        Weapon = GetComponent<Weapon>();
     }
 
-    protected void Attack(CreatureEntity creature)
+    protected virtual void Attack(CreatureEntity creature)
     {
-        attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
+        attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
     }
 
     protected void FaceCell(Cell cell)

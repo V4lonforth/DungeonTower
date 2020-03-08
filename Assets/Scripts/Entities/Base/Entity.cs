@@ -8,7 +8,7 @@ public abstract class Entity : MonoBehaviour
     public Tower Tower => Room.Tower;
     public TurnController TurnController => Tower.TurnController;
 
-    public float movingTime;
+    private const float MovingTime = 0.1f;
 
     public static Entity Instantiate(GameObject prefab, Cell cell)
     {
@@ -48,7 +48,7 @@ public abstract class Entity : MonoBehaviour
         cell.Entity = this;
         Cell = cell;
 
-        StartCoroutine(MoveToParentCell(movingTime));
+        StartCoroutine(MoveToParentCell(MovingTime));
     }
 
     public virtual void Replace(Cell cell)
@@ -66,6 +66,12 @@ public abstract class Entity : MonoBehaviour
         }
         else
             MoveTo(cell);
+    }
+
+    public void Detach()
+    {
+        Cell.Entity = null;
+        Cell = null;
     }
 
     public virtual void Destroy()

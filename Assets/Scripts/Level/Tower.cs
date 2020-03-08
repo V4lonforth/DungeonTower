@@ -35,9 +35,7 @@ public class Tower : MonoBehaviour
     {
         if (MathHelper.InRange(position, Size))
         {
-            Player.Target = Cells[position.y, position.x];
-            if (TurnController.AbleToMakeMove)
-                Player.MakeMove();
+            Player.SetTarget(Cells[position.y, position.x]);
         }
     }
 

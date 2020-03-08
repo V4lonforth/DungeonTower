@@ -1,20 +1,10 @@
-﻿using UnityEngine;
-
-public class ItemEntity : Entity
+﻿public class ItemEntity : Entity
 {
-    public Item item;
+    public Item Item { get; private set; }
 
-    public static ItemEntity Instantiate(GameObject prefab, Cell cell, Item item, float multiplier = 1f)
+    private void Awake()
     {
-        ItemEntity itemEntity = (ItemEntity)Instantiate(prefab, cell);
-        itemEntity.item = item;
-        itemEntity.SetMultiplier(multiplier);
-        Instantiate(item.prefab, itemEntity.transform);
-        return itemEntity;
-    }
-
-    public void SetMultiplier(float multiplier)
-    {
-        item.SetMultiplier(multiplier);
+        Item = GetComponent<Item>();
+        Item.ItemEntity = this;
     }
 }
