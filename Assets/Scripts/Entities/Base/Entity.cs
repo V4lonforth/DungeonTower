@@ -18,7 +18,7 @@ public abstract class Entity : MonoBehaviour
         return entity;
     }
     
-    private IEnumerator MoveToParentCell(float movingTimeLeft)
+    protected virtual IEnumerator MoveToParentCell(float movingTimeLeft)
     {
         while (movingTimeLeft > 0f)
         {

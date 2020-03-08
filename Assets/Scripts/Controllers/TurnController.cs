@@ -1,9 +1,11 @@
 ﻿public class TurnController
 {
     public bool AbleToMakeMove { get; private set; }
+    public bool CurrentlyAnimated => enemiesAnimated > 0;
 
     private Tower tower;
     private int enemiesMakingMove;
+    private int enemiesAnimated;
 
     public TurnController(Tower tower)
     {
@@ -45,15 +47,20 @@
         {
             FinishMove();
         }
-        else if (enemiesMakingMove < 0)
-        {
-
-        }
     }
 
     public void FinishMove()
     {
         tower.Lava.FinishMove();
         PrepareMove();
+    }
+
+    public void StartEnemyAnimation()
+    {
+        enemiesAnimated++;
+    }
+    public void FinishEnemyAnimation()
+    {
+        enemiesAnimated--;
     }
 }

@@ -4,6 +4,7 @@
     private bool moved;
 
     private float multiplier;
+    private bool isAnimated;
 
     public void SetMultiplier(float multiplier)
     {
@@ -40,6 +41,8 @@
         if (!moved)
         {
             moved = true;
+            isAnimated = true;
+            TurnController.StartEnemyAnimation();
             if (aggroed)
             {
                 foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
@@ -86,5 +89,10 @@
     public override void FinishMove()
     {
         TurnController.FinishEnemyMove();
+        if (isAnimated)
+        {
+            TurnController.FinishEnemyAnimation();
+            isAnimated = false;
+        }
     }
 }

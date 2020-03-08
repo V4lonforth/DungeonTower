@@ -39,6 +39,6 @@ public class Cell : MonoBehaviour
         foreach (Direction direction in Direction.Values)
             if (ReferenceEquals(AdjacentCells[direction], cell))
                 return direction;
-        return Direction.Left;
+        return Direction.Bottom;
     }
 }

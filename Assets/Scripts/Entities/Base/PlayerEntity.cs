@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -39,9 +40,21 @@ public class PlayerEntity : CreatureEntity
     {
         CheckNearbyEnemies();
         base.MoveTo(cell);
-        Tower.Concealer.RevealConnectedRooms(cell);
-        Tower.Navigator.CreateMap(cell);
-        cell.Room.AggroEnemies();
+    }
+
+    protected override IEnumerator MoveToParentCell(float movingTimeLeft)
+    {
+        while (TurnController.CurrentlyAnimated)
+            yield return null;
+        yield return base.MoveToParentCell(movingTimeLeft);
+    }
+
+    protected override void StopMoving()
+    {
+        Tower.Concealer.RevealConnectedRooms(Cell);
+        Tower.Navigator.CreateMap(Cell);
+        Cell.Room.AggroEnemies();
+        base.StopMoving();
     }
 
     private void CheckNearbyEnemies()
@@ -54,7 +67,10 @@ public class PlayerEntity : CreatureEntity
     protected override void Interact(CreatureEntity creature)
     {
         if (creature is EnemyEntity enemy)
+        {
             Attack(enemy);
+            enemy.Cell.Room.AggroEnemies();
+        }
         else
             FinishMove();
     }
