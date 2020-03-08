@@ -13,6 +13,11 @@ public class ArmorItem : Item
         Awake();
     }
 
+    public override Item Clone()
+    {
+        return new ArmorItem(armor, text);
+    }
+
     public void Awake()
     {
         UpdateText();

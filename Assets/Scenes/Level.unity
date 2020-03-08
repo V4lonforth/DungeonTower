@@ -692,17 +692,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldText: {fileID: 529740889}
+  armorItems:
+  - prefab: {fileID: 5563039525762108147, guid: ee0a1ffe7950d064181010dc8f09fee6,
+      type: 3}
+    text: {fileID: 0}
+    armor: 8
+  necklaceItems:
+  - prefab: {fileID: 4594997411175087559, guid: 9551d37c2d1b9cb498ac22828c1765fb,
+      type: 3}
+    text: {fileID: 0}
+    maxHealth: 20
+  weaponItems:
+  - prefab: {fileID: 8336715344871862006, guid: d219141b4ae42fd439f78d681674975e,
+      type: 3}
+    text: {fileID: 0}
+    damage: 5
+  goldItems:
+  - prefab: {fileID: 5658968545976273666, guid: 4749884089040114985b0d9579c48398,
+      type: 3}
+    text: {fileID: 0}
   playerPrefab: {fileID: 1677155915308444074, guid: a04e4ae77b45c0940b1315bafb07a7c3,
     type: 3}
   enemyPrefab: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
     type: 3}
-  goldPrefab: {fileID: 5658968545976273666, guid: 4749884089040114985b0d9579c48398,
-    type: 3}
-  weaponPrefab: {fileID: 8336715344871862006, guid: d219141b4ae42fd439f78d681674975e,
-    type: 3}
-  armorPrefab: {fileID: 5563039525762108147, guid: ee0a1ffe7950d064181010dc8f09fee6,
-    type: 3}
-  necklacePrefab: {fileID: 4594997411175087559, guid: 9551d37c2d1b9cb498ac22828c1765fb,
+  itemPrefab: {fileID: 6617900686038300400, guid: d093369e1b873ed4f8664e8aa348937c,
     type: 3}
 --- !u!114 &1555518227
 MonoBehaviour:
@@ -730,33 +743,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogOfWarPrefab: {fileID: 7445248187939320007, guid: 86dd73e2b88a30b4b977304c66e4e7cb,
     type: 3}
---- !u!1 &1846945998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1846945999}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1846945999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846945998}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

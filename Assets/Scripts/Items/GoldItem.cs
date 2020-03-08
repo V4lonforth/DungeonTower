@@ -21,6 +21,11 @@ public class GoldItem : Item
         Amount = amount;
     }
 
+    public override Item Clone()
+    {
+        return new GoldItem(amount, text);
+    }
+
     private void UpdateText()
     {
         UpdateText(amount);

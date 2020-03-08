@@ -14,6 +14,11 @@ public class NecklaceItem : Item
         Awake();
     }
 
+    public override Item Clone()
+    {
+        return new NecklaceItem(maxHealth, text);
+    }
+
     public void Awake()
     {
         health = maxHealth;

@@ -13,6 +13,11 @@ public class WeaponItem : Item
         Awake();
     }
 
+    public override Item Clone()
+    {
+        return new WeaponItem(damage, text);
+    }
+
     public void Awake()
     {
         UpdateText();

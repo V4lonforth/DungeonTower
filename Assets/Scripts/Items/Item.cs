@@ -1,12 +1,12 @@
 ﻿using System;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [Serializable]
 public abstract class Item
 {
+    public GameObject prefab;
     public TextMeshPro text;
-    public abstract void SetMultiplier(float multiplier);
 
     public Item()
     { }
@@ -15,6 +15,9 @@ public abstract class Item
     {
         this.text = text;
     }
+
+    public abstract void SetMultiplier(float multiplier);
+    public abstract Item Clone();
 
     protected virtual void UpdateText(int value)
     {

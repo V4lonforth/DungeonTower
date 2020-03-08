@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -6,12 +7,14 @@ public class Filler : MonoBehaviour
 {
     public Text goldText;
 
+    public List<ArmorItem> armorItems;
+    public List<NecklaceItem> necklaceItems;
+    public List<WeaponItem> weaponItems;
+    public List<GoldItem> goldItems;
+
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
-    public GameObject goldPrefab;
-    public GameObject weaponPrefab;
-    public GameObject armorPrefab;
-    public GameObject necklacePrefab;
+    public GameObject itemPrefab;
 
     public void Fill(Tower tower)
     {
@@ -34,10 +37,13 @@ public class Filler : MonoBehaviour
         tower.Player = GeneratePlayer(tower[0, 0]);
     }
 
-    public GoldEntity GenerateGold(Cell cell, float multiplier = 1f)
+    public ItemEntity GenerateGold(Cell cell, float multiplier = 1f)
     {
-        GoldEntity gold = GoldEntity.Instantiate(goldPrefab, cell, Random.Range(8, 14));
-        gold.gold.text = gold.GetComponentInChildren<TextMeshPro>();
+        int amount = Random.Range(8, 14);
+        GoldItem goldItem = GetRandomItem(goldItems);
+        goldItem.Amount = amount;
+        ItemEntity gold = ItemEntity.Instantiate(itemPrefab, cell, goldItem, multiplier);
+        ((GoldItem)gold.item).text = gold.GetComponentInChildren<TextMeshPro>();
         gold.SetMultiplier(multiplier);
         return gold;
     }
@@ -54,24 +60,29 @@ public class Filler : MonoBehaviour
         return PlayerEntity.Instantiate(playerPrefab, cell, goldText);
     }
 
-    public WeaponEntity GenerateWeapon(Cell cell, float multiplier = 1f)
+    public ItemEntity GenerateWeapon(Cell cell, float multiplier = 1f)
     {
-        WeaponEntity weapon = WeaponEntity.Instantiate(weaponPrefab, cell, multiplier);
+        ItemEntity weapon = ItemEntity.Instantiate(itemPrefab, cell, GetRandomItem(weaponItems), multiplier);
         weapon.SetMultiplier(multiplier);
         return weapon;
     }
 
-    public ArmorEntity GenerateArmor(Cell cell, float multiplier = 1f)
+    public ItemEntity GenerateArmor(Cell cell, float multiplier = 1f)
     {
-        ArmorEntity armor = ArmorEntity.Instantiate(armorPrefab, cell, multiplier);
+        ItemEntity armor = ItemEntity.Instantiate(itemPrefab, cell, GetRandomItem(armorItems), multiplier);
         armor.SetMultiplier(multiplier);
         return armor;
     }
 
-    public NecklaceEntity GenerateNecklace(Cell cell, float multiplier = 1f)
+    public ItemEntity GenerateNecklace(Cell cell, float multiplier = 1f)
     {
-        NecklaceEntity necklace = NecklaceEntity.Instantiate(necklacePrefab, cell, multiplier);
+        ItemEntity necklace = ItemEntity.Instantiate(itemPrefab, cell, GetRandomItem(necklaceItems), multiplier);
         necklace.SetMultiplier(multiplier);
         return necklace;
+    }
+
+    private T GetRandomItem<T>(List<T> items)
+    {
+        return items[Random.Range(0, items.Count)];
     }
 }

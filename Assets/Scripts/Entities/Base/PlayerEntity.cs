@@ -77,14 +77,14 @@ public class PlayerEntity : CreatureEntity
 
     protected override void Interact(ItemEntity item)
     {
-        if (item is ArmorEntity armor)
-            Equip(armor.armor);
-        else if (item is WeaponEntity weapon)
-            Equip(weapon.weapon);
-        else if (item is NecklaceEntity necklace)
-            Equip(necklace.necklace);
-        else if (item is GoldEntity gold)
-            Collect(gold.gold);
+        if (item.item is ArmorItem armor)
+            Equip(armor);
+        else if (item.item is WeaponItem weapon)
+            Equip(weapon);
+        else if (item.item is NecklaceItem necklace)
+            Equip(necklace);
+        else if (item.item is GoldItem gold)
+            Collect(gold);
         Replace(item.Cell);
     }
 
