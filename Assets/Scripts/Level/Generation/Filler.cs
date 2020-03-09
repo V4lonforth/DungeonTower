@@ -37,8 +37,15 @@ public class Filler : MonoBehaviour
 
     public ItemEntity GenerateGold(Cell cell)
     {
+        int amount = Random.Range(8, 14);
+        foreach (ItemEntity itemEntity in cell.ItemEntities)
+            if (itemEntity.Item is GoldItem goldItem)
+            {
+                goldItem.Amount += amount;
+                return itemEntity;
+            }
         ItemEntity gold = ItemEntity.Instantiate(GetRandomItem(goldItems), cell);
-        ((GoldItem)gold.Item).Amount = Random.Range(8, 14);
+        ((GoldItem)gold.Item).Amount = amount;
         return gold;
     }
 
