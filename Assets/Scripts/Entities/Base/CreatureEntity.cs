@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public abstract class CreatureEntity : Entity
@@ -11,7 +12,16 @@ public abstract class CreatureEntity : Entity
 
     private AttackEffect attackEffect;
     private Animator animator;
-    
+
+    private const float MovingTime = 0.1f;
+
+    public new static CreatureEntity Instantiate(GameObject prefab, Cell cell)
+    {
+        CreatureEntity entity = (CreatureEntity)Entity.Instantiate(prefab, cell);
+        cell.CreatureEntity = entity;
+        return entity;
+    }
+
     protected void Awake()
     {
         attackEffect = GetComponentInChildren<AttackEffect>();
@@ -19,6 +29,40 @@ public abstract class CreatureEntity : Entity
         Health = GetComponent<Health>();
         Armor = GetComponent<Armor>();
         Weapon = GetComponent<Weapon>();
+    }
+
+    public override void Destroy()
+    {
+        base.Destroy();
+        Cell.CreatureEntity = null;
+    }
+
+    public virtual void MoveTo(Cell cell)
+    {
+        if (Cell != null && Cell.CreatureEntity == this)
+            Cell.CreatureEntity = null;
+        cell.CreatureEntity = this;
+        Cell = cell;
+
+        StartCoroutine(MoveToParentCell(MovingTime));
+    }
+
+    protected virtual IEnumerator MoveToParentCell(float movingTimeLeft)
+    {
+        while (movingTimeLeft > 0f)
+        {
+            if (Time.deltaTime >= movingTimeLeft)
+            {
+                movingTimeLeft = 0f;
+                StopMoving();
+            }
+            else
+            {
+                transform.position += (Cell.transform.position - transform.position) * (Time.deltaTime / movingTimeLeft);
+                movingTimeLeft -= Time.deltaTime;
+                yield return null;
+            }
+        }
     }
 
     protected virtual void Attack(CreatureEntity creature)
@@ -41,9 +85,9 @@ public abstract class CreatureEntity : Entity
         FinishMove();
     }
 
-    protected override void StopMoving()
+    protected virtual void StopMoving()
     {
-        base.StopMoving();
+        transform.position = Cell.transform.position;
         FinishMove();
     }
 
@@ -58,16 +102,13 @@ public abstract class CreatureEntity : Entity
         {
             FaceCell(cell);
 
-            if (cell.Entity is null)
+            if (cell.CreatureEntity is null)
                 MoveTo(cell);
-            else if (cell.Entity is ItemEntity item)
-                Interact(item);
-            else if (cell.Entity is CreatureEntity creature)
-                Interact(creature);
+            else
+                Interact(cell.CreatureEntity);
         }
     }
 
-    protected abstract void Interact(ItemEntity item);
     protected abstract void Interact(CreatureEntity creature);
 
     public abstract void MakeMove();

@@ -47,7 +47,7 @@ public class Room : MonoBehaviour
     {
         foreach (Cell cell in Cells)
         {
-            if (cell.Entity is EnemyEntity enemy)
+            if (cell.CreatureEntity is EnemyEntity enemy)
                 enemy.Aggro();
         }
     }

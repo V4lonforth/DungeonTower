@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public Entity Entity { get; set; }
+    public CreatureEntity CreatureEntity { get; set; }
+    public List<ItemEntity> ItemEntities { get; set; }
 
     public Vector2Int Position { get; private set; }
     public Room Room { get; private set; }
@@ -32,6 +33,8 @@ public class Cell : MonoBehaviour
 
         AdjacentRooms = new List<Room>();
         ConnectedRooms = new List<Room>();
+
+        ItemEntities = new List<ItemEntity>();
     }
 
     public Direction GetDirectionToCell(Cell cell)

@@ -22,7 +22,7 @@ public class TurnController
         AbleToMakeMove = true;
         foreach (Cell cell in tower.Cells)
         {
-            if (cell.Entity is EnemyEntity enemy)
+            if (cell.CreatureEntity is EnemyEntity enemy)
             {
                 enemy.PrepareMove();
                 enemiesMakingMove.Add(enemy);
@@ -42,16 +42,16 @@ public class TurnController
             if (enemiesMakingMove[i] != null)
                 enemiesMakingMove[i].MakeMove();
         enemiesMakingMove.Clear();
-        if (enemiesAnimated.Count == 0)
-        {
-            FinishMove();
-        }
+        TryFinishMove();
     }
 
-    public void FinishMove()
+    public void TryFinishMove()
     {
-        tower.Lava.FinishMove();
-        PrepareMove();
+        if (enemiesAnimated.Count == 0 && enemiesMakingMove.Count == 0)
+        {
+            tower.Lava.FinishMove();
+            PrepareMove();
+        }
     }
 
     public void StopEnemyMakingMove(EnemyEntity enemy)
@@ -68,9 +68,6 @@ public class TurnController
         {
             return;
         }
-        if (enemiesAnimated.Count == 0)
-        {
-            FinishMove();
-        }
+        TryFinishMove();
     }
 }

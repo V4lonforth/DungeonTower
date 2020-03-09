@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca43e326bb0b7e4a83e3241eb3fa9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingTime: 0.1
 --- !u!114 &6816704319335838144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,4 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cee61ca03420784688fa1f5a7119482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: -7930571331049095873, guid: 2756178eed7fe564db8eea0cbad23e05, type: 3}
   value: 0.25

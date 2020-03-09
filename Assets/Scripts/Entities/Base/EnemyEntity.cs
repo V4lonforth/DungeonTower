@@ -40,7 +40,7 @@
                 {
                     bool madeMove = false;
                     Cell cell = Cell.ConnectedCells[direction];
-                    if (cell.Entity is PlayerEntity player)
+                    if (cell.CreatureEntity is PlayerEntity player)
                     {
                         MakeMove(cell);
                         madeMove = true;
@@ -48,9 +48,9 @@
                     }
                     else
                     {
-                        if (cell.Entity is EnemyEntity enemy)
+                        if (cell.CreatureEntity is EnemyEntity enemy)
                             enemy.MakeMove();
-                        if (!(cell.Entity is EnemyEntity))
+                        if (!(cell.CreatureEntity is EnemyEntity))
                         {
                             MakeMove(cell);
                             madeMove = true;
@@ -78,12 +78,6 @@
         isAnimated = true;
         TurnController.StartEnemyAnimation(this);
         base.Attack(creature);
-    }
-
-    protected override void Interact(ItemEntity item)
-    {
-        FaceCell(item.Cell);
-        Swap(item.Cell);
     }
 
     protected override void Interact(CreatureEntity creature)

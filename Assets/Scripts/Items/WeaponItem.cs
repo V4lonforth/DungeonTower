@@ -4,7 +4,6 @@
 
     public override void Use(PlayerEntity player)
     {
-        player.Weapon.Equip(this);
         player.Inventory.Equip(this);
     }
 }

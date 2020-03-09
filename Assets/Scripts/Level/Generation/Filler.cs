@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class Filler : MonoBehaviour
 {
-    public TextMeshPro goldText;
+    public Text goldText;
 
     public List<GameObject> armorItems;
     public List<GameObject> potionItems;
@@ -25,26 +25,26 @@ public class Filler : MonoBehaviour
             else if (value < 0.35f)
                 GenerateEnemy(cell);
             else if (value < 0.37f)
-                Entity.Instantiate(GetRandomItem(weaponItems), cell);
+                ItemEntity.Instantiate(GetRandomItem(weaponItems), cell);
             else if (value < 0.39f)
-                Entity.Instantiate(GetRandomItem(potionItems), cell);
+                ItemEntity.Instantiate(GetRandomItem(potionItems), cell);
             else if (value < 0.41f)
-                Entity.Instantiate(GetRandomItem(armorItems), cell);
+                ItemEntity.Instantiate(GetRandomItem(armorItems), cell);
         }
-        tower[0, 0].Entity?.Destroy();
+        tower[0, 0].CreatureEntity?.Destroy();
         tower.Player = GeneratePlayer(tower[0, 0]);
     }
 
     public ItemEntity GenerateGold(Cell cell)
     {
-        ItemEntity gold = (ItemEntity)Entity.Instantiate(GetRandomItem(goldItems), cell);
+        ItemEntity gold = ItemEntity.Instantiate(GetRandomItem(goldItems), cell);
         ((GoldItem)gold.Item).Amount = Random.Range(8, 14);
         return gold;
     }
 
     public EnemyEntity GenerateEnemy(Cell cell)
     {
-        return (EnemyEntity)Entity.Instantiate(enemyPrefab, cell);
+        return (EnemyEntity)CreatureEntity.Instantiate(enemyPrefab, cell);
     }
 
     public PlayerEntity GeneratePlayer(Cell cell)

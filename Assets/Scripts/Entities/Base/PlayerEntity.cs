@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.UI;
 
 public class PlayerEntity : CreatureEntity
 {
-    public Cell Target { get; private set; }
+    public WeaponItem defaultWeapon;
+    public ArmorItem defaultArmour;
 
     public Inventory Inventory { get; private set; }
-    
-    public static PlayerEntity Instantiate(GameObject prefab, Cell cell, TextMeshPro goldText)
+
+    public Cell Target { get; private set; }
+
+    public static PlayerEntity Instantiate(GameObject prefab, Cell cell, Text goldText)
     {
         PlayerEntity player = (PlayerEntity)Instantiate(prefab, cell).GetComponent<Entity>();
         player.Inventory.SetText(goldText);
@@ -19,23 +22,28 @@ public class PlayerEntity : CreatureEntity
     protected new void Awake()
     {
         base.Awake();
+
         Camera.main.GetComponent<CameraFollower>().followedObject = transform;
-        Inventory = GetComponent<Inventory>();
+        Inventory = FindObjectOfType<Inventory>();
+        Inventory.PlayerEntity = this;
+
+        defaultWeapon?.Use(this);
+        defaultArmour?.Use(this);
     }
 
     protected void Start()
     {
-        Tower.Concealer.RevealConnectedRooms(Cell);
-        Tower.Navigator.CreateMap(Cell);
-        Cell.Room.AggroEnemies();
+        CheckCell();
         Tower.StartLevel();
     }
 
     public void SetTarget(Cell cell)
     {
-        Target = cell;
         if (TurnController.AbleToMakeMove)
+        {
+            Target = cell;
             MakeMove();
+        }
     }
 
     public override void Die()
@@ -45,6 +53,7 @@ public class PlayerEntity : CreatureEntity
 
     public override void MoveTo(Cell cell)
     {
+        Inventory.HideDrop();
         CheckNearbyEnemies();
         base.MoveTo(cell);
     }
@@ -56,18 +65,35 @@ public class PlayerEntity : CreatureEntity
         yield return base.MoveToParentCell(movingTimeLeft);
     }
 
-    protected override void StopMoving()
+    private void CheckCell()
     {
         Tower.Concealer.RevealConnectedRooms(Cell);
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
+        CollectGold();
+        Inventory.ShowDrop(Cell.ItemEntities);
+    }
+
+    protected override void StopMoving()
+    {
+        CheckCell();
         base.StopMoving();
+    }
+
+    private void CollectGold()
+    {
+        for (int i = 0; i < Cell.ItemEntities.Count; i++)
+            if (Cell.ItemEntities[i].Item is GoldItem gold)
+            {
+                gold.Use(this);
+                i--;
+            }
     }
 
     private void CheckNearbyEnemies()
     {
         foreach (Cell cell in Cell.ConnectedCells)
-            if (cell && cell.Entity is EnemyEntity enemy)
+            if (cell && cell.CreatureEntity is EnemyEntity enemy)
                 enemy.MakeMove();
     }
 
@@ -83,13 +109,6 @@ public class PlayerEntity : CreatureEntity
             Attack(enemy);
         else
             FinishMove();
-    }
-
-    protected override void Interact(ItemEntity item)
-    {
-        Cell cell = item.Cell;
-        item.Item.Use(this);
-        MoveTo(cell);
     }
 
     public override void MakeMove()

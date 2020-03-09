@@ -7,11 +7,23 @@ public class Armor : MonoBehaviour
 
     public TextMeshPro text;
 
+    private PlayerEntity playerEntity;
+
     private void Awake()
     {
+        playerEntity = GetComponent<PlayerEntity>();
         if (armorItem != null)
             armorItem.value = armorItem.maxValue;
         UpdateText();
+    }
+
+    public void Break()
+    {
+        if (armorItem != playerEntity.defaultArmour)
+        {
+            armorItem.ItemEntity.Destroy();
+            playerEntity.Inventory.Equip(playerEntity.defaultArmour);
+        }
     }
 
     public void Equip(ArmorItem armorItem)
@@ -22,7 +34,7 @@ public class Armor : MonoBehaviour
 
     public bool TakeDamage(int damage, out int damageLeft)
     {
-        if (armorItem == null)
+        if (armorItem == null || armorItem.maxValue == 0)
         {
             damageLeft = damage;
             return true;
@@ -33,6 +45,7 @@ public class Armor : MonoBehaviour
         {
             damageLeft = -armorItem.value;
             armorItem.value = 0;
+            Break();
             UpdateText();
             return true;
         }

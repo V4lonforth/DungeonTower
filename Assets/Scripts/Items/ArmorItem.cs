@@ -10,7 +10,6 @@
 
     public override void Use(PlayerEntity player)
     {
-        player.Armor.Equip(this);
         player.Inventory.Equip(this);
     }
 }
