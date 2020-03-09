@@ -32,8 +32,6 @@ public class InputController : MonoBehaviour
                     Press(touch.position);
                     break;
             }
-            if (touch.phase == TouchPhase.Ended)
-                Press(touch.position);
         }
         if (Input.touches.Length == 0)
         {

@@ -117,6 +117,7 @@ public class PlayerEntity : CreatureEntity
         {
             Cell target = Target;
             Target = null;
+            TurnController.MakeMove();
             MakeMove(target);
         }
     }
