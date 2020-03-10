@@ -8,7 +8,6 @@ public class Concealer : MonoBehaviour
 
     public void ConcealTower(Tower tower)
     {
-        tower.Concealer = this;
         fogOfWar = new GameObject[tower.Size.y, tower.Size.x];
 
         ConcealOutside(tower);

@@ -18,13 +18,11 @@ public class Tower : MonoBehaviour
     public Cell[,] Cells { get; set; }
     public PlayerEntity Player { get; set; }
 
-    public Filler Filler { get; set; }
-    public Concealer Concealer { get; set; }
+    public TowerGenerator TowerGenerator { get; set; }
     public Lava Lava { get; set; }
     public Navigator Navigator { get; set; }
 
     public TurnController TurnController { get; private set; }
-    public Inspector Inspector { get; set; }
 
     private void Awake()
     {

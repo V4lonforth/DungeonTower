@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3506395653784930017}
   - component: {fileID: 7520351623123940863}
   - component: {fileID: 5049847439827514403}
+  - component: {fileID: 5878586570701876766}
   m_Layer: 0
   m_Name: Trapdoor
   m_TagString: Untagged
@@ -107,4 +108,19 @@ MonoBehaviour:
   - {x: -0.375, y: 0.125, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -365136
+  m_InstanceId: 52546
+--- !u!114 &5878586570701876766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122471142970768789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe765f8707e3e654fa79134da3879223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closed: {fileID: 21300000, guid: 50710f8468d4cd0439096fc14f08357d, type: 3}
+  opened1: {fileID: 21300000, guid: beb63cb4c0ddda34caf466e8d81eb3f1, type: 3}
+  opened2: {fileID: 21300000, guid: 058b90c9b242f844c8fa2a4f1a87a206, type: 3}

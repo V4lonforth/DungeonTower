@@ -16,7 +16,6 @@ public class Filler : MonoBehaviour
 
     public void Fill(Tower tower)
     {
-        tower.Filler = this;
         foreach (Cell cell in tower.Cells)
         {
             float value = Random.Range(0f, 1f);

@@ -101,6 +101,11 @@ public abstract class CreatureEntity : Entity
         if (CanInteract(cell))
         {
             FaceCell(cell);
+            if (cell.Room != Room)
+            {
+                Direction direction = Cell.GetDirectionToCell(cell);
+                Cell.Walls[direction].GetComponent<Door>().Open(direction);
+            }
 
             if (cell.CreatureEntity is null)
                 MoveTo(cell);

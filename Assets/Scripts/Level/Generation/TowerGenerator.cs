@@ -4,25 +4,25 @@ public class TowerGenerator : MonoBehaviour
 {
     public Inspector inspector;
 
-    private InputController inputController;
+    public InputController InputController { get; private set; }
 
-    private Builder builder;
-    private Linker linker;
-    private Connector connector;
-    private Decorator decorator;
-    private Filler filler;
-    private Concealer concealer;
+    public Builder Builder { get; private set; }
+    public Linker Linker { get; private set; }
+    public Connector Connector { get; private set; }
+    public Decorator Decorator { get; private set; }
+    public Filler Filler { get; private set; }
+    public Concealer Concealer { get; private set; }
 
     private void Awake()
     {
-        inputController = GetComponent<InputController>();
+        InputController = GetComponent<InputController>();
 
-        builder = GetComponent<Builder>();
-        linker = GetComponent<Linker>();
-        connector = GetComponent<Connector>();
-        decorator = GetComponent<Decorator>();
-        filler = GetComponent<Filler>();
-        concealer = GetComponent<Concealer>();
+        Builder = GetComponent<Builder>();
+        Linker = GetComponent<Linker>();
+        Connector = GetComponent<Connector>();
+        Decorator = GetComponent<Decorator>();
+        Filler = GetComponent<Filler>();
+        Concealer = GetComponent<Concealer>();
     }
 
     private void Start()
@@ -32,13 +32,13 @@ public class TowerGenerator : MonoBehaviour
 
     public void Generate()
     {
-        Tower tower = builder.Build();
-        tower.Inspector = inspector;
-        linker.Link(tower);
-        connector.Connect(tower);
-        decorator.Decorate(tower);
-        filler.Fill(tower);
-        concealer.ConcealTower(tower);
-        inputController.Tower = tower;
+        Tower tower = Builder.Build();
+        tower.TowerGenerator = this;
+        Linker.Link(tower);
+        Connector.Connect(tower);
+        Decorator.Decorate(tower);
+        Filler.Fill(tower);
+        Concealer.ConcealTower(tower);
+        InputController.Tower = tower;
     }
 }

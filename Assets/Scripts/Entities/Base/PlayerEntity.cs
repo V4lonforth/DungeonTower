@@ -67,7 +67,7 @@ public class PlayerEntity : CreatureEntity
 
     private void CheckCell()
     {
-        Tower.Concealer.RevealConnectedRooms(Cell);
+        Tower.TowerGenerator.Concealer.RevealConnectedRooms(Cell);
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
         CollectGold();

@@ -11,7 +11,7 @@
         FinishMove();
         TurnController.StopEnemyMakingMove(this);
         Destroy();
-        Cell.Room.Tower.Filler.GenerateGold(Cell);
+        Tower.TowerGenerator.Filler.GenerateGold(Cell);
     }
 
     public override void PrepareMove()

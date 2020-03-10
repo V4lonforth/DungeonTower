@@ -16,6 +16,8 @@ public class Cell : MonoBehaviour
     public List<Room> AdjacentRooms { get; private set; }
     public List<Room> ConnectedRooms { get; private set; }
 
+    public GameObject[] Walls { get; private set; }
+
     public static Cell Instantiate(GameObject cellPrefab, Room room, Vector2Int position)
     {
         Cell cell = Instantiate(cellPrefab, room.transform).GetComponent<Cell>();
@@ -35,6 +37,7 @@ public class Cell : MonoBehaviour
         ConnectedRooms = new List<Room>();
 
         ItemEntities = new List<ItemEntity>();
+        Walls = new GameObject[Direction.DirectionsAmount];
     }
 
     public Direction GetDirectionToCell(Cell cell)

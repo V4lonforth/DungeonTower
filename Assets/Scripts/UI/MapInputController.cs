@@ -48,18 +48,18 @@ public class MapInputController : IInteractive
                 entity = cell.ItemEntities[0];
             else
             {
-                inputController.Tower.Inspector.ShowEmpty();
+                inputController.Tower.TowerGenerator.inspector.ShowEmpty();
                 return;
             }
         }
             
-        inputController.Tower.Inspector.ShowText(entity.GetDescription());
+        inputController.Tower.TowerGenerator.inspector.ShowText(entity.GetDescription());
     }
 
     private void StopInspecting()
     {
         closingInspector = false;
-        inputController.Tower.Inspector.HideText();
+        inputController.Tower.TowerGenerator.inspector.HideText();
     }
 
     public bool Press(Vector2 position, int id)

@@ -174,14 +174,30 @@ public class Decorator : MonoBehaviour
                 }
                 else if (!ReferenceEquals(cell.Room, cell.ConnectedCells[direction].Room))
                 {
+                    GameObject door = null;
                     if (direction == Direction.Top)
-                        Instantiate(trapdoorPrefab, cell.transform).transform.position += new Vector3(0f, 0.5f, 0f);
+                    {
+                        door = Instantiate(trapdoorPrefab, cell.transform);
+                        door.transform.position += new Vector3(0f, 0.5f, 0f);
+                    }
                     else if (direction == Direction.Right)
-                        Instantiate(doorPrefab, cell.transform).transform.position += new Vector3(0.5f, 0f, 0f);
+                    {
+                        door = Instantiate(doorPrefab, cell.transform);
+                        door.transform.position += new Vector3(0.5f, 0f, 0f);
+                    }
                     else if (direction == Direction.Left)
-                        Instantiate(doorPrefab, cell.transform).transform.position += new Vector3(-0.5f, 0f, 0f);
+                    {
+                        door = Instantiate(doorPrefab, cell.transform);
+                        door.transform.position += new Vector3(-0.5f, 0f, 0f);
+                    }
                     else if (direction == Direction.Bottom)
-                        Instantiate(trapdoorPrefab, cell.transform).transform.position += new Vector3(0f, -0.5f, 0f);
+                    {
+                        door = Instantiate(trapdoorPrefab, cell.transform);
+                        door.transform.position += new Vector3(0f, -0.5f, 0f);
+                    }
+                    cell.Walls[direction] = door;
+                    if (cell.AdjacentCells[direction] != null)
+                        cell.AdjacentCells[direction].Walls[direction.Opposite] = door;
                 }
                 else if (direction == Direction.Top || direction == Direction.Bottom)
                 {
