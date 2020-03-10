@@ -7,4 +7,9 @@
         player.Inventory.Gold += Amount;
         ItemEntity.Destroy();
     }
+
+    public override string GetDescription()
+    {
+        return $"{Amount} gold";
+    }
 }

@@ -1,68 +1,75 @@
 ﻿using UnityEngine;
 
-public class InputController : MonoBehaviour
+public class InputController : MonoBehaviour, IInteractive
 {
     public Inventory Inventory { get; private set; }
+    public MapInputController MapInputController { get; private set; }
 
     public Tower Tower { get; set; }
 
     private void Awake()
     {
         Inventory = FindObjectOfType<Inventory>();
+        MapInputController = new MapInputController(this);
     }
 
     private void Update()
+    {
+        HandleTouches();
+        HandleMouse();
+    }
+
+    private void HandleTouches()
     {
         foreach (Touch touch in Input.touches)
         {
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    if (Inventory.Press(touch.position, touch.fingerId))
-                        continue;
+                    Press(touch.position, touch.fingerId);
                     break;
                 case TouchPhase.Moved:
                 case TouchPhase.Stationary:
-                    if (Inventory.Hold(touch.position, touch.fingerId))
-                        continue;
+                    Hold(touch.position, touch.fingerId);
                     break;
                 case TouchPhase.Ended:
-                    if (Inventory.Release(touch.position, touch.fingerId))
-                        continue;
-                    Press(touch.position);
+                    Release(touch.position, touch.fingerId);
                     break;
             }
         }
+    }
+
+    private void HandleMouse()
+    {
         if (Input.touches.Length == 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (Inventory.Press(Input.mousePosition, 0))
-                    return;
+                Press(Input.mousePosition, 0);
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                if (Inventory.Release(Input.mousePosition, 0))
-                    return;
-                Press(Input.mousePosition);
+                Release(Input.mousePosition, 0);
             }
             else if (Input.GetMouseButton(0))
             {
-                if (Inventory.Hold(Input.mousePosition, 0))
-                    return;
+                Hold(Input.mousePosition, 0);
             }
         }
     }
 
-    private void Press(Vector2 position)
+    public bool Press(Vector2 position, int id)
     {
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, Camera.main.nearClipPlane)) + new Vector3(0.5f, 0.5f, 0f);
-        Tower.Interact(WorldToTowerPoint(worldPosition));
+        return Inventory.Press(position, id) || MapInputController.Press(position, id);
     }
 
-    private Vector2Int WorldToTowerPoint(Vector2 position)
+    public bool Hold(Vector2 position, int id)
     {
-        position = position - (Vector2)Tower.transform.position;
-        return new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y));
+        return Inventory.Hold(position, id) || MapInputController.Hold(position, id);
+    }
+
+    public bool Release(Vector2 position, int id)
+    {
+        return Inventory.Release(position, id) || MapInputController.Release(position, id);
     }
 }

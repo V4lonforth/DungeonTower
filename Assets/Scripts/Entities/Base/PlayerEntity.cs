@@ -117,19 +117,26 @@ public class PlayerEntity : CreatureEntity
         {
             Cell target = Target;
             Target = null;
-            TurnController.MakeMove();
-            MakeMove(target);
+            if (CanInteract(target))
+            {
+                TurnController.MakeMove();
+                MakeMove(target);
+            }
         }
     }
 
     public override void PrepareMove()
     {
-        if (Target != null)
-            MakeMove();
+        MakeMove();
     }
 
     public override void FinishMove()
     {
         TurnController.FinishPlayerMove();
+    }
+
+    public override string GetDescription()
+    {
+        return "You";
     }
 }

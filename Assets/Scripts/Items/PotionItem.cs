@@ -7,4 +7,9 @@
         player.Health.Heal(value);
         ItemEntity.Destroy();
     }
+
+    public override string GetDescription()
+    {
+        return $"Heals {value * 100}% hp";
+    }
 }

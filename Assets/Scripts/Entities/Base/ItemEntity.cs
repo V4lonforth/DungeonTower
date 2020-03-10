@@ -55,4 +55,9 @@ public class ItemEntity : Entity
         transform.SetParent(cell.transform);
         transform.position = cell.transform.position;
     }
+
+    public override string GetDescription()
+    {
+        return Item.GetDescription();
+    }
 }

@@ -96,7 +96,7 @@ public abstract class CreatureEntity : Entity
         return Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
     }
 
-    protected void MakeMove(Cell cell)
+    protected bool MakeMove(Cell cell)
     {
         if (CanInteract(cell))
         {
@@ -106,7 +106,9 @@ public abstract class CreatureEntity : Entity
                 MoveTo(cell);
             else
                 Interact(cell.CreatureEntity);
+            return true;
         }
+        return false;
     }
 
     protected abstract void Interact(CreatureEntity creature);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentSlot : MonoBehaviour
+public class EquipmentSlot : MonoBehaviour, IInteractive
 {
     public Sprite emptyIcon;
 
@@ -54,7 +54,7 @@ public class EquipmentSlot : MonoBehaviour
 
     public bool Press(Vector2 position, int id)
     {
-        if (!pressed && RectTransformUtility.RectangleContainsScreenPoint(equipmentIcon.rectTransform, position))
+        if (!pressed && CheckDropPosition(position))
         {
             pressed = true;
             touchId = id;
@@ -113,6 +113,7 @@ public class EquipmentSlot : MonoBehaviour
 
     public bool CheckDropPosition(Vector2 position)
     {
-        return Mathf.Abs(position.x - SlotPosition.x) * 2f < equipmentIcon.rectTransform.sizeDelta.x && Mathf.Abs(position.y - SlotPosition.y) * 2f < equipmentIcon.rectTransform.sizeDelta.y;
+        return RectTransformUtility.RectangleContainsScreenPoint(equipmentIcon.rectTransform, position);
+        //return Mathf.Abs(position.x - SlotPosition.x) * 2f < equipmentIcon.rectTransform.sizeDelta.x && Mathf.Abs(position.y - SlotPosition.y) * 2f < equipmentIcon.rectTransform.sizeDelta.y;
     }
 }

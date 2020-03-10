@@ -93,4 +93,9 @@
             isAnimated = false;
         }
     }
+
+    public override string GetDescription()
+    {
+        return "Enemy";
+    }
 }

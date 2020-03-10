@@ -12,4 +12,9 @@
     {
         player.Inventory.Equip(this);
     }
+
+    public override string GetDescription()
+    {
+        return $"{value} armor";
+    }
 }

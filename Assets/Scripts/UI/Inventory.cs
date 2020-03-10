@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IInteractive
 {
     public EquipmentSlot weaponSlot;
     public EquipmentSlot armorSlot;
@@ -217,7 +217,7 @@ public class Inventory : MonoBehaviour
     private bool IsInInventory(EquipmentSlot equipmentSlot) => IsEquipped(equipmentSlot) || IsInBackpack(equipmentSlot);
 
     private EquipmentSlot FindItem(Item item) => allSlots.Find(slot => slot.Item == item);
-    private EquipmentSlot FindEmptyBackpackSlot() => backpackSlots.First(slot => slot.Item == null);
+    private EquipmentSlot FindEmptyBackpackSlot() => backpackSlots.FirstOrDefault(slot => slot.Item == null);
     private bool IsEmpty(EquipmentSlot equipmentSlot) => IsEmpty(equipmentSlot.Item);
     private bool IsEmpty(Item item) => item == null || item == PlayerEntity.defaultWeapon || item == PlayerEntity.defaultArmour;
 
@@ -273,7 +273,7 @@ public class Inventory : MonoBehaviour
                 }
             }
             EquipmentSlot emptySlot = FindEmptyBackpackSlot();
-            if (equipmentSlot != null)
+            if (emptySlot != null)
                 TryDragEquipment(equipmentSlot, emptySlot);
         }
     }

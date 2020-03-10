@@ -18,4 +18,6 @@ public abstract class Entity : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public abstract string GetDescription();
 }

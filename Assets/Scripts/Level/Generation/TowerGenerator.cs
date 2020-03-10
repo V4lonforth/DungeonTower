@@ -2,6 +2,8 @@
 
 public class TowerGenerator : MonoBehaviour
 {
+    public Inspector inspector;
+
     private InputController inputController;
 
     private Builder builder;
@@ -31,6 +33,7 @@ public class TowerGenerator : MonoBehaviour
     public void Generate()
     {
         Tower tower = builder.Build();
+        tower.Inspector = inspector;
         linker.Link(tower);
         connector.Connect(tower);
         decorator.Decorate(tower);

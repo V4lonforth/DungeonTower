@@ -24,8 +24,9 @@ public class Tower : MonoBehaviour
     public Navigator Navigator { get; set; }
 
     public TurnController TurnController { get; private set; }
+    public Inspector Inspector { get; set; }
 
-    protected void Awake()
+    private void Awake()
     {
         TurnController = new TurnController(this);
         Lava = GetComponentInChildren<Lava>();
