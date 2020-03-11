@@ -61,11 +61,9 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public void ShowDrop(List<ItemEntity> itemEntities, int offset = 0)
     {
+        HideDrop();
         if (itemEntities.Count == 0)
-        {
-            HideDrop();
             return;
-        }
 
         itemEntities = new List<ItemEntity>(itemEntities);
         itemEntities.RemoveAll(itemEntity => itemEntity.Item is ChestItem chest && chest.Opened);
@@ -81,7 +79,6 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public void HideDrop()
     {
-        droppedItemEntities = null;
         dropTransform.gameObject.SetActive(false);
         foreach (EquipmentSlot equipmentSlot in dropSlots)
             equipmentSlot.Hide();
