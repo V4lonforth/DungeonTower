@@ -2,6 +2,7 @@
 
 public abstract class Item : MonoBehaviour
 {
+    public int value;
     public Sprite icon;
 
     public ItemEntity ItemEntity { get; set; }

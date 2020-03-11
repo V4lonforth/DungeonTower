@@ -13,7 +13,7 @@ public class Armor : MonoBehaviour
     {
         playerEntity = GetComponent<PlayerEntity>();
         if (armorItem != null)
-            armorItem.value = armorItem.maxValue;
+            armorItem.armor = armorItem.maxArmor;
         UpdateText();
     }
 
@@ -34,17 +34,17 @@ public class Armor : MonoBehaviour
 
     public bool TakeDamage(int damage, out int damageLeft)
     {
-        if (armorItem == null || armorItem.maxValue == 0)
+        if (armorItem == null || armorItem.maxArmor == 0)
         {
             damageLeft = damage;
             return true;
         }
 
-        armorItem.value -= damage;
-        if (armorItem.value <= 0)
+        armorItem.armor -= damage;
+        if (armorItem.armor <= 0)
         {
-            damageLeft = -armorItem.value;
-            armorItem.value = 0;
+            damageLeft = -armorItem.armor;
+            armorItem.armor = 0;
             Break();
             UpdateText();
             return true;
@@ -56,16 +56,16 @@ public class Armor : MonoBehaviour
 
     public void Repair(int value)
     {
-        armorItem.value = Mathf.Min(armorItem.value + value, armorItem.maxValue);
+        armorItem.armor = Mathf.Min(armorItem.armor + value, armorItem.maxArmor);
     }
     public void Repair(float value)
     {
-        Repair(Mathf.RoundToInt(armorItem.maxValue * value));
+        Repair(Mathf.RoundToInt(armorItem.maxArmor * value));
     }
 
     private void UpdateText()
     {
         if (text != null && armorItem != null)
-            text.text = armorItem.value.ToString();
+            text.text = armorItem.armor.ToString();
     }
 }

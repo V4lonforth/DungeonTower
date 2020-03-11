@@ -128,5 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cee61ca03420784688fa1f5a7119482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: 200
   icon: {fileID: -7930571331049095873, guid: 2756178eed7fe564db8eea0cbad23e05, type: 3}
-  value: 0.25
+  uses: 1
+  healStrength: 0.25

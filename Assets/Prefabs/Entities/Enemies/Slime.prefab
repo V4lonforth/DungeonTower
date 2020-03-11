@@ -462,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatedSprite: {fileID: 2318149054017695747}
+  strength: 125
 --- !u!114 &3191707806070055066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 2
+  icon: {fileID: 0}
+  damage: 2
 --- !u!1 &5365931337906762206
 GameObject:
   m_ObjectHideFlags: 0

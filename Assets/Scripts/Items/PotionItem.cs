@@ -1,15 +1,15 @@
 ﻿public class PotionItem : ConsumableItem
 {
-    public float value;
+    public float healStrength;
 
     public override void Use(PlayerEntity player)
     {
         base.Use(player);
-        player.Health.Heal(value);
+        player.Health.Heal(healStrength);
     }
 
     public override string GetDescription()
     {
-        return $"Heals {value * 100}% hp";
+        return $"Heals {healStrength * 100}% hp";
     }
 }

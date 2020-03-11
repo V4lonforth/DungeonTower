@@ -1,15 +1,15 @@
 ﻿public class ArmorItem : EquipmentItem
 {
-    public int maxValue;
-    public int value;
+    public int maxArmor;
+    public int armor;
 
     private void Awake()
     {
-        value = maxValue;
+        armor = maxArmor;
     }
 
     public override string GetDescription()
     {
-        return $"{value} armor";
+        return $"{armor} armor";
     }
 }

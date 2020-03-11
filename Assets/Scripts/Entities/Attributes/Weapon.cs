@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
 
     public void Attack(CreatureEntity creature)
     {
-        int damageLeft = weaponItem.value;
+        int damageLeft = weaponItem.damage;
         if (creature.Armor is null || creature.Armor.TakeDamage(damageLeft, out damageLeft))
         {
             if (creature.Health.TakeDamage(damageLeft, out damageLeft))
@@ -32,6 +32,6 @@ public class Weapon : MonoBehaviour
     private void UpdateText()
     {
         if (text != null)
-            text.text = weaponItem.value.ToString();
+            text.text = weaponItem.damage.ToString();
     }
 }

@@ -1,9 +1,9 @@
 ﻿public class WeaponItem : EquipmentItem
 {
-    public int value;
+    public int damage;
 
     public override string GetDescription()
     {
-        return $"{value} damage";
+        return $"{damage} damage";
     }
 }

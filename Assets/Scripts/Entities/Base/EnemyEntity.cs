@@ -1,5 +1,6 @@
 ﻿public class EnemyEntity : CreatureEntity
 {
+    public int strength;
     private bool aggroed;
     private bool moved;
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,41 +17,69 @@ public class Filler : MonoBehaviour
 
     public void Fill(Tower tower)
     {
-        foreach (Cell cell in tower.Cells)
+        foreach (Room room in tower.Rooms.Skip(1))
         {
-            float value = Random.Range(0f, 1f);
-            if (value < 0.15f)
-                GenerateGold(cell);
-            else if (value < 0.35f)
-                GenerateEnemy(cell);
-            else if (value < 0.37f)
-                ItemEntity.Instantiate(GetRandomItem(weaponItems), cell);
-            else if (value < 0.39f)
-                ItemEntity.Instantiate(GetRandomItem(potionItems), cell);
-            else if (value < 0.41f)
-                ItemEntity.Instantiate(GetRandomItem(armorItems), cell);
+            int roomStrength = CalculateRoomStrength(room);
+            int currentStrength = 0;
+            List<Cell> emptyCells = new List<Cell>(room.Cells);
+            while (emptyCells.Count > 0 && currentStrength < roomStrength)
+            {
+                int index = Random.Range(0, emptyCells.Count);
+                currentStrength += GenerateEnemy(emptyCells[index]);
+                emptyCells.RemoveAt(index);
+            }
+            int roomValue = CalculateRoomValue(room, currentStrength);
+            emptyCells = new List<Cell>(room.Cells);
+            foreach (Cell cell in emptyCells)
+            {
+                float value = Random.Range(0f, 1f);
+                if (value < 0.15f)
+                    roomValue -= GenerateGold(cell);
+                else if (value < 0.18f)
+                    roomValue -= GenerateItem(GetRandomItem(weaponItems), cell);
+                else if (value < 0.21f)
+                    roomValue -= GenerateItem(GetRandomItem(potionItems), cell);
+                else if (value < 0.24f)
+                    roomValue -= GenerateItem(GetRandomItem(armorItems), cell);
+
+                if (roomValue < 0)
+                    break;
+            }
         }
-        tower[0, 0].CreatureEntity?.Destroy();
         tower.Player = GeneratePlayer(tower[0, 0]);
     }
 
-    public ItemEntity GenerateGold(Cell cell)
+    private int CalculateRoomStrength(Room room)
+    {
+        return Random.Range(25, 75) * room.Cells.Count;
+    }
+    private int CalculateRoomValue(Room room, int strength)
+    {
+        return strength + Random.Range(5, 15) * room.Cells.Count;
+    }
+
+    public int GenerateItem(GameObject item, Cell cell)
+    {
+        return ItemEntity.Instantiate(item, cell).Item.value;
+    }
+
+    public int GenerateGold(Cell cell)
     {
         int amount = Random.Range(8, 14);
         foreach (ItemEntity itemEntity in cell.ItemEntities)
             if (itemEntity.Item is GoldItem goldItem)
             {
                 goldItem.Amount += amount;
-                return itemEntity;
+                return goldItem.value;
             }
         ItemEntity gold = ItemEntity.Instantiate(GetRandomItem(goldItems), cell);
         ((GoldItem)gold.Item).Amount = amount;
-        return gold;
+        return gold.Item.value;
     }
 
-    public EnemyEntity GenerateEnemy(Cell cell)
+    public int GenerateEnemy(Cell cell)
     {
-        return (EnemyEntity)CreatureEntity.Instantiate(enemyPrefab, cell);
+        return ((EnemyEntity)CreatureEntity.Instantiate(enemyPrefab, cell)).strength;
     }
 
     public PlayerEntity GeneratePlayer(Cell cell)
