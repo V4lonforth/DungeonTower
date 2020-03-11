@@ -179,6 +179,8 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Press(Vector2 position, int id)
     {
+        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+            return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && !IsEmpty(equipmentSlot) && equipmentSlot.Press(position, id))
                 return true;
@@ -187,6 +189,8 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Hold(Vector2 position, int id)
     {
+        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+            return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && equipmentSlot.Hold(position, id))
                 return true;
@@ -195,6 +199,8 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Release(Vector2 position, int id)
     {
+        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+            return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && equipmentSlot.Release(position, id))
                 return true;

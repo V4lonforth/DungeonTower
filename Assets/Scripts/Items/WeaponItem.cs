@@ -1,11 +1,6 @@
-﻿public class WeaponItem : Item
+﻿public class WeaponItem : EquipmentItem
 {
     public int value;
-
-    public override void Use(PlayerEntity player)
-    {
-        player.Inventory.Equip(this);
-    }
 
     public override string GetDescription()
     {

@@ -1,11 +1,11 @@
-﻿public class PotionItem : Item
+﻿public class PotionItem : ConsumableItem
 {
     public float value;
 
     public override void Use(PlayerEntity player)
     {
+        base.Use(player);
         player.Health.Heal(value);
-        ItemEntity.Destroy();
     }
 
     public override string GetDescription()
