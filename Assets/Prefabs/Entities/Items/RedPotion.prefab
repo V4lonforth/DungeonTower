@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 200
+  collectable: 1
   icon: {fileID: -7930571331049095873, guid: 2756178eed7fe564db8eea0cbad23e05, type: 3}
   uses: 1
   healStrength: 0.25

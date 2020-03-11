@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 200
+  collectable: 1
   icon: {fileID: 21300000, guid: eb2352c0cb5867945b7020adfa341344, type: 3}
   maxArmor: 8
   armor: 0

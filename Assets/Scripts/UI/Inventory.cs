@@ -59,19 +59,24 @@ public class Inventory : MonoBehaviour, IInteractive
             goldText.text = Gold.ToString();
     }
 
-    public void ShowDrop(List<ItemEntity> itemEntities)
+    public void ShowDrop(List<ItemEntity> itemEntities, int offset = 0)
     {
         if (itemEntities.Count == 0)
         {
             HideDrop();
             return;
         }
+
+        itemEntities = new List<ItemEntity>(itemEntities);
+        itemEntities.RemoveAll(itemEntity => itemEntity.Item is ChestItem chest && chest.Opened);
         droppedItemEntities = itemEntities;
-        dropTransform.anchoredPosition = new Vector2(dropOffset - dropsInterval * itemEntities.Count, 0);
+        dropTransform.anchoredPosition = new Vector2(dropOffset - dropsInterval * Mathf.Min(itemEntities.Count, dropSlots.Length), 0);
         dropTransform.gameObject.SetActive(true);
 
-        for (int i = 0; i < itemEntities.Count && i < dropSlots.Length; i++)
-            dropSlots[i].Show(itemEntities[i].Item);
+        for (int i = 0; i + offset < itemEntities.Count && i < dropSlots.Length; i++)
+        {
+            dropSlots[i].Show(itemEntities[i + offset].Item);
+        }
     }
 
     public void HideDrop()
@@ -287,7 +292,12 @@ public class Inventory : MonoBehaviour, IInteractive
     public void Use(EquipmentSlot equipmentSlot)
     {
         if (IsDropped(equipmentSlot))
-            TryPutInInventory(equipmentSlot);
+        {
+            if (equipmentSlot.Item.collectable)
+                TryPutInInventory(equipmentSlot);
+            else
+                equipmentSlot.Item.Use(PlayerEntity);
+        }
         else if (IsInBackpack(equipmentSlot))
             equipmentSlot.Item.Use(PlayerEntity);
     }

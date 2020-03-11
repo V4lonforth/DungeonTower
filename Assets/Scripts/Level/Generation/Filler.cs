@@ -11,6 +11,7 @@ public class Filler : MonoBehaviour
     public List<GameObject> potionItems;
     public List<GameObject> weaponItems;
     public List<GameObject> goldItems;
+    public List<GameObject> chestItems;
 
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
@@ -32,21 +33,28 @@ public class Filler : MonoBehaviour
             emptyCells = new List<Cell>(room.Cells);
             foreach (Cell cell in emptyCells)
             {
-                float value = Random.Range(0f, 1f);
-                if (value < 0.15f)
-                    roomValue -= GenerateGold(cell);
-                else if (value < 0.18f)
-                    roomValue -= GenerateItem(GetRandomItem(weaponItems), cell);
-                else if (value < 0.21f)
-                    roomValue -= GenerateItem(GetRandomItem(potionItems), cell);
-                else if (value < 0.24f)
-                    roomValue -= GenerateItem(GetRandomItem(armorItems), cell);
-
+                roomValue -= GenerateItem(cell);
                 if (roomValue < 0)
                     break;
             }
         }
         tower.Player = GeneratePlayer(tower[0, 0]);
+    }
+
+    public int GenerateItem(Cell cell)
+    {
+        float value = Random.Range(0f, 1f);
+        if (value < 0.15f)
+            return GenerateGold(cell);
+        else if (value < 0.18f)
+            return GenerateItem(GetRandomItem(weaponItems), cell);
+        else if (value < 0.21f)
+            return GenerateItem(GetRandomItem(potionItems), cell);
+        else if (value < 0.24f)
+            return GenerateItem(GetRandomItem(armorItems), cell);
+        else if (value < 0.30f)
+            return GenerateItem(GetRandomItem(chestItems), cell);
+        return 0;
     }
 
     private int CalculateRoomStrength(Room room)

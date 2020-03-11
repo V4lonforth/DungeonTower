@@ -73,13 +73,7 @@ public class PlayerEntity : CreatureEntity
         CollectGold();
         Inventory.ShowDrop(Cell.ItemEntities);
     }
-
-    protected override void StopMoving()
-    {
-        CheckCell();
-        base.StopMoving();
-    }
-
+    
     private void CollectGold()
     {
         for (int i = 0; i < Cell.ItemEntities.Count; i++)
@@ -132,6 +126,7 @@ public class PlayerEntity : CreatureEntity
 
     public override void FinishMove()
     {
+        CheckCell();
         TurnController.FinishPlayerMove();
     }
 
