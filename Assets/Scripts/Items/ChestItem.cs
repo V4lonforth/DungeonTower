@@ -21,7 +21,7 @@ public class ChestItem : Item
             int contentValue = (int)(value * Random.Range(0.5f, 1.5f));
             while (contentValue > 0)
             {
-                contentValue -= player.Tower.TowerGenerator.Filler.GenerateItem(ItemEntity.Cell);
+                contentValue -= player.Tower.TowerGenerator.Filler.GenerateItem(ItemEntity.Cell, false);
             }
 
             foreach (ItemEntity itemEntity in ItemEntity.Cell.ItemEntities)

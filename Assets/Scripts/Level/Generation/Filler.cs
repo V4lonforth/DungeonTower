@@ -41,7 +41,7 @@ public class Filler : MonoBehaviour
         tower.Player = GeneratePlayer(tower[0, 0]);
     }
 
-    public int GenerateItem(Cell cell)
+    public int GenerateItem(Cell cell, bool chestAllowed = true)
     {
         float value = Random.Range(0f, 1f);
         if (value < 0.15f)
@@ -52,7 +52,7 @@ public class Filler : MonoBehaviour
             return GenerateItem(GetRandomItem(potionItems), cell);
         else if (value < 0.24f)
             return GenerateItem(GetRandomItem(armorItems), cell);
-        else if (value < 0.30f)
+        else if (chestAllowed && value < 0.30f)
             return GenerateItem(GetRandomItem(chestItems), cell);
         return 0;
     }
