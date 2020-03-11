@@ -14,6 +14,8 @@ public abstract class CreatureEntity : Entity
     private Animator animator;
 
     private const float MovingTime = 0.1f;
+    private const float AttackTime = 0.075f;
+    private const float AttackMovingSpeed = 3f;
 
     public new static CreatureEntity Instantiate(GameObject prefab, Cell cell)
     {
@@ -67,6 +69,7 @@ public abstract class CreatureEntity : Entity
 
     protected virtual void Attack(CreatureEntity creature)
     {
+        StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
     }
 
@@ -77,6 +80,25 @@ public abstract class CreatureEntity : Entity
             animatedSprite.flipX = true;
         else if (direction == Direction.Right)
             animatedSprite.flipX = false;
+    }
+
+    protected IEnumerator AttackAnim(Direction direction, float attackTimeLeft)
+    {
+        float time = attackTimeLeft;
+        while (time > 0f)
+        {
+            animatedSprite.transform.position += (Vector3)(direction.Rotation2 * (AttackMovingSpeed * Time.deltaTime));
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        time = attackTimeLeft;
+        while (time > 0f)
+        {
+            animatedSprite.transform.position -= (Vector3)(direction.Rotation2 * (AttackMovingSpeed * Time.deltaTime));
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        animatedSprite.transform.position = Cell.transform.position;
     }
 
     public void FinishAttackAnimation()

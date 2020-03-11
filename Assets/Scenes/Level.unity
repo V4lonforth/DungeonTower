@@ -1928,6 +1928,8 @@ MonoBehaviour:
   - {fileID: 8336715344871862006, guid: d219141b4ae42fd439f78d681674975e, type: 3}
   goldItems:
   - {fileID: 5658968545976273666, guid: 4749884089040114985b0d9579c48398, type: 3}
+  chestItems:
+  - {fileID: 811860787870745194, guid: 73743375378d6da4ca071b3244745624, type: 3}
   playerPrefab: {fileID: 1677155915308444074, guid: a04e4ae77b45c0940b1315bafb07a7c3,
     type: 3}
   enemyPrefab: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
