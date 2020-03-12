@@ -64,6 +64,8 @@ public class Inventory : MonoBehaviour, IInteractive
         HideDrop();
         if (itemEntities.Count == 0)
             return;
+        if (itemEntities.Count == 1)
+            itemEntities[0].GetComponent<SpriteRenderer>().enabled = true;
 
         itemEntities = new List<ItemEntity>(itemEntities);
         itemEntities.RemoveAll(itemEntity => itemEntity.Item is ChestItem chest && chest.Opened);
