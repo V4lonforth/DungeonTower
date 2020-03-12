@@ -1249,6 +1249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 0
+  collectable: 0
   icon: {fileID: 21300000, guid: eb2352c0cb5867945b7020adfa341344, type: 3}
   maxArmor: 0
   armor: 0
@@ -1368,5 +1369,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 3
+  collectable: 0
   icon: {fileID: 21300000, guid: 4d6bf396f0efac346813df53ddc53409, type: 3}
   damage: 3
