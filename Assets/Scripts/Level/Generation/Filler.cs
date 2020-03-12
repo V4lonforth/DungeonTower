@@ -13,24 +13,17 @@ public class Filler : MonoBehaviour
     public List<GameObject> goldItems;
     public List<GameObject> chestItems;
 
+    public EnemyGroups enemyGroups;
+
     public GameObject playerPrefab;
-    public GameObject enemyPrefab;
 
     public void Fill(Tower tower)
     {
         foreach (Room room in tower.Rooms.Skip(1))
         {
-            int roomStrength = CalculateRoomStrength(room);
-            int currentStrength = 0;
+            int roomStrength = GenerateMonsters(new List<Cell>(room.Cells), CalculateRoomStrength(room));
+            int roomValue = CalculateRoomValue(room, roomStrength);
             List<Cell> emptyCells = new List<Cell>(room.Cells);
-            while (emptyCells.Count > 0 && currentStrength < roomStrength)
-            {
-                int index = Random.Range(0, emptyCells.Count);
-                currentStrength += GenerateEnemy(emptyCells[index]);
-                emptyCells.RemoveAt(index);
-            }
-            int roomValue = CalculateRoomValue(room, currentStrength);
-            emptyCells = new List<Cell>(room.Cells);
             foreach (Cell cell in emptyCells)
             {
                 roomValue -= GenerateItem(cell);
@@ -39,6 +32,22 @@ public class Filler : MonoBehaviour
             }
         }
         tower.Player = GeneratePlayer(tower[0, 0]);
+    }
+
+    private int GenerateMonsters(List<Cell> emptyCells, int roomStrength)
+    {
+        EnemyGroup enemyGroup = enemyGroups.GetRandomEnemyGroup(emptyCells.Count, roomStrength);
+        int currentStrength = 0;
+        while (emptyCells.Count > 0 && currentStrength < roomStrength)
+        {
+            int index = Random.Range(0, emptyCells.Count);
+            GameObject enemy = enemyGroup.GetRandomEnemy(roomStrength - currentStrength);
+            if (enemy == null)
+                break;
+            currentStrength += GenerateEnemy(enemy, emptyCells[index]);
+            emptyCells.RemoveAt(index);
+        }
+        return 0;
     }
 
     public int GenerateItem(Cell cell, bool chestAllowed = true)
@@ -85,9 +94,9 @@ public class Filler : MonoBehaviour
         return gold.Item.value;
     }
 
-    public int GenerateEnemy(Cell cell)
+    public int GenerateEnemy(GameObject enemy, Cell cell)
     {
-        return ((EnemyEntity)CreatureEntity.Instantiate(enemyPrefab, cell)).strength;
+        return ((EnemyEntity)CreatureEntity.Instantiate(enemy, cell)).strength;
     }
 
     public PlayerEntity GeneratePlayer(Cell cell)

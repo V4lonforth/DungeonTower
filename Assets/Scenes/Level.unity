@@ -1930,9 +1930,19 @@ MonoBehaviour:
   - {fileID: 5658968545976273666, guid: 4749884089040114985b0d9579c48398, type: 3}
   chestItems:
   - {fileID: 811860787870745194, guid: 73743375378d6da4ca071b3244745624, type: 3}
+  enemyGroups:
+    enemyGroups:
+    - weight: 1
+      minStrength: 0
+      minSize: 1
+      enemies:
+      - element: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
+          type: 3}
+        weight: 2
+      - element: {fileID: 9144915095607567580, guid: 9d56a53076c9e1842ad4068fdd22757f,
+          type: 3}
+        weight: 1
   playerPrefab: {fileID: 1677155915308444074, guid: a04e4ae77b45c0940b1315bafb07a7c3,
-    type: 3}
-  enemyPrefab: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
     type: 3}
 --- !u!114 &1555518227
 MonoBehaviour:
