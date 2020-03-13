@@ -4,22 +4,40 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -8990434135149268302
-    second: FogOfWar_0
+    second: FogOfWarFull
   - first:
       213: -7566295408621450935
-    second: FogOfWar_1
+    second: FogOfWarOuterCorner
   - first:
       213: 9000610249593974655
-    second: FogOfWar_2
+    second: FogOfWarInnerCorner
   - first:
       213: 2057407542763337001
-    second: FogOfWar_3
+    second: FogOfWarVertical
   - first:
       213: 6623981353048158438
-    second: FogOfWar_4
+    second: FogOfWarHorizontal
+  - first:
+      213: -2028834325767994207
+    second: FogOfWarFull
+  - first:
+      213: -2867696914862236582
+    second: FogOfWarHorizontal
+  - first:
+      213: 8323284237090211001
+    second: FogOfWarVertical
+  - first:
+      213: 117604568397057517
+    second: FogOfWarHorizontalConnector
+  - first:
+      213: -5783179072779538691
+    second: FogOfWarVerticalConnector
   - first:
       213: 7638207526081734886
-    second: FogOfWar_5
+    second: FogOfWarOuterCorner
+  - first:
+      213: -673607433688639311
+    second: FogOfWarInnerCorner
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -116,7 +134,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FogOfWar_0
+      name: FogOfWarFull
       rect:
         serializedVersion: 2
         x: 0
@@ -124,20 +142,20 @@ TextureImporter:
         width: 40
         height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b2b1e599cf8b3380800000000000000
-      internalID: -8990434135149268302
+      spriteID: 1a4ca701ee128d3e0800000000000000
+      internalID: -2028834325767994207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FogOfWar_1
+      name: FogOfWarHorizontal
       rect:
         serializedVersion: 2
         x: 40
@@ -145,20 +163,20 @@ TextureImporter:
         width: 40
         height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 949037fe96e1ff690800000000000000
-      internalID: -7566295408621450935
+      spriteID: a5c172289d4e338d0800000000000000
+      internalID: -2867696914862236582
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FogOfWar_2
+      name: FogOfWarVertical
       rect:
         serializedVersion: 2
         x: 80
@@ -166,20 +184,41 @@ TextureImporter:
         width: 40
         height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7fe9c0b55798ec70800000000000000
-      internalID: 9000610249593974655
+      spriteID: 9b4ce5c3aee328370800000000000000
+      internalID: 8323284237090211001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FogOfWar_3
+      name: FogOfWarHorizontalConnector
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 40
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ded054b5bb0d1a100800000000000000
+      internalID: 117604568397057517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FogOfWarVerticalConnector
       rect:
         serializedVersion: 2
         x: 0
@@ -187,20 +226,20 @@ TextureImporter:
         width: 40
         height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9253e9072416d8c10800000000000000
-      internalID: 2057407542763337001
+      spriteID: dfea08e16450ebfa0800000000000000
+      internalID: -5783179072779538691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FogOfWar_4
+      name: FogOfWarOuterCorner
       rect:
         serializedVersion: 2
         x: 40
@@ -208,28 +247,7 @@ TextureImporter:
         width: 40
         height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e03f3bf1fb1deb50800000000000000
-      internalID: 6623981353048158438
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FogOfWar_5
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -237,6 +255,27 @@ TextureImporter:
       bones: []
       spriteID: 6e821d8a64d500a60800000000000000
       internalID: 7638207526081734886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FogOfWarInnerCorner
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b81de4ab9dd6a6f0800000000000000
+      internalID: -673607433688639311
       vertices: []
       indices: 
       edges: []

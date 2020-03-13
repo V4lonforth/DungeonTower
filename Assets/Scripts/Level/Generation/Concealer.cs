@@ -17,11 +17,19 @@ public class Concealer : MonoBehaviour
 
     public GameObject fogOfWarPrefab;
 
+    public GameObject fogOfWarVertical;
+    public GameObject fogOfWarHorizontal;
+    public GameObject fogOfWarVerticalConnector;
+    public GameObject fogOfWarHorizontalConnector;
+    public GameObject fogOfWarInnerCorner;
+    public GameObject fogOfWarOuterCorner;
+
     public Sprite[] fogOfWarSprites;
 
     private GameObject[,] fogOfWar;
 
     private Dictionary<int, FogOfWarShape> fogOfWarShapes;
+    private Tower tower;
 
     private void Awake()
     {
@@ -53,6 +61,7 @@ public class Concealer : MonoBehaviour
 
     public void ConcealTower(Tower tower)
     {
+        this.tower = tower;
         fogOfWar = new GameObject[tower.Size.y, tower.Size.x];
 
         ConcealOutside(tower);
@@ -72,19 +81,90 @@ public class Concealer : MonoBehaviour
         }
     }
 
+    private bool HasFogOfWar(Vector2Int position)
+    {
+        return !(MathHelper.InRange(position, tower.Size) && tower[position].Room.IsRevealed);
+    }
+
+    private void Flip(GameObject gameObject, bool flipX, bool flipY)
+    {
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.flipX = flipX;
+        spriteRenderer.flipY = flipY;
+    }
+
     private void ShapeFogOfWar(Cell cell)
     {
-        int key = 0;
-        foreach (Direction direction in Direction.Values)
+        Destroy(fogOfWar[cell.Position.y, cell.Position.x]);
+        GameObject fogOfWarParent = Instantiate(new GameObject(), cell.transform);
+        fogOfWar[cell.Position.y, cell.Position.x] = fogOfWarParent;
+
+        if (HasFogOfWar(cell.Position + Vector2Int.up))
         {
-            key <<= 1;
-            if (cell.AdjacentCells[direction] == null || !cell.AdjacentCells[direction].Room.IsRevealed)
-                key |= 1;
+            Instantiate(fogOfWarHorizontal, fogOfWarParent.transform);
+            if (HasFogOfWar(cell.Position + Vector2Int.right))
+                Instantiate(fogOfWarInnerCorner, fogOfWarParent.transform);
+            else if (HasFogOfWar(cell.Position + Vector2Int.one))
+                Instantiate(fogOfWarHorizontalConnector, fogOfWarParent.transform);
         }
-        if (fogOfWarShapes.TryGetValue(key, out FogOfWarShape shape))
+        else
         {
-            fogOfWar[cell.Position.y, cell.Position.x].GetComponent<SpriteRenderer>().sprite = shape.sprite;
-            fogOfWar[cell.Position.y, cell.Position.x].transform.rotation = Quaternion.Euler(0f, 0f, shape.direction.Rotation);
+            if (HasFogOfWar(cell.Position + Vector2Int.one))
+            {
+                if (HasFogOfWar(cell.Position + Vector2Int.right))
+                    Instantiate(fogOfWarVerticalConnector, fogOfWarParent.transform);
+                else
+                    Instantiate(fogOfWarOuterCorner, fogOfWarParent.transform);
+            }
+        }
+
+        if (HasFogOfWar(cell.Position + Vector2Int.right))
+        {
+            Instantiate(fogOfWarVertical, fogOfWarParent.transform);
+            if (HasFogOfWar(cell.Position + Vector2Int.down))
+                Flip(Instantiate(fogOfWarInnerCorner, fogOfWarParent.transform), false, true);
+        }
+        else
+        {
+            if (HasFogOfWar(cell.Position + new Vector2Int(1, -1)))
+            {
+                if (!HasFogOfWar(cell.Position + Vector2Int.down))
+                    Flip(Instantiate(fogOfWarOuterCorner, fogOfWarParent.transform), false, true);
+                else
+                    Flip(Instantiate(fogOfWarHorizontalConnector, fogOfWarParent.transform), false, true);
+            }
+        }
+
+        if (HasFogOfWar(cell.Position + Vector2Int.down))
+        {
+            Flip(Instantiate(fogOfWarHorizontal, fogOfWarParent.transform), false, true);
+            if (HasFogOfWar(cell.Position + Vector2Int.left))
+                Flip(Instantiate(fogOfWarInnerCorner, fogOfWarParent.transform), true, true);
+        }
+        else
+        {
+            if (HasFogOfWar(cell.Position + new Vector2Int(-1, -1)))
+            {
+                if (!HasFogOfWar(cell.Position + Vector2Int.left))
+                    Flip(Instantiate(fogOfWarOuterCorner, fogOfWarParent.transform), true, true);
+            }
+        }
+
+        if (HasFogOfWar(cell.Position + Vector2Int.left))
+        {
+            Flip(Instantiate(fogOfWarVertical, fogOfWarParent.transform), true, false);
+            if (HasFogOfWar(cell.Position + Vector2Int.up))
+                Flip(Instantiate(fogOfWarInnerCorner, fogOfWarParent.transform), true, false);
+            else if (HasFogOfWar(cell.Position + new Vector2Int(-1, 1)))
+                Flip(Instantiate(fogOfWarVerticalConnector, fogOfWarParent.transform), true, false);
+        }
+        else
+        {
+            if (HasFogOfWar(cell.Position + new Vector2Int(-1, 1)))
+            {
+                if (!HasFogOfWar(cell.Position + Vector2Int.up))
+                    Flip(Instantiate(fogOfWarOuterCorner, fogOfWarParent.transform), true, false);
+            }
         }
     }
 
@@ -92,28 +172,19 @@ public class Concealer : MonoBehaviour
     {
         room.IsRevealed = true;
 
-        foreach (Cell cell in room.Cells)
-        {
-            bool revealed = true;
-            foreach (Direction direction in Direction.Values)
-                if (cell.AdjacentCells[direction] == null || !cell.AdjacentCells[direction].Room.IsRevealed)
-                {
-                    revealed = false;
-                    ShapeFogOfWar(cell);
-                    break;
-                }
-            if (revealed)
-                fogOfWar[cell.Position.y, cell.Position.x].SetActive(false);
-            foreach (Direction direction in Direction.Values)
-                if (cell.AdjacentCells[direction] != null && cell.AdjacentCells[direction].Room != cell.Room && cell.AdjacentCells[direction].Room.IsRevealed)
-                    ShapeFogOfWar(cell.AdjacentCells[direction]);
-                    //fogOfWar[cell.AdjacentCells[direction].Position.y, cell.AdjacentCells[direction].Position.x].SetActive(false);
-        }
-        //foreach (Cell cell in room.Cells)
-        //    if (cell.AdjacentRooms.Count > 0)
-        //        foreach (Direction direction in Direction.Values)
-        //            if (cell.AdjacentCells[direction] != null && !cell.AdjacentCells[direction].Room.IsRevealed)
-        //                ShapeFogOfWar(cell.AdjacentCells[direction]);
+        List<Room> revealingRooms = new List<Room>() { room };
+        foreach (Room adjacentRoom in room.AdjacentRooms)
+            if (adjacentRoom.IsRevealed)
+            {
+                revealingRooms.Add(adjacentRoom);
+                foreach (Room secondAdjacentRoom in adjacentRoom.AdjacentRooms)
+                    if (secondAdjacentRoom.IsRevealed && !revealingRooms.Contains(secondAdjacentRoom))
+                        revealingRooms.Add(secondAdjacentRoom);
+            }
+
+        foreach (Room revealingRoom in revealingRooms)
+            foreach (Cell cell in revealingRoom.Cells)
+                ShapeFogOfWar(cell);
     }
 
     private void ConcealOutside(Tower tower)
