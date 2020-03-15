@@ -22,7 +22,7 @@ public class Armor : MonoBehaviour
         if (armorItem != playerEntity.defaultArmour)
         {
             armorItem.ItemEntity.Destroy();
-            playerEntity.Inventory.Equip(playerEntity.defaultArmour);
+            playerEntity.InputController.Inventory.Equip(playerEntity.defaultArmour);
         }
     }
 

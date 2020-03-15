@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentSlot : MonoBehaviour, IInteractive
+public class EquipmentSlot : Button
 {
     public Sprite emptyIcon;
 
@@ -14,9 +14,6 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
 
     public bool Active { get; private set; }
 
-    private bool pressed;
-    private int touchId;
-
     private float holdingTime;
     private bool isDragging;
 
@@ -26,6 +23,7 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
     private void Awake()
     {
         Active = true;
+        area = equipmentIcon.rectTransform;
         SlotPosition = equipmentIcon.rectTransform.position;
     }
 
@@ -52,12 +50,10 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
         equipmentIcon.sprite = emptyIcon;
     }
 
-    public bool Press(Vector2 position, int id)
+    public override bool Press(Vector2 position, int id)
     {
-        if (!pressed && CheckDropPosition(position))
+        if (base.Press(position, id))
         {
-            pressed = true;
-            touchId = id;
             holdingTime = 0f;
             isDragging = false;
             StartTouchPosition = position;
@@ -66,9 +62,9 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
         return false;
     }
 
-    public bool Hold(Vector2 position, int id)
+    public override bool Hold(Vector2 position, int id)
     {
-        if (pressed && touchId == id)
+        if (base.Hold(position, id))
         {
             if (!isDragging)
             {
@@ -76,23 +72,19 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
                     isDragging = true;
             }
             if (isDragging)
-            {
                 equipmentIcon.rectTransform.position = position;
-            }
             else
-            {
                 holdingTime += Time.deltaTime;
-            }
+
             return true;
         }
         return false;
     }
 
-    public bool Release(Vector2 position, int id)
+    public override bool Release(Vector2 position, int id)
     {
-        if (pressed && touchId == id)
+        if (base.Release(position, id))
         {
-            pressed = false;
             equipmentIcon.rectTransform.position = SlotPosition;
             if (isDragging)
             {
@@ -109,11 +101,5 @@ public class EquipmentSlot : MonoBehaviour, IInteractive
             return true;
         }
         return false;
-    }
-
-    public bool CheckDropPosition(Vector2 position)
-    {
-        return RectTransformUtility.RectangleContainsScreenPoint(equipmentIcon.rectTransform, position);
-        //return Mathf.Abs(position.x - SlotPosition.x) * 2f < equipmentIcon.rectTransform.sizeDelta.x && Mathf.Abs(position.y - SlotPosition.y) * 2f < equipmentIcon.rectTransform.sizeDelta.y;
     }
 }

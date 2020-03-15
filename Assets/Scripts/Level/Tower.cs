@@ -28,6 +28,7 @@ public class Tower : MonoBehaviour
     {
         TurnController = new TurnController(this);
         Lava = GetComponentInChildren<Lava>();
+        FindObjectOfType<InputController>().Tower = this;
     }
 
     public void Interact(Vector2Int position)

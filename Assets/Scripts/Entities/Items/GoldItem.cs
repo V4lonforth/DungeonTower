@@ -4,7 +4,7 @@
 
     public override void Use(PlayerEntity player)
     {
-        player.Inventory.Gold += Amount;
+        player.InputController.Inventory.Gold += Amount;
         ItemEntity.Destroy();
     }
 

@@ -4,8 +4,6 @@ public class TowerGenerator : MonoBehaviour
 {
     public Inspector inspector;
 
-    public InputController InputController { get; private set; }
-
     public Builder Builder { get; private set; }
     public Linker Linker { get; private set; }
     public Connector Connector { get; private set; }
@@ -15,8 +13,6 @@ public class TowerGenerator : MonoBehaviour
 
     private void Awake()
     {
-        InputController = GetComponent<InputController>();
-
         Builder = GetComponent<Builder>();
         Linker = GetComponent<Linker>();
         Connector = GetComponent<Connector>();
@@ -39,6 +35,5 @@ public class TowerGenerator : MonoBehaviour
         Decorator.Decorate(tower);
         Filler.Fill(tower);
         Concealer.ConcealTower(tower);
-        InputController.Tower = tower;
     }
 }

@@ -18,6 +18,7 @@
     public override void PrepareMove()
     {
         moved = false;
+        base.PrepareMove();
     }
 
     public void Aggro()
@@ -34,6 +35,9 @@
     {
         if (!moved)
         {
+            base.MakeMove();
+            if (moved)
+                return;
             moved = true;
             if (aggroed)
             {
@@ -88,6 +92,7 @@
 
     public override void FinishMove()
     {
+        base.FinishMove();
         if (isAnimated)
         {
             TurnController.FinishEnemyAnimation(this);

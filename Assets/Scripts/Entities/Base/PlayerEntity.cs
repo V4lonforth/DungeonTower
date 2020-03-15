@@ -8,14 +8,14 @@ public class PlayerEntity : CreatureEntity
     public WeaponItem defaultWeapon;
     public ArmorItem defaultArmour;
 
-    public Inventory Inventory { get; private set; }
+    public InputController InputController { get; private set; }
 
     public Cell Target { get; private set; }
 
     public static PlayerEntity Instantiate(GameObject prefab, Cell cell, Text goldText)
     {
         PlayerEntity player = (PlayerEntity)Instantiate(prefab, cell).GetComponent<Entity>();
-        player.Inventory.SetText(goldText);
+        player.InputController.Inventory.SetText(goldText);
         return player;
     }
 
@@ -24,15 +24,18 @@ public class PlayerEntity : CreatureEntity
         base.Awake();
 
         Camera.main.GetComponent<CameraFollower>().followedObject = transform;
-        Inventory = FindObjectOfType<Inventory>();
-        Inventory.PlayerEntity = this;
 
-        defaultWeapon?.Use(this);
-        defaultArmour?.Use(this);
+        InputController = FindObjectOfType<InputController>();
+        InputController.PlayerEntity = this;
+        InputController.Inventory.PlayerEntity = this;
+        InputController.AbilityController.SetAbility(ActiveAbility);
     }
 
     protected void Start()
     {
+        defaultWeapon?.Use(this);
+        defaultArmour?.Use(this);
+
         CheckCell();
         Tower.StartLevel();
     }
@@ -53,7 +56,7 @@ public class PlayerEntity : CreatureEntity
 
     public override void MoveTo(Cell cell)
     {
-        Inventory.HideDrop();
+        InputController.Inventory.HideDrop();
         CheckNearbyEnemies();
         base.MoveTo(cell);
     }
@@ -71,7 +74,7 @@ public class PlayerEntity : CreatureEntity
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
         CollectGold();
-        Inventory.ShowDrop(Cell.ItemEntities);
+        InputController.Inventory.ShowDrop(Cell.ItemEntities);
     }
     
     private void CollectGold()
@@ -109,6 +112,7 @@ public class PlayerEntity : CreatureEntity
     {
         if (Target != null)
         {
+            base.MakeMove();
             Cell target = Target;
             Target = null;
             if (CanInteract(target))
@@ -121,11 +125,13 @@ public class PlayerEntity : CreatureEntity
 
     public override void PrepareMove()
     {
+        base.PrepareMove();
         MakeMove();
     }
 
     public override void FinishMove()
     {
+        base.FinishMove();
         CheckCell();
         TurnController.FinishPlayerMove();
     }

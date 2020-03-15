@@ -123,7 +123,12 @@ public class MapInputController : IInteractive
             if (closingInspector)
                 StopInspecting();
             else if (!swiping)
-                inputController.Tower.Interact(inputController.Tower.Player.Cell.Position);
+            {
+                if (inputController.PlayerEntity.SelectedAbility == null)
+                    inputController.Tower.Interact(inputController.Tower.Player.Cell.Position);
+                else
+                    inputController.Tower.Interact(startTowerPosition);
+            }
         }
         pressed = false;
         return true;

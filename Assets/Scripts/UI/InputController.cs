@@ -4,12 +4,15 @@ public class InputController : MonoBehaviour, IInteractive
 {
     public Inventory Inventory { get; private set; }
     public MapInputController MapInputController { get; private set; }
+    public AbilityController AbilityController { get; private set; }
 
     public Tower Tower { get; set; }
+    public PlayerEntity PlayerEntity { get; set; }
 
     private void Awake()
     {
         Inventory = FindObjectOfType<Inventory>();
+        AbilityController = FindObjectOfType<AbilityController>();
         MapInputController = new MapInputController(this);
     }
 
@@ -60,16 +63,16 @@ public class InputController : MonoBehaviour, IInteractive
 
     public bool Press(Vector2 position, int id)
     {
-        return Inventory.Press(position, id) || MapInputController.Press(position, id);
+        return Inventory.Press(position, id) || AbilityController.Press(position, id) || MapInputController.Press(position, id);
     }
 
     public bool Hold(Vector2 position, int id)
     {
-        return Inventory.Hold(position, id) || MapInputController.Hold(position, id);
+        return Inventory.Hold(position, id) || AbilityController.Hold(position, id) || MapInputController.Hold(position, id);
     }
 
     public bool Release(Vector2 position, int id)
     {
-        return Inventory.Release(position, id) || MapInputController.Release(position, id);
+        return Inventory.Release(position, id) || AbilityController.Release(position, id) || MapInputController.Release(position, id);
     }
 }

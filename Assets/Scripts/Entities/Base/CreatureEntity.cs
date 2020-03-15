@@ -1,14 +1,28 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public abstract class CreatureEntity : Entity
 {
+    public delegate void MoveEvent(CreatureEntity sender, Cell target);
+
+    public MoveEvent PrepareMoveEvent;
+    public MoveEvent MakeMoveEvent;
+    public MoveEvent FinishMoveEvent;
+    public MoveEvent AttackEvent;
+
     public SpriteRenderer animatedSprite;
 
     public Health Health { get; private set; }
     public Armor Armor { get; private set; }
     public Weapon Weapon { get; private set; }
+
+    public ActiveAbility ActiveAbility { get; private set; }
+
+    public ActiveAbility SelectedAbility { get; private set; }
+
+    public List<Effect> Effects { get; private set; }
 
     private AttackEffect attackEffect;
     private Animator animator;
@@ -31,6 +45,9 @@ public abstract class CreatureEntity : Entity
         Health = GetComponent<Health>();
         Armor = GetComponent<Armor>();
         Weapon = GetComponent<Weapon>();
+
+        ActiveAbility = GetComponent<ActiveAbility>();
+        Effects = new List<Effect>();
     }
 
     public override void Destroy()
@@ -69,17 +86,33 @@ public abstract class CreatureEntity : Entity
 
     protected virtual void Attack(CreatureEntity creature)
     {
+        AttackEvent?.Invoke(this, creature.Cell);
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
     }
 
-    protected void FaceCell(Cell cell)
+    private void FaceCell(Cell cell)
     {
         Direction direction = Cell.GetDirectionToCell(cell);
         if (direction == Direction.Left)
             animatedSprite.flipX = true;
         else if (direction == Direction.Right)
             animatedSprite.flipX = false;
+    }
+
+    private void TryOpenDoor(Cell cell)
+    {
+        if (cell.Room != Room)
+        {
+            Direction direction = Cell.GetDirectionToCell(cell);
+            Cell.Walls[direction].GetComponent<Door>().Open(direction);
+        }
+    }
+
+    private void StartMakingMove(Cell cell)
+    {
+        FaceCell(cell);
+        TryOpenDoor(cell);
     }
 
     protected IEnumerator AttackAnim(Direction direction, float attackTimeLeft)
@@ -115,21 +148,33 @@ public abstract class CreatureEntity : Entity
 
     protected bool CanInteract(Cell cell)
     {
+        if (SelectedAbility != null)
+            return SelectedAbility.CanTarget(cell);
         return Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
+    }
+
+    public void SelectAbility(ActiveAbility activeAbility)
+    {
+        SelectedAbility = activeAbility;
+        if (!SelectedAbility.targetRequired)
+            MakeMove(Cell);
+    }
+    public void DeselectAbility()
+    {
+        SelectedAbility = null;
     }
 
     protected bool MakeMove(Cell cell)
     {
         if (CanInteract(cell))
         {
-            FaceCell(cell);
-            if (cell.Room != Room)
+            StartMakingMove(cell);
+            if (SelectedAbility != null)
             {
-                Direction direction = Cell.GetDirectionToCell(cell);
-                Cell.Walls[direction].GetComponent<Door>().Open(direction);
+                SelectedAbility.Use(cell);
+                SelectedAbility = null;
             }
-
-            if (cell.CreatureEntity is null)
+            else if (cell.CreatureEntity is null)
                 MoveTo(cell);
             else
                 Interact(cell.CreatureEntity);
@@ -140,8 +185,18 @@ public abstract class CreatureEntity : Entity
 
     protected abstract void Interact(CreatureEntity creature);
 
-    public abstract void MakeMove();
-    public abstract void PrepareMove();
-    public abstract void FinishMove();
+    public virtual void MakeMove()
+    {
+        MakeMoveEvent?.Invoke(this, null);
+    }
+    public virtual void PrepareMove()
+    {
+        PrepareMoveEvent?.Invoke(this, null);
+    }
+    public virtual void FinishMove()
+    {
+        FinishMoveEvent?.Invoke(this, null);
+        ActiveAbility?.FinishMove();
+    }
     public abstract void Die();
 }

@@ -214,7 +214,7 @@ public class Inventory : MonoBehaviour, IInteractive
     public EquipmentSlot FindDropEquipmentSlot(Vector2 position)
     {
         foreach (EquipmentSlot equipmentSlot in allSlots)
-            if (equipmentSlot.Active && equipmentSlot.CheckDropPosition(position))
+            if (equipmentSlot.Active && equipmentSlot.CheckPosition(position))
                 return equipmentSlot;
         return null;
     }

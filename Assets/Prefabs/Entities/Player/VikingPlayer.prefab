@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2358176071935276182}
   - component: {fileID: 5012898225555041119}
-  - component: {fileID: 8102635722847420575}
   - component: {fileID: 79729867894627734}
   - component: {fileID: 660778774782975776}
   - component: {fileID: 5725026516896302022}
   - component: {fileID: 1789895499057625743}
+  - component: {fileID: 1626303456970467044}
   m_Layer: 0
   m_Name: VikingPlayer
   m_TagString: Untagged
@@ -63,56 +63,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!212 &8102635722847420575
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677155915308444074}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!114 &79729867894627734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +121,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorItem: {fileID: 8412723526542111217}
   text: {fileID: 5826173403933236531}
+--- !u!114 &1626303456970467044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5542641030b341a4283c9e5c2c014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRequired: 1
+  cooldown: 3
+  stunEffect:
+    canExpire: 1
+    timeToExpire: 2
 --- !u!1 &2280690995866697862
 GameObject:
   m_ObjectHideFlags: 0

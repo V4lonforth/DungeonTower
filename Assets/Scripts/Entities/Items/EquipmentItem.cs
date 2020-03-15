@@ -2,6 +2,6 @@
 {
     public override void Use(PlayerEntity player)
     {
-        player.Inventory.Equip(this);
+        player.InputController.Inventory.Equip(this);
     }
 }
