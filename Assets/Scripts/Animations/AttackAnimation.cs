@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class AttackEffect : MonoBehaviour
+public class AttackAnimation : MonoBehaviour
 {
     private Animator animator;
     private Action endAttack;

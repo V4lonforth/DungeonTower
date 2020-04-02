@@ -36,7 +36,7 @@ public abstract class CreatureEntity : Entity
     public bool SkipTurn { get; set; }
     protected bool skippedTurn;
 
-    private AttackEffect attackEffect;
+    private AttackAnimation attackEffect;
 
     private const float MovingTime = 0.1f;
     private const float AttackTime = 0.075f;
@@ -51,7 +51,7 @@ public abstract class CreatureEntity : Entity
 
     protected void Awake()
     {
-        attackEffect = GetComponentInChildren<AttackEffect>();
+        attackEffect = GetComponentInChildren<AttackAnimation>();
 
         Health = GetComponent<Health>();
         Armor = GetComponent<Armor>();
