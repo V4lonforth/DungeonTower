@@ -134,12 +134,11 @@ public class TurnController : MonoBehaviour
 
     public void ForceMove(EnemyEntity enemyEntity)
     {
-        if (enemiesPreparingMove.Contains(enemyEntity))
+        if (enemiesPreparingMove.Remove(enemyEntity))
             enemyEntity.PrepareMove();
         if (enemyEntity.State == CreatureEntity.MoveState.MakingMove)
         {
             enemyEntity.MakeMove();
-            enemiesPreparingMove.Remove(enemyEntity);
             enemiesFinishingMove.Add(enemyEntity);
         }
     }
