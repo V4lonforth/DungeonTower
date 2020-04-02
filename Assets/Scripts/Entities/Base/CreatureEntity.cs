@@ -151,7 +151,7 @@ public abstract class CreatureEntity : Entity
         return cell != null && Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
     }
 
-    protected bool MakeMove(Cell cell)
+    protected virtual bool MakeMove(Cell cell)
     {
         if (CanInteract(cell))
         {

@@ -1,4 +1,4 @@
-﻿public abstract class ConsumableItem : Item
+﻿public abstract class ConsumableItem : ItemEntity
 {
     public int uses;
 
@@ -6,7 +6,7 @@
     {
         uses--;
         if (uses <= 0)
-            ItemEntity.Destroy();
+            Destroy();
 
         player.SetTarget(player.Cell);
     }

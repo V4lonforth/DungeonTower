@@ -69,16 +69,10 @@ public class PlayerEntity : CreatureEntity
         InputController.Inventory.ShowDrop(Cell.ItemEntities);
     }
 
-    protected override void Attack(CreatureEntity creature)
-    {
-        base.Attack(creature);
-        creature.Cell.Room.AggroEnemies();
-    }
-
     private void CollectGold()
     {
         for (int i = 0; i < Cell.ItemEntities.Count; i++)
-            if (Cell.ItemEntities[i].Item is GoldItem gold)
+            if (Cell.ItemEntities[i] is GoldItem gold)
             {
                 gold.Use(this);
                 i--;
@@ -102,6 +96,16 @@ public class PlayerEntity : CreatureEntity
     {
         if (TurnController.AbleToMakeMove)
             Target = cell;
+    }
+
+    protected override bool MakeMove(Cell cell)
+    {
+        if (base.MakeMove(cell))
+        {
+            cell.Room.AggroEnemies();
+            return true;
+        }
+        return false;
     }
 
     public override void MakeMove()

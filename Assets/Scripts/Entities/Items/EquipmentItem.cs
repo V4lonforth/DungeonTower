@@ -1,4 +1,4 @@
-﻿public abstract class EquipmentItem : Item
+﻿public abstract class EquipmentItem : ItemEntity
 {
     public override void Use(PlayerEntity player)
     {

@@ -77,21 +77,21 @@ public class Filler : MonoBehaviour
 
     public int GenerateItem(GameObject item, Cell cell)
     {
-        return ItemEntity.Instantiate(item, cell).Item.value;
+        return ItemEntity.Instantiate(item, cell).value;
     }
 
     public int GenerateGold(Cell cell)
     {
         int amount = Random.Range(8, 14);
         foreach (ItemEntity itemEntity in cell.ItemEntities)
-            if (itemEntity.Item is GoldItem goldItem)
+            if (itemEntity is GoldItem goldItem)
             {
                 goldItem.Amount += amount;
                 return goldItem.value;
             }
         ItemEntity gold = ItemEntity.Instantiate(GetRandomItem(goldItems), cell);
-        ((GoldItem)gold.Item).Amount = amount;
-        return gold.Item.value;
+        ((GoldItem)gold).Amount = amount;
+        return gold.value;
     }
 
     public int GenerateEnemy(GameObject enemy, Cell cell)

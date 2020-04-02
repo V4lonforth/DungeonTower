@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ChestItem : Item
+public class ChestItem : ItemEntity
 {
     public Sprite openedSprite;
 
@@ -21,11 +21,11 @@ public class ChestItem : Item
             int contentValue = (int)(value * Random.Range(0.5f, 1.5f));
             while (contentValue > 0)
             {
-                contentValue -= player.Tower.TowerGenerator.Filler.GenerateItem(ItemEntity.Cell, false);
+                contentValue -= player.Tower.TowerGenerator.Filler.GenerateItem(Cell, false);
             }
 
-            foreach (ItemEntity itemEntity in ItemEntity.Cell.ItemEntities)
-                if (itemEntity != ItemEntity)
+            foreach (ItemEntity itemEntity in Cell.ItemEntities)
+                if (itemEntity != this)
                     itemEntity.GetComponent<SpriteRenderer>().enabled = false;
 
             player.SetTarget(player.Cell);

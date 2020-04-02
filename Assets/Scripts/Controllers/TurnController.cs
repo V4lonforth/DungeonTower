@@ -102,8 +102,11 @@ public class TurnController : MonoBehaviour
         turnState = MoveState.EnemiesFinishingMove;
         foreach (CreatureEntity creature in enemiesMakingMove)
         {
-            creature.MakeMove();
-            enemiesFinishingMove.Add(creature);
+            if (creature.State == CreatureEntity.MoveState.MakingMove)
+            {
+                creature.MakeMove();
+                enemiesFinishingMove.Add(creature);
+            }
         }
         enemiesMakingMove.Clear();
     }

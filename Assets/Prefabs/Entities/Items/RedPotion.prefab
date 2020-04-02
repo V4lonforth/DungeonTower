@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6836090511833143088}
   - component: {fileID: 5429343698948790957}
   - component: {fileID: 4251682887820837}
-  - component: {fileID: 5066989459675817803}
   - component: {fileID: 6816704319335838144}
   m_Layer: 0
   m_Name: RedPotion
@@ -104,18 +103,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5066989459675817803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4594997411175087559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ca43e326bb0b7e4a83e3241eb3fa9c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6816704319335838144
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class EquipmentSlot : Button
 
     public Vector2 StartTouchPosition { get; private set; }
     public Vector2 SlotPosition { get; private set; }
-    public Item Item { get; private set; }
+    public ItemEntity Item { get; private set; }
 
     public bool Active { get; private set; }
 
@@ -27,10 +27,10 @@ public class EquipmentSlot : Button
         SlotPosition = equipmentIcon.rectTransform.position;
     }
 
-    public void Show(Item item)
+    public void Show(ItemEntity item)
     {
         Item = item;
-        item.ItemEntity?.AttachToEquipmentSlot(this);
+        item.AttachToEquipmentSlot(this);
         equipmentIcon.sprite = item.icon;
         SlotPosition = equipmentIcon.rectTransform.position;
         gameObject.SetActive(true);
