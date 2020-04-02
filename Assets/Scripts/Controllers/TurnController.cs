@@ -91,26 +91,20 @@ public class TurnController : MonoBehaviour
     {
         turnState = MoveState.EnemiesMakingMove;
         foreach (CreatureEntity creature in enemiesPreparingMove)
-            if (creature.State == CreatureEntity.MoveState.PreparingMove)
-            {
-                creature.PrepareMove();
-                enemiesMakingMove.Add(creature);
-            }
-            else
-                continue;
+        {
+            creature.PrepareMove();
+            enemiesMakingMove.Add(creature);
+        }
         enemiesPreparingMove.Clear();
     }
     private void MakeEnemiesMove()
     {
         turnState = MoveState.EnemiesFinishingMove;
         foreach (CreatureEntity creature in enemiesMakingMove)
-            if (creature.State == CreatureEntity.MoveState.MakingMove)
-            {
-                creature.MakeMove();
-                enemiesFinishingMove.Add(creature);
-            }
-            else
-                continue;
+        {
+            creature.MakeMove();
+            enemiesFinishingMove.Add(creature);
+        }
         enemiesMakingMove.Clear();
     }
     private void FinishEnemiesMove()
@@ -130,7 +124,7 @@ public class TurnController : MonoBehaviour
     private void ClearEnemiesFinishingMove()
     {
         for (int i = 0; i < enemiesFinishingMove.Count; i++)
-            if (enemiesFinishingMove[i].State == CreatureEntity.MoveState.FinishingMove && !enemiesFinishingMove[i].IsAnimated)
+            if (!enemiesFinishingMove[i].IsAnimated)
             {
                 enemiesFinishingMove[i].FinishMove();
                 enemiesFinishingMove.RemoveAt(i);
@@ -140,14 +134,9 @@ public class TurnController : MonoBehaviour
 
     public void ForceMove(EnemyEntity enemyEntity)
     {
-        if (enemyEntity.State == CreatureEntity.MoveState.PreparingMove && enemiesPreparingMove.Contains(enemyEntity))
-        {
+        if (enemiesPreparingMove.Contains(enemyEntity))
             enemyEntity.PrepareMove();
-            enemyEntity.MakeMove();
-            enemiesPreparingMove.Remove(enemyEntity);
-            enemiesFinishingMove.Add(enemyEntity);
-        }
-        else if (enemyEntity.State == CreatureEntity.MoveState.MakingMove && enemiesMakingMove.Contains(enemyEntity))
+        if (enemyEntity.State == CreatureEntity.MoveState.MakingMove)
         {
             enemyEntity.MakeMove();
             enemiesPreparingMove.Remove(enemyEntity);
