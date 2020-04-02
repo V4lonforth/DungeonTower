@@ -25,12 +25,12 @@ public abstract class ActiveAbility : MonoBehaviour
     public void SelectAbility()
     {
         if (CreatureEntity.SelectedAbility != null)
-            CreatureEntity.DeselectAbility();
-        CreatureEntity.SelectAbility(this);
+            DeselectAbility();
+        CreatureEntity.SelectedAbility = this;
     }
     public void DeselectAbility()
     {
-        CreatureEntity.DeselectAbility();
+        CreatureEntity.SelectedAbility = null;
     }
 
     public bool Use(Cell cell)
@@ -39,7 +39,7 @@ public abstract class ActiveAbility : MonoBehaviour
         {
             turnsToRecharge = cooldown;
             Activate(cell);
-            CreatureEntity.FinishMove();
+            DeselectAbility();
             return true;
         }
         return false;

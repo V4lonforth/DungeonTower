@@ -1,73 +1,164 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class TurnController
+public class TurnController : MonoBehaviour
 {
-    public bool AbleToMakeMove { get; private set; }
-    public bool CurrentlyAnimated => enemiesAnimated.Count > 0;
-
-    private Tower tower;
-    private List<EnemyEntity> enemiesMakingMove;
-    private List<EnemyEntity> enemiesAnimated;
-
-    public TurnController(Tower tower)
+    public enum MoveState
     {
-        this.tower = tower;
-
-        enemiesMakingMove = new List<EnemyEntity>();
-        enemiesAnimated = new List<EnemyEntity>();
+        PreparingMove,
+        ForceMove,
+        PlayerPreparingMove,
+        PlayerMakingMove,
+        PlayerFinishingMove,
+        EnemiesPreparingMove,
+        EnemiesMakingMove,
+        EnemiesFinishingMove
     }
 
-    public void PrepareMove()
+    public bool AbleToMakeMove => turnState == MoveState.PlayerMakingMove;
+    public bool CurrentlyAnimated => enemiesFinishingMove.Count > 0;
+    public Tower Tower { get; set; }
+
+    private MoveState turnState;
+
+    private List<CreatureEntity> enemiesPreparingMove;
+    private List<CreatureEntity> enemiesMakingMove;
+    private List<CreatureEntity> enemiesFinishingMove;
+
+    private Dictionary<MoveState, Action> turnActions;
+
+    private void Awake()
     {
-        AbleToMakeMove = true;
-        foreach (Cell cell in tower.Cells)
+        enemiesPreparingMove = new List<CreatureEntity>();
+        enemiesMakingMove = new List<CreatureEntity>();
+        enemiesFinishingMove = new List<CreatureEntity>();
+
+        turnActions = new Dictionary<MoveState, Action>()
         {
+            { MoveState.PreparingMove, PreapareMove },
+            { MoveState.ForceMove, FinishForceMoves },
+            { MoveState.PlayerPreparingMove, PreparePlayerMove },
+            { MoveState.PlayerMakingMove, MakePlayerMove },
+            { MoveState.PlayerFinishingMove, FinishPlayerMove },
+            { MoveState.EnemiesPreparingMove, PrepareEnemiesMove },
+            { MoveState.EnemiesMakingMove, MakeEnemiesMove },
+            { MoveState.EnemiesFinishingMove, FinishEnemiesMove }
+        };
+    }
+
+    private void Update()
+    {
+        if (turnActions.TryGetValue(turnState, out Action action))
+            action();
+    }
+
+    public void StartLevel()
+    {
+        PreapareMove();
+    }
+
+    private void PreapareMove()
+    {
+        turnState = MoveState.PlayerPreparingMove;
+        foreach (Cell cell in Tower.Cells)
             if (cell.CreatureEntity is EnemyEntity enemy)
+                enemiesPreparingMove.Add(enemy);
+    }
+    private void PreparePlayerMove()
+    {
+        turnState = MoveState.PlayerMakingMove;
+        Tower.Player.PrepareMove();
+    }
+    private void MakePlayerMove()
+    {
+        if (Tower.Player.ReadyToMakeMove)
+        {
+            turnState = MoveState.ForceMove;
+            Tower.Player.MakeMove();
+        }
+    }
+    private void FinishPlayerMove()
+    {
+        if (!Tower.Player.IsAnimated)
+        {
+            turnState = MoveState.EnemiesPreparingMove;
+            Tower.Player.FinishMove();
+        }
+    }
+
+    private void PrepareEnemiesMove()
+    {
+        turnState = MoveState.EnemiesMakingMove;
+        foreach (CreatureEntity creature in enemiesPreparingMove)
+            if (creature.State == CreatureEntity.MoveState.PreparingMove)
             {
-                enemy.PrepareMove();
-                enemiesMakingMove.Add(enemy);
+                creature.PrepareMove();
+                enemiesMakingMove.Add(creature);
             }
-        }
-        tower.Player.PrepareMove();
+            else
+                continue;
+        enemiesPreparingMove.Clear();
     }
-
-    public void MakeMove()
+    private void MakeEnemiesMove()
     {
-        AbleToMakeMove = false;
-    }
-
-    public void FinishPlayerMove()
-    {
-        for (int i = 0; i < enemiesMakingMove.Count; i++)
-            if (enemiesMakingMove[i] != null)
-                enemiesMakingMove[i].MakeMove();
+        turnState = MoveState.EnemiesFinishingMove;
+        foreach (CreatureEntity creature in enemiesMakingMove)
+            if (creature.State == CreatureEntity.MoveState.MakingMove)
+            {
+                creature.MakeMove();
+                enemiesFinishingMove.Add(creature);
+            }
+            else
+                continue;
         enemiesMakingMove.Clear();
-        TryFinishMove();
+    }
+    private void FinishEnemiesMove()
+    {
+        ClearEnemiesFinishingMove();
+        if (enemiesFinishingMove.Count == 0)
+            turnState = MoveState.PreparingMove;
+    }
+    
+    private void FinishForceMoves()
+    {
+        ClearEnemiesFinishingMove();
+        if (enemiesFinishingMove.Count == 0)
+            turnState = MoveState.PlayerFinishingMove;
     }
 
-    public void TryFinishMove()
+    private void ClearEnemiesFinishingMove()
     {
-        if (enemiesAnimated.Count == 0 && enemiesMakingMove.Count == 0)
+        for (int i = 0; i < enemiesFinishingMove.Count; i++)
+            if (enemiesFinishingMove[i].State == CreatureEntity.MoveState.FinishingMove && !enemiesFinishingMove[i].IsAnimated)
+            {
+                enemiesFinishingMove[i].FinishMove();
+                enemiesFinishingMove.RemoveAt(i);
+                i--;
+            }
+    }
+
+    public void ForceMove(EnemyEntity enemyEntity)
+    {
+        if (enemyEntity.State == CreatureEntity.MoveState.PreparingMove && enemiesPreparingMove.Contains(enemyEntity))
         {
-            tower.Lava.FinishMove();
-            PrepareMove();
+            enemyEntity.PrepareMove();
+            enemyEntity.MakeMove();
+            enemiesPreparingMove.Remove(enemyEntity);
+            enemiesFinishingMove.Add(enemyEntity);
+        }
+        else if (enemyEntity.State == CreatureEntity.MoveState.MakingMove && enemiesMakingMove.Contains(enemyEntity))
+        {
+            enemyEntity.MakeMove();
+            enemiesPreparingMove.Remove(enemyEntity);
+            enemiesFinishingMove.Add(enemyEntity);
         }
     }
 
-    public void StopEnemyMakingMove(EnemyEntity enemy)
+    public void DestroyEnemy(EnemyEntity enemyEntity)
     {
-        enemiesMakingMove.Remove(enemy);
-    }
-    public void StartEnemyAnimation(EnemyEntity enemy)
-    {
-        enemiesAnimated.Add(enemy);
-    }
-    public void FinishEnemyAnimation(EnemyEntity enemy)
-    {
-        if (!enemiesAnimated.Remove(enemy))
-        {
-            return;
-        }
-        TryFinishMove();
+        enemiesPreparingMove.Remove(enemyEntity);
+        enemiesMakingMove.Remove(enemyEntity);
+        enemiesFinishingMove.Remove(enemyEntity);
     }
 }

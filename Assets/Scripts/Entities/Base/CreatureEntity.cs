@@ -5,6 +5,13 @@ using UnityEngine;
 
 public abstract class CreatureEntity : Entity
 {
+    public enum MoveState
+    {
+        PreparingMove,
+        MakingMove,
+        FinishingMove
+    }
+
     public delegate void MoveEvent(CreatureEntity sender, Cell target);
 
     public MoveEvent PrepareMoveEvent;
@@ -19,13 +26,17 @@ public abstract class CreatureEntity : Entity
     public Weapon Weapon { get; private set; }
 
     public ActiveAbility ActiveAbility { get; private set; }
-
-    public ActiveAbility SelectedAbility { get; private set; }
+    public ActiveAbility SelectedAbility { get; set; }
 
     public List<Effect> Effects { get; private set; }
 
+    public MoveState State { get; protected set; }
+    public bool IsAnimated { get; protected set; }
+
+    public bool SkipTurn { get; set; }
+    protected bool skippedTurn;
+
     private AttackEffect attackEffect;
-    private Animator animator;
 
     private const float MovingTime = 0.1f;
     private const float AttackTime = 0.075f;
@@ -45,7 +56,7 @@ public abstract class CreatureEntity : Entity
         Health = GetComponent<Health>();
         Armor = GetComponent<Armor>();
         Weapon = GetComponent<Weapon>();
-
+        
         ActiveAbility = GetComponent<ActiveAbility>();
         Effects = new List<Effect>();
     }
@@ -63,6 +74,7 @@ public abstract class CreatureEntity : Entity
         cell.CreatureEntity = this;
         Cell = cell;
 
+        IsAnimated = true;
         StartCoroutine(MoveToParentCell(MovingTime));
     }
 
@@ -86,6 +98,7 @@ public abstract class CreatureEntity : Entity
 
     protected virtual void Attack(CreatureEntity creature)
     {
+        IsAnimated = true;
         AttackEvent?.Invoke(this, creature.Cell);
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
@@ -98,21 +111,6 @@ public abstract class CreatureEntity : Entity
             animatedSprite.flipX = true;
         else if (direction == Direction.Right)
             animatedSprite.flipX = false;
-    }
-
-    private void TryOpenDoor(Cell cell)
-    {
-        if (cell.Room != Room)
-        {
-            Direction direction = Cell.GetDirectionToCell(cell);
-            Cell.Walls[direction].GetComponent<Door>().Open(direction);
-        }
-    }
-
-    private void StartMakingMove(Cell cell)
-    {
-        FaceCell(cell);
-        TryOpenDoor(cell);
     }
 
     protected IEnumerator AttackAnim(Direction direction, float attackTimeLeft)
@@ -137,43 +135,30 @@ public abstract class CreatureEntity : Entity
     public void FinishAttackAnimation()
     {
         attackEffect.End();
-        FinishMove();
+        IsAnimated = false;
     }
 
     protected virtual void StopMoving()
     {
         transform.position = Cell.transform.position;
-        FinishMove();
+        IsAnimated = false;
     }
 
     protected bool CanInteract(Cell cell)
     {
         if (SelectedAbility != null)
             return SelectedAbility.CanTarget(cell);
-        return Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
-    }
-
-    public void SelectAbility(ActiveAbility activeAbility)
-    {
-        SelectedAbility = activeAbility;
-        if (!SelectedAbility.targetRequired)
-            MakeMove(Cell);
-    }
-    public void DeselectAbility()
-    {
-        SelectedAbility = null;
+        return cell != null && Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
     }
 
     protected bool MakeMove(Cell cell)
     {
         if (CanInteract(cell))
         {
-            StartMakingMove(cell);
+            FaceCell(cell);
+            Cell.OpenDoor(cell);
             if (SelectedAbility != null)
-            {
                 SelectedAbility.Use(cell);
-                SelectedAbility = null;
-            }
             else if (cell.CreatureEntity is null)
                 MoveTo(cell);
             else
@@ -185,18 +170,26 @@ public abstract class CreatureEntity : Entity
 
     protected abstract void Interact(CreatureEntity creature);
 
-    public virtual void MakeMove()
-    {
-        MakeMoveEvent?.Invoke(this, null);
-    }
     public virtual void PrepareMove()
     {
         PrepareMoveEvent?.Invoke(this, null);
+        if (SkipTurn)
+        {
+            SkipTurn = false;
+            skippedTurn = true;
+        }
+        State = MoveState.MakingMove;
+    }
+    public virtual void MakeMove()
+    {
+        MakeMoveEvent?.Invoke(this, null);
+        State = MoveState.FinishingMove;
     }
     public virtual void FinishMove()
     {
         FinishMoveEvent?.Invoke(this, null);
         ActiveAbility?.FinishMove();
+        State = MoveState.PreparingMove;
     }
     public abstract void Die();
 }

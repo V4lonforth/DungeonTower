@@ -11,6 +11,7 @@ public class PlayerEntity : CreatureEntity
     public InputController InputController { get; private set; }
 
     public Cell Target { get; private set; }
+    public bool ReadyToMakeMove => Target != null && CanInteract(Target);
 
     public static PlayerEntity Instantiate(GameObject prefab, Cell cell, Text goldText)
     {
@@ -40,15 +41,6 @@ public class PlayerEntity : CreatureEntity
         Tower.StartLevel();
     }
 
-    public void SetTarget(Cell cell)
-    {
-        if (TurnController.AbleToMakeMove)
-        {
-            Target = cell;
-            MakeMove();
-        }
-    }
-
     public override void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -76,7 +68,13 @@ public class PlayerEntity : CreatureEntity
         CollectGold();
         InputController.Inventory.ShowDrop(Cell.ItemEntities);
     }
-    
+
+    protected override void Attack(CreatureEntity creature)
+    {
+        base.Attack(creature);
+        creature.Cell.Room.AggroEnemies();
+    }
+
     private void CollectGold()
     {
         for (int i = 0; i < Cell.ItemEntities.Count; i++)
@@ -91,49 +89,32 @@ public class PlayerEntity : CreatureEntity
     {
         foreach (Cell cell in Cell.ConnectedCells)
             if (cell && cell.CreatureEntity is EnemyEntity enemy)
-                enemy.MakeMove();
-    }
-
-    protected override void Attack(CreatureEntity creature)
-    {
-        base.Attack(creature);
-        creature.Cell.Room.AggroEnemies();
+                TurnController.ForceMove(enemy);
     }
 
     protected override void Interact(CreatureEntity creature)
     {
         if (creature is EnemyEntity enemy)
             Attack(enemy);
-        else
-            FinishMove();
+    }
+
+    public void SetTarget(Cell cell)
+    {
+        if (TurnController.AbleToMakeMove)
+            Target = cell;
     }
 
     public override void MakeMove()
     {
-        if (Target != null)
-        {
+        if (MakeMove(Target))
             base.MakeMove();
-            Cell target = Target;
-            Target = null;
-            if (CanInteract(target))
-            {
-                TurnController.MakeMove();
-                MakeMove(target);
-            }
-        }
     }
-
-    public override void PrepareMove()
-    {
-        base.PrepareMove();
-        MakeMove();
-    }
-
+    
     public override void FinishMove()
     {
         base.FinishMove();
         CheckCell();
-        TurnController.FinishPlayerMove();
+        Target = null;
     }
 
     public override string GetDescription()

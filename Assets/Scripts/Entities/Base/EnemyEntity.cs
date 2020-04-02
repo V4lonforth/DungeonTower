@@ -2,23 +2,12 @@
 {
     public int strength;
     private bool aggroed;
-    private bool moved;
-
-    private float multiplier;
-    private bool isAnimated;
 
     public override void Die()
     {
-        FinishMove();
-        TurnController.StopEnemyMakingMove(this);
+        TurnController.DestroyEnemy(this);
         Destroy();
         Tower.TowerGenerator.Filler.GenerateGold(Cell);
-    }
-
-    public override void PrepareMove()
-    {
-        moved = false;
-        base.PrepareMove();
     }
 
     public void Aggro()
@@ -26,78 +15,45 @@
         if (!aggroed)
         {
             aggroed = true;
-            moved = true;
-            FinishMove();
+            SkipTurn = true;
         }
     }
 
     public override void MakeMove()
     {
-        if (!moved)
+        base.MakeMove();
+        if (!aggroed)
+            return;
+        if (skippedTurn)
         {
-            base.MakeMove();
-            if (moved)
-                return;
-            moved = true;
-            if (aggroed)
+            skippedTurn = false;
+            return;
+        }
+
+        foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
+        {
+            Cell cell = Cell.ConnectedCells[direction];
+            if (cell.CreatureEntity is PlayerEntity player)
             {
-                foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
-                {
-                    bool madeMove = false;
-                    Cell cell = Cell.ConnectedCells[direction];
-                    if (cell.CreatureEntity is PlayerEntity player)
-                    {
-                        MakeMove(cell);
-                        madeMove = true;
-                        break;
-                    }
-                    else
-                    {
-                        if (cell.CreatureEntity is EnemyEntity enemy)
-                            enemy.MakeMove();
-                        if (!(cell.CreatureEntity is EnemyEntity))
-                        {
-                            MakeMove(cell);
-                            madeMove = true;
-                            break;
-                        }
-                    }
-                    if (!madeMove)
-                        FinishMove();
-                }
+                MakeMove(cell);
+                break;
             }
             else
-                FinishMove();
+            {
+                if (cell.CreatureEntity is EnemyEntity enemy)
+                    TurnController.ForceMove(enemy);
+                if (!(cell.CreatureEntity is EnemyEntity))
+                {
+                    MakeMove(cell);
+                    break;
+                }
+            }
         }
-    }
-
-    public override void MoveTo(Cell cell)
-    {
-        isAnimated = true;
-        TurnController.StartEnemyAnimation(this);
-        base.MoveTo(cell);
-    }
-
-    protected override void Attack(CreatureEntity creature)
-    {
-        isAnimated = true;
-        TurnController.StartEnemyAnimation(this);
-        base.Attack(creature);
     }
 
     protected override void Interact(CreatureEntity creature)
     {
         Attack(creature);
-    }
-
-    public override void FinishMove()
-    {
-        base.FinishMove();
-        if (isAnimated)
-        {
-            TurnController.FinishEnemyAnimation(this);
-            isAnimated = false;
-        }
     }
 
     public override string GetDescription()

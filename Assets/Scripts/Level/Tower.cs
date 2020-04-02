@@ -26,8 +26,9 @@ public class Tower : MonoBehaviour
 
     private void Awake()
     {
-        TurnController = new TurnController(this);
         Lava = GetComponentInChildren<Lava>();
+        TurnController = FindObjectOfType<TurnController>();
+        TurnController.Tower = this;
         FindObjectOfType<InputController>().Tower = this;
     }
 
@@ -41,6 +42,6 @@ public class Tower : MonoBehaviour
 
     public void StartLevel()
     {
-        TurnController.PrepareMove();
+        TurnController.StartLevel();
     }
 }

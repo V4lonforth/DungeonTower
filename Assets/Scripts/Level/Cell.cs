@@ -47,4 +47,13 @@ public class Cell : MonoBehaviour
                 return direction;
         return Direction.Bottom;
     }
+
+    public void OpenDoor(Cell cell)
+    {
+        if (cell.Room != Room)
+        {
+            Direction direction = GetDirectionToCell(cell);
+            Walls[direction].GetComponent<Door>().Open(direction);
+        }
+    }
 }
