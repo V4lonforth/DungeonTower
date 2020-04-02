@@ -7,19 +7,24 @@ public class Weapon : MonoBehaviour
 
     public TextMeshPro text;
 
+    private CreatureEntity parent;
+
     private void Awake()
     {
         UpdateText();
+        parent = GetComponent<CreatureEntity>();
+    }
+
+    private Damage GetDamage()
+    {
+        return new Damage(weaponItem.damage, DamageType.Physical, parent);
     }
 
     public void Attack(CreatureEntity creature)
     {
-        int damageLeft = weaponItem.damage;
-        if (creature.Armor is null || creature.Armor.TakeDamage(damageLeft, out damageLeft))
-        {
-            if (creature.Health.TakeDamage(damageLeft, out damageLeft))
-                creature.Die();
-        }
+        Damage damage = GetDamage();
+        parent.AttackEvent?.Invoke(parent, damage);
+        creature.TakeDamage(damage);
         UpdateText();
     }
 

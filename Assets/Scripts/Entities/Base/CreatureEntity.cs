@@ -13,11 +13,13 @@ public abstract class CreatureEntity : Entity
     }
 
     public delegate void MoveEvent(CreatureEntity sender, Cell target);
+    public delegate void DamageEvent(CreatureEntity sender, Damage damage);
 
     public MoveEvent PrepareMoveEvent;
     public MoveEvent MakeMoveEvent;
     public MoveEvent FinishMoveEvent;
-    public MoveEvent AttackEvent;
+    public DamageEvent AttackEvent;
+    public DamageEvent TakeDamageEvent;
 
     public SpriteRenderer animatedSprite;
 
@@ -99,9 +101,19 @@ public abstract class CreatureEntity : Entity
     protected virtual void Attack(CreatureEntity creature)
     {
         IsAnimated = true;
-        AttackEvent?.Invoke(this, creature.Cell);
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
+    }
+
+    public void TakeDamage(Damage damage)
+    {
+        TakeDamageEvent?.Invoke(this, damage);
+        int damageLeft = damage.Value;
+        if (Armor is null || Armor.TakeDamage(damageLeft, out damageLeft))
+        {
+            if (Health.TakeDamage(damageLeft, out damageLeft))
+                Die();
+        }
     }
 
     private void FaceCell(Cell cell)
