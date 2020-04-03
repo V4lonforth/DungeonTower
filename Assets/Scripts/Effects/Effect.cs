@@ -1,14 +1,13 @@
-﻿using System;
+﻿using UnityEngine;
 
-[Serializable]
-public abstract class Effect
+public abstract class Effect : ScriptableObject
 {
     public bool canExpire;
     public int timeToExpire;
 
     protected CreatureEntity creatureEntity;
 
-    public virtual void AddEffect(CreatureEntity creatureEntity)
+    public virtual void ApplyEffect(CreatureEntity creatureEntity)
     {
         this.creatureEntity = creatureEntity;
     }
@@ -16,7 +15,6 @@ public abstract class Effect
     {
         creatureEntity.Effects.Remove(this);
     }
-    public Effect Clone() => (Effect)MemberwiseClone();
 
     protected void FinishMove()
     {

@@ -2,11 +2,11 @@
 
 public class ShieldBashActivity : ActiveAbility
 {
-    public StunEffect stunEffect;
+    public StunAbilityEffect stunEffect;
 
     protected override void Activate(Cell cell)
     {
-        stunEffect.Clone().AddEffect(cell.CreatureEntity);
+        Instantiate(stunEffect).ApplyEffect(cell.CreatureEntity);
     }
 
     public override bool CanTarget(Cell cell)

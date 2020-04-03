@@ -25,12 +25,16 @@ public class Weapon : MonoBehaviour
         Damage damage = GetDamage();
         parent.AttackEvent?.Invoke(parent, damage);
         creature.TakeDamage(damage);
+        parent.PostAttackEvent?.Invoke(parent, damage);
         UpdateText();
     }
 
     public void Equip(WeaponItem weaponItem)
     {
+        if (weaponItem != null)
+            this.weaponItem.Unequip(parent);
         this.weaponItem = weaponItem;
+        weaponItem.Equip(parent);
         UpdateText();
     }
 

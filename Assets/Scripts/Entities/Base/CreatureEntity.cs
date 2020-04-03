@@ -19,6 +19,7 @@ public abstract class CreatureEntity : Entity
     public MoveEvent MakeMoveEvent;
     public MoveEvent FinishMoveEvent;
     public DamageEvent AttackEvent;
+    public DamageEvent PostAttackEvent;
     public DamageEvent TakeDamageEvent;
 
     public SpriteRenderer animatedSprite;
@@ -114,6 +115,7 @@ public abstract class CreatureEntity : Entity
             if (Health.TakeDamage(damageLeft, out damageLeft))
                 Die();
         }
+        damage.Value -= damageLeft;
     }
 
     private void FaceCell(Cell cell)
