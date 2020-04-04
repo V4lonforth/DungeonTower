@@ -1830,6 +1830,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2da5eb9b0b48a5428b8a6516f2a8a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultRoom:
+    backgroundWalls:
+    - element: {fileID: 3249488795473933527, guid: 300ceccc2f3a95b4ea363c045fcd8f97,
+        type: 3}
+      weight: 1
+    horizontalWalls:
+    - element: {fileID: 8104007859757771772, guid: ca0fc6a66bf49674a9c0e97015c60713,
+        type: 3}
+      weight: 1
+    verticalWalls:
+    - element: {fileID: 7146176050538171413, guid: f907b96e9f33121419117b0861f8af98,
+        type: 3}
+      weight: 1
+    connectorWalls:
+    - element: {fileID: 7350212077551375554, guid: 524dbcb522a4a7b4a9bfd5afbe0d3350,
+        type: 3}
+      weight: 1
   backgroundPrefab: {fileID: 3249488795473933527, guid: 300ceccc2f3a95b4ea363c045fcd8f97,
     type: 3}
   horizontalWallPrefab: {fileID: 8104007859757771772, guid: ca0fc6a66bf49674a9c0e97015c60713,
@@ -1839,28 +1856,6 @@ MonoBehaviour:
   doorPrefab: {fileID: 584751161002276040, guid: 52fa7060ae98d8840aa38204bd757de1,
     type: 3}
   trapdoorPrefab: {fileID: 1122471142970768789, guid: add9ec8538d3c8844bec2ab7eb81d4a6,
-    type: 3}
-  lTCornerConnector: {fileID: 777966863815263293, guid: 2994fbaebe0fe464db5a15362929dad0,
-    type: 3}
-  rTCornerConnector: {fileID: 2910847500805017098, guid: 282f0608dc6376a4dbb58afc649382ac,
-    type: 3}
-  lBCornerConnector: {fileID: 6299299736248996644, guid: b3791f21fe4818a4ba983216ca12955e,
-    type: 3}
-  rBCornerConnector: {fileID: 368834422078474963, guid: 24717b473793ded4694a1f2eddf32320,
-    type: 3}
-  horizontalLineConnector: {fileID: 5170932788144320634, guid: 8ad0ce3c87f41a144a28eec55e6fb581,
-    type: 3}
-  verticalLineConnector: {fileID: 4533586138117924052, guid: d5947c4f736d85b469a190fbba0399c8,
-    type: 3}
-  topTConnector: {fileID: 7837755544685244619, guid: 63ac5e175b75a7340b9317462e60af16,
-    type: 3}
-  bottomTConnector: {fileID: 5210608201319469099, guid: 05bb7ce5a257017488998cbf4bf9eaf9,
-    type: 3}
-  leftTConnector: {fileID: 3332243299175705670, guid: 642c4506a9b84564c913781a0c76b413,
-    type: 3}
-  rightTConnector: {fileID: 7739979060102761746, guid: 080abd7f4f2e47b4e8c8a884ed65af1a,
-    type: 3}
-  plusConnector: {fileID: 7350212077551375554, guid: 524dbcb522a4a7b4a9bfd5afbe0d3350,
     type: 3}
   platformPrefab: {fileID: 1197052962821430929, guid: 2046306e4d886394fb64ec257f0b665a,
     type: 3}
@@ -2136,36 +2131,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834411122}
   m_CullTransparentMesh: 0
---- !u!1 &1881104726
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1881104727}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1881104727
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881104726}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887216164
 GameObject:
   m_ObjectHideFlags: 0
