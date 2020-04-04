@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Decorator : MonoBehaviour
 {
+    public RoomDecorations defaultRoom;
+
     public GameObject backgroundPrefab;
 
     public GameObject horizontalWallPrefab;
@@ -11,48 +14,15 @@ public class Decorator : MonoBehaviour
     public GameObject doorPrefab;
     public GameObject trapdoorPrefab;
 
-    public GameObject lTCornerConnector;
-    public GameObject rTCornerConnector;
-    public GameObject lBCornerConnector;
-    public GameObject rBCornerConnector;
-
-    public GameObject horizontalLineConnector;
-    public GameObject verticalLineConnector;
-
-    public GameObject topTConnector;
-    public GameObject bottomTConnector;
-    public GameObject leftTConnector;
-    public GameObject rightTConnector;
-
-    public GameObject plusConnector;
-
     public GameObject platformPrefab;
     public GameObject lPlatformPrefab;
     public GameObject rPlatformPrefab;
     public GameObject lrPlatformPrefab;
 
-    private Dictionary<int, GameObject> connectors;
     private Dictionary<int, GameObject> platforms;
 
     protected void Awake()
     {
-        connectors = new Dictionary<int, GameObject>()
-        {
-            { 0b1111, plusConnector },
-
-            { 0b0111, topTConnector },
-            { 0b1011, rightTConnector },
-            { 0b1101, leftTConnector },
-            { 0b1110, bottomTConnector },
-
-            { 0b0011, rTCornerConnector },
-            { 0b0101, lTCornerConnector },
-            { 0b1010, rBCornerConnector },
-            { 0b1100, lBCornerConnector },
-
-            { 0b1001, verticalLineConnector },
-            { 0b0110, horizontalLineConnector }
-        };
         platforms = new Dictionary<int, GameObject>()
         {
             { 0b00, platformPrefab },
@@ -142,15 +112,14 @@ public class Decorator : MonoBehaviour
                 walls[Direction.Right] = true;
         }
 
-        int key = 0;
+        int wallCount = 0;
         foreach (Direction direction in Direction.Values)
         {
-            key <<= 1;
             if (walls[direction])
-                key |= 1;
+                wallCount++;
         }
-        if (connectors.TryGetValue(key, out GameObject gameObject))
-            Instantiate(gameObject, cell.transform).transform.position = pos + new Vector2(0.5f, 0.5f);
+        if (wallCount > 1)
+            Instantiate(RoomDecorations.GetGameObject(defaultRoom.connectorWalls), cell.transform).transform.position = pos + new Vector2(0.5f, 0.5f);
     }
 
     private void DecorateCell(Cell cell, bool[,] decorated)

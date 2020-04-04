@@ -72,12 +72,13 @@ SpriteRenderer:
   m_SortingLayerID: -283666571
   m_SortingLayer: -1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}
+  m_Sprite: {fileID: -2302327988271558475, guid: 5f022ddd50f4da24998cddaf5aa61af5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 0.75}
+  m_Size: {x: 0.1875, y: 0.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -121,6 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe765f8707e3e654fa79134da3879223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closed: {fileID: 21300000, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}
-  opened1: {fileID: 21300000, guid: a7dab649e07ccf84e9f15280c07bcba9, type: 3}
-  opened2: {fileID: 21300000, guid: 76253f94f418bc543ae1c6058baad7cf, type: 3}
+  closed: {fileID: -2302327988271558475, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}
+  opened1: {fileID: 5213229242370633579, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}
+  opened2: {fileID: 436563815456543028, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}
