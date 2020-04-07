@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5012898225555041119}
   - component: {fileID: 79729867894627734}
   - component: {fileID: 1626303456970467044}
+  - component: {fileID: 7275596522291450903}
   m_Layer: 0
   m_Name: VikingPlayer
   m_TagString: Untagged
@@ -100,6 +101,19 @@ MonoBehaviour:
   targetRequired: 1
   cooldown: 3
   stunEffect: {fileID: 11400000, guid: d67cb24bdcad1954d9bcd40ab7c37ce7, type: 2}
+--- !u!114 &7275596522291450903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677155915308444074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198137449febb264d837f493cd91eb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 11400000, guid: 4e2d1b09b1ec4ed44b54e503a712ad30, type: 2}
 --- !u!1 &2280690995866697862
 GameObject:
   m_ObjectHideFlags: 0

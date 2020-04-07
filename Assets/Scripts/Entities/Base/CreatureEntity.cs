@@ -27,6 +27,8 @@ public abstract class CreatureEntity : Entity
     public Health health;
     public Armor armor;
     public Weapon weapon;
+    
+    public Direction FacingDirection { get; private set; }
 
     public ActiveAbility ActiveAbility { get; private set; }
     public ActiveAbility SelectedAbility { get; set; }
@@ -61,7 +63,10 @@ public abstract class CreatureEntity : Entity
         weapon.Awake(this);
         
         ActiveAbility = GetComponent<ActiveAbility>();
+        GetComponent<PassiveAbility>()?.effect.ApplyEffect(this);
         Effects = new List<Effect>();
+
+        FacingDirection = Direction.Right;
     }
 
     public override void Destroy()
@@ -120,9 +125,15 @@ public abstract class CreatureEntity : Entity
     {
         Direction direction = Cell.GetDirectionToCell(cell);
         if (direction == Direction.Left)
+        {
             animatedSprite.flipX = true;
+            FacingDirection = Direction.Left;
+        }
         else if (direction == Direction.Right)
+        {
             animatedSprite.flipX = false;
+            FacingDirection = Direction.Right;
+        }
     }
 
     protected IEnumerator AttackAnim(Direction direction, float attackTimeLeft)
