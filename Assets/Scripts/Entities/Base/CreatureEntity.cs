@@ -13,7 +13,7 @@ public abstract class CreatureEntity : Entity
     }
 
     public delegate void MoveEvent(CreatureEntity sender, Cell target);
-    public delegate void DamageEvent(CreatureEntity sender, Damage damage);
+    public delegate void DamageEvent(Damage damage);
 
     public MoveEvent PrepareMoveEvent;
     public MoveEvent MakeMoveEvent;
@@ -24,9 +24,9 @@ public abstract class CreatureEntity : Entity
 
     public SpriteRenderer animatedSprite;
 
-    public Health Health { get; private set; }
-    public Armor Armor { get; private set; }
-    public Weapon Weapon { get; private set; }
+    public Health health;
+    public Armor armor;
+    public Weapon weapon;
 
     public ActiveAbility ActiveAbility { get; private set; }
     public ActiveAbility SelectedAbility { get; set; }
@@ -56,9 +56,9 @@ public abstract class CreatureEntity : Entity
     {
         attackEffect = GetComponentInChildren<AttackAnimation>();
 
-        Health = GetComponent<Health>();
-        Armor = GetComponent<Armor>();
-        Weapon = GetComponent<Weapon>();
+        health.Awake();
+        armor.Awake(this);
+        weapon.Awake(this);
         
         ActiveAbility = GetComponent<ActiveAbility>();
         Effects = new List<Effect>();
@@ -103,19 +103,17 @@ public abstract class CreatureEntity : Entity
     {
         IsAnimated = true;
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
-        attackEffect?.Attack(creature.transform.position, () => Weapon.Attack(creature));
+        attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
     }
 
     public void TakeDamage(Damage damage)
     {
-        TakeDamageEvent?.Invoke(this, damage);
-        int damageLeft = damage.Value;
-        if (Armor is null || Armor.TakeDamage(damageLeft, out damageLeft))
-        {
-            if (Health.TakeDamage(damageLeft, out damageLeft))
-                Die();
-        }
-        damage.Value -= damageLeft;
+        TakeDamageEvent?.Invoke(damage);
+        armor.TakeDamage(damage);
+        if (armor.Destroyed)
+            health.health.TakeDamage(damage);
+        if (health.health.Destroyed)
+            Die();
     }
 
     private void FaceCell(Cell cell)

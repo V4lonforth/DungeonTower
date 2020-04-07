@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 2358176071935276182}
   - component: {fileID: 5012898225555041119}
   - component: {fileID: 79729867894627734}
-  - component: {fileID: 660778774782975776}
-  - component: {fileID: 5725026516896302022}
-  - component: {fileID: 1789895499057625743}
   - component: {fileID: 1626303456970467044}
   m_Layer: 0
   m_Name: VikingPlayer
@@ -40,7 +37,6 @@ Transform:
   - {fileID: 4091619223915118193}
   - {fileID: 6495456814224069565}
   - {fileID: 5398248504765593389}
-  - {fileID: 7575288741937004514}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,51 +72,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatedSprite: {fileID: 2116251420474943497}
+  health:
+    health:
+      maxValue: 8
+      healthType: 0
+    text: {fileID: 3704684567426521848}
+  armor:
+    armorItem: {fileID: 0}
+    text: {fileID: 5826173403933236531}
+  weapon:
+    weaponItem: {fileID: 0}
+    text: {fileID: 2285339560530887688}
   defaultWeapon: {fileID: 1789235635080328517}
-  defaultArmour: {fileID: 8412723526542111217}
---- !u!114 &660778774782975776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677155915308444074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c6e4178f4d2b64fa45b020db5b0c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponItem: {fileID: 1789235635080328517}
-  text: {fileID: 2285339560530887688}
---- !u!114 &5725026516896302022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677155915308444074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b005cab79f8fc45b6667e735428def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 18
-  value: 0
-  text: {fileID: 3704684567426521848}
---- !u!114 &1789895499057625743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677155915308444074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68769893baed8424f80180c17d065388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armorItem: {fileID: 8412723526542111217}
-  text: {fileID: 5826173403933236531}
+  defaultArmour: {fileID: 0}
 --- !u!114 &1626303456970467044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,55 +1134,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &6406887929252512363
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7575288741937004514}
-  - component: {fileID: 8412723526542111217}
-  m_Layer: 0
-  m_Name: DefaultArmor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7575288741937004514
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406887929252512363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2358176071935276182}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8412723526542111217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406887929252512363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c74582a9dc7a2d478a70a674c812e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 0
-  collectable: 0
-  icon: {fileID: 21300000, guid: eb2352c0cb5867945b7020adfa341344, type: 3}
-  effects: []
-  maxArmor: 0
-  armor: 0
 --- !u!1 &7386596460613319290
 GameObject:
   m_ObjectHideFlags: 0

@@ -712,6 +712,7 @@ MonoBehaviour:
   value: 0
   collectable: 0
   icon: {fileID: 0}
+  effects: []
   damage: 4
 --- !u!1 &8787994068666033464
 GameObject:
@@ -806,8 +807,6 @@ GameObject:
   - component: {fileID: 2302282820495494699}
   - component: {fileID: 3326588026349259956}
   - component: {fileID: 6147012037046364056}
-  - component: {fileID: 9216444082455442357}
-  - component: {fileID: 5619988552777377300}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Untagged
@@ -866,33 +865,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatedSprite: {fileID: 8324871000630338348}
+  health:
+    health:
+      maxValue: 4
+      healthType: 0
+    text: {fileID: 1371991112754402811}
+  armor:
+    armorItem: {fileID: 0}
+    text: {fileID: 0}
+  weapon:
+    weaponItem: {fileID: 4737108766465745898}
+    text: {fileID: 3531329454006696648}
   strength: 300
---- !u!114 &9216444082455442357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144915095607567580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c6e4178f4d2b64fa45b020db5b0c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponItem: {fileID: 4737108766465745898}
-  text: {fileID: 3531329454006696648}
---- !u!114 &5619988552777377300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144915095607567580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b005cab79f8fc45b6667e735428def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 5
-  value: 0
-  text: {fileID: 1371991112754402811}

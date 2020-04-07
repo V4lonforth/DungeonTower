@@ -5,7 +5,7 @@
     public override void Use(PlayerEntity player)
     {
         base.Use(player);
-        player.Health.Heal(healStrength);
+        player.health.health.Heal(healStrength);
     }
 
     public override string GetDescription()

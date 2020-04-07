@@ -167,12 +167,12 @@ public class Inventory : MonoBehaviour, IInteractive
         EquipmentSlot equippedSlot = null;
         if (item is WeaponItem weapon)
         {
-            PlayerEntity.Weapon.Equip(weapon);
+            PlayerEntity.weapon.Equip(weapon);
             equippedSlot = weaponSlot;
         }
         else if (item is ArmorItem armor)
         {
-            PlayerEntity.Armor.Equip(armor);
+            PlayerEntity.armor.Equip(armor);
             equippedSlot = armorSlot;
         }
         if (equipmentSlot == null)
@@ -238,7 +238,15 @@ public class Inventory : MonoBehaviour, IInteractive
             Detach(equipmentSlot);
 
             if (IsEquippedArmor(equipmentSlot))
-                Equip(PlayerEntity.defaultArmour);
+            {
+                if (PlayerEntity.defaultArmour == null)
+                {
+                    armorSlot.Hide();
+                    PlayerEntity.armor.Unequip();
+                }
+                else
+                    Equip(PlayerEntity.defaultArmour);
+            }
             else if (IsEquippedWeapon(equipmentSlot))
                 Equip(PlayerEntity.defaultWeapon);
 

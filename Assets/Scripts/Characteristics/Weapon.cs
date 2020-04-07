@@ -1,7 +1,8 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using System;
+using TMPro;
 
-public class Weapon : MonoBehaviour
+[Serializable]
+public class Weapon
 {
     public WeaponItem weaponItem;
 
@@ -9,29 +10,30 @@ public class Weapon : MonoBehaviour
 
     private CreatureEntity parent;
 
-    private void Awake()
+    public void Awake(CreatureEntity creatureEntity)
     {
-        UpdateText();
-        parent = GetComponent<CreatureEntity>();
+        parent = creatureEntity;
+        if (weaponItem != null)
+            Equip(weaponItem);
     }
 
-    private Damage GetDamage()
+    private Damage GetDamage(CreatureEntity target)
     {
-        return new Damage(weaponItem.damage, DamageType.Physical, parent);
+        return new Damage(weaponItem.damage, DamageType.Physical, parent, target);
     }
 
     public void Attack(CreatureEntity creature)
     {
-        Damage damage = GetDamage();
-        parent.AttackEvent?.Invoke(parent, damage);
+        Damage damage = GetDamage(creature);
+        parent.AttackEvent?.Invoke(damage);
         creature.TakeDamage(damage);
-        parent.PostAttackEvent?.Invoke(parent, damage);
+        parent.PostAttackEvent?.Invoke(damage);
         UpdateText();
     }
 
     public void Equip(WeaponItem weaponItem)
     {
-        if (weaponItem != null)
+        if (this.weaponItem != null)
             this.weaponItem.Unequip(parent);
         this.weaponItem = weaponItem;
         weaponItem.Equip(parent);

@@ -9,6 +9,7 @@ public class PlayerEntity : CreatureEntity
     public ArmorItem defaultArmour;
 
     public InputController InputController { get; private set; }
+    public Inventory Inventory { get; private set; }
 
     public Cell Target { get; private set; }
     public bool ReadyToMakeMove => Target != null && CanInteract(Target);

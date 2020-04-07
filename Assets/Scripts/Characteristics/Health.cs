@@ -1,47 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
 using TMPro;
 
-public class Health : MonoBehaviour
+[Serializable]
+public class Health
 {
-    public int maxValue;
-    public int value;
+    public HealthBar health;
 
     public TextMeshPro text;
 
-    private void Awake()
+    public void Awake()
     {
-        value = maxValue;
-        UpdateText();
-    }
-
-    public bool TakeDamage(int damage, out int damageLeft)
-    {
-        value -= damage;
-        if (value <= 0)
-        {
-            damageLeft = -value;
-            value = 0;
-            UpdateText();
-            return true;
-        }
-        damageLeft = 0;
-        UpdateText();
-        return false;
-    }
-
-    public void Heal(int heal)
-    {
-        value = Mathf.Min(value + heal, maxValue);
-        UpdateText();
-    }
-    public void Heal(float heal)
-    {
-        Heal(Mathf.RoundToInt(maxValue * heal));
+        health.ValueChangedEvent += UpdateText;
+        health.Initialize();
     }
 
     private void UpdateText()
     {
         if (text != null)
-            text.text = value.ToString();
+            text.text = health.Value.ToString();
     }
 }

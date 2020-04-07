@@ -17,9 +17,9 @@ public class FireWeaponEffect : Effect
         creatureEntity.AttackEvent -= AttackEffect;
     }
 
-    private void AttackEffect(CreatureEntity sender, Damage damage)
+    private void AttackEffect(Damage damage)
     {
-        damage.Value += extraDamage;
+        damage.DamageLeft += extraDamage;
         damage.Type = DamageType.Fire;
     }
 }

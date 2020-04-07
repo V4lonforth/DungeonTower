@@ -17,8 +17,8 @@ public class VampirismWeaponEffect : Effect
         creatureEntity.PostAttackEvent -= AttackEffect;
     }
 
-    private void AttackEffect(CreatureEntity sender, Damage damage)
+    private void AttackEffect(Damage damage)
     {
-        sender.Health.Heal(Mathf.CeilToInt(damage.Value * percentage));
+        damage.Attacker.health.health.Heal(Mathf.CeilToInt(damage.DamageDealt * percentage));
     }
 }

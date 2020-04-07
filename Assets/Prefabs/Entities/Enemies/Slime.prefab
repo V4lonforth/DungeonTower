@@ -351,8 +351,6 @@ GameObject:
   - component: {fileID: 5503117680992460036}
   - component: {fileID: 9044970186666008475}
   - component: {fileID: 496179602076906679}
-  - component: {fileID: 3191707806070055066}
-  - component: {fileID: 2184931404212270395}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -411,36 +409,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatedSprite: {fileID: 2318149054017695747}
+  health:
+    health:
+      maxValue: 2
+      healthType: 0
+    text: {fileID: 4658429542872663764}
+  armor:
+    armorItem: {fileID: 0}
+    text: {fileID: 0}
+  weapon:
+    weaponItem: {fileID: 1302047210576294085}
+    text: {fileID: 7110505638535703015}
   strength: 100
---- !u!114 &3191707806070055066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3262041589394946035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c6e4178f4d2b64fa45b020db5b0c6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponItem: {fileID: 1302047210576294085}
-  text: {fileID: 7110505638535703015}
---- !u!114 &2184931404212270395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3262041589394946035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b005cab79f8fc45b6667e735428def, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 3
-  value: 0
-  text: {fileID: 4658429542872663764}
 --- !u!1 &3877119313327055697
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +467,7 @@ MonoBehaviour:
   value: 2
   collectable: 0
   icon: {fileID: 0}
+  effects: []
   damage: 2
 --- !u!1 &5365931337906762206
 GameObject:

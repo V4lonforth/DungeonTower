@@ -1,15 +1,14 @@
 ﻿public class ArmorItem : EquipmentItem
 {
-    public int maxArmor;
-    public int armor;
+    public HealthBar armor;
 
     private void Awake()
     {
-        armor = maxArmor;
+        armor.Initialize();
     }
 
     public override string GetDescription()
     {
-        return $"{armor} armor";
+        return $"{armor.Value} armor";
     }
 }

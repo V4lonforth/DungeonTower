@@ -1,71 +1,73 @@
-﻿using UnityEngine;
+﻿using System;
 using TMPro;
 
-public class Armor : MonoBehaviour
+[Serializable]
+public class Armor
 {
     public ArmorItem armorItem;
-
     public TextMeshPro text;
 
-    private PlayerEntity playerEntity;
+    public bool Equipped => armorItem != null;
+    public bool Destroyed => !Equipped || armorItem.armor.Destroyed;
 
-    private void Awake()
+    private CreatureEntity parent;
+
+    public void Awake(CreatureEntity creatureEntity)
     {
-        playerEntity = GetComponent<PlayerEntity>();
+        parent = creatureEntity;
         if (armorItem != null)
-            armorItem.armor = armorItem.maxArmor;
-        UpdateText();
+            Equip(armorItem);
     }
 
     public void Break()
     {
-        if (armorItem != playerEntity.defaultArmour)
+        if (parent is PlayerEntity playerEntity)
         {
-            armorItem.Destroy();
-            playerEntity.InputController.Inventory.Equip(playerEntity.defaultArmour);
+            if (armorItem != playerEntity.defaultArmour)
+            {
+                armorItem.Destroy();
+                playerEntity.InputController.Inventory.Equip(playerEntity.defaultArmour);
+            }
         }
     }
 
     public void Equip(ArmorItem armorItem)
     {
+        if (this.armorItem != null)
+            Unequip();
         this.armorItem = armorItem;
+        armorItem.armor.ValueChangedEvent += UpdateText;
         UpdateText();
     }
 
-    public bool TakeDamage(int damage, out int damageLeft)
+    public void Unequip()
     {
-        if (armorItem == null || armorItem.maxArmor == 0)
-        {
-            damageLeft = damage;
-            return true;
-        }
-
-        armorItem.armor -= damage;
-        if (armorItem.armor <= 0)
-        {
-            damageLeft = -armorItem.armor;
-            armorItem.armor = 0;
-            Break();
-            UpdateText();
-            return true;
-        }
-        damageLeft = 0;
+        armorItem.armor.ValueChangedEvent -= UpdateText;
+        armorItem = null;
         UpdateText();
-        return false;
     }
 
-    public void Repair(int value)
+    public void TakeDamage(Damage damage)
     {
-        armorItem.armor = Mathf.Min(armorItem.armor + value, armorItem.maxArmor);
+        if (Equipped)
+        {
+            armorItem.armor.TakeDamage(damage);
+            if (armorItem.armor.Destroyed)
+            {
+                armorItem.Destroy();
+                armorItem = null;
+            }
+        }
     }
-    public void Repair(float value)
-    {
-        Repair(Mathf.RoundToInt(armorItem.maxArmor * value));
-    }
-
+    
     private void UpdateText()
     {
-        if (text != null && armorItem != null)
-            text.text = armorItem.armor.ToString();
+        if (text != null)
+        {
+            if (armorItem != null)
+                text.text = armorItem.armor.Value.ToString();
+            else
+                text.text = "0";
+        }
     }
 }
