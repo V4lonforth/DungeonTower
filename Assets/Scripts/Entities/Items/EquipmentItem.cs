@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
-public abstract class EquipmentItem : ItemEntity
+public abstract class EquipmentItem : Item
 {
     public List<Effect> effects;
 
-    public new static WeaponItem Instantiate(GameObject prefab, Cell cell)
+    public static WeaponItem Instantiate(EquipmentItem equipmentItem, Cell cell)
     {
-        WeaponItem entity = (WeaponItem)ItemEntity.Instantiate(prefab, cell);
+        WeaponItem entity = (WeaponItem)Item.Instantiate(equipmentItem, cell);
         for (int i = 0; i < entity.effects.Count; i++)
             entity.effects[i] = Instantiate(entity.effects[i]);
         return entity;

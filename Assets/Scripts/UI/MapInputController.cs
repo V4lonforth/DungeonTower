@@ -45,15 +45,12 @@ public class MapInputController : IInteractive
         if (entity == null)
         {
             if (cell.ItemEntities.Count > 0)
-                entity = cell.ItemEntities[0];
+                inputController.Tower.TowerGenerator.inspector.ShowText(cell.ItemEntities[0].GetDescription());
             else
-            {
                 inputController.Tower.TowerGenerator.inspector.ShowEmpty();
-                return;
-            }
         }
-            
-        inputController.Tower.TowerGenerator.inspector.ShowText(entity.GetDescription());
+        else
+            inputController.Tower.TowerGenerator.inspector.ShowText(entity.GetDescription());
     }
 
     private void StopInspecting()

@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
-public abstract class ItemEntity : Entity
+public abstract class Item : MonoBehaviour
 {
-    public int value;
-    public bool collectable;
-    public Sprite icon;
-
+    public Cell Cell { get; private set; }
     public EquipmentSlot EquipmentSlot { get; private set; }
 
-    public new static ItemEntity Instantiate(GameObject prefab, Cell cell)
+    public GameObject prefab;
+    public Sprite icon;
+    public int value;
+    public bool collectable;
+
+    public static Item Instantiate(Item item, Cell cell)
     {
-        ItemEntity entity = (ItemEntity)Entity.Instantiate(prefab, cell);
+        Item entity = Instantiate(item.prefab, cell.transform).GetComponent<Item>();
+        entity.Cell = cell;
         cell.ItemEntities.Add(entity);
         return entity;
     }
 
-    public override void Destroy()
+    public void Destroy()
     {
-        base.Destroy();
+        Destroy(gameObject);
         Cell?.ItemEntities.Remove(this);
         EquipmentSlot?.DetachItem();
     }
@@ -54,4 +57,5 @@ public abstract class ItemEntity : Entity
     }
 
     public abstract void Use(PlayerEntity player);
+    public abstract string GetDescription();
 }

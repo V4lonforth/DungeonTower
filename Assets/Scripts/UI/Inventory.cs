@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour, IInteractive
         }
     }
 
-    private List<ItemEntity> droppedItemEntities;
+    private List<Item> droppedItemEntities;
     private List<EquipmentSlot> allSlots;
 
     private int gold;
@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour, IInteractive
             goldText.text = Gold.ToString();
     }
 
-    public void ShowDrop(List<ItemEntity> itemEntities, int offset = 0)
+    public void ShowDrop(List<Item> itemEntities, int offset = 0)
     {
         HideDrop();
         if (itemEntities.Count == 0)
@@ -67,7 +67,7 @@ public class Inventory : MonoBehaviour, IInteractive
         if (itemEntities.Count == 1)
             itemEntities[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        itemEntities = new List<ItemEntity>(itemEntities);
+        itemEntities = new List<Item>(itemEntities);
         itemEntities.RemoveAll(itemEntity => itemEntity is ChestItem chest && chest.Opened);
         droppedItemEntities = itemEntities;
         dropTransform.anchoredPosition = new Vector2(dropOffset - dropsInterval * Mathf.Min(itemEntities.Count, dropSlots.Length), 0);
@@ -86,7 +86,7 @@ public class Inventory : MonoBehaviour, IInteractive
             equipmentSlot.Hide();
     }
 
-    private void Attach(ItemEntity item)
+    private void Attach(Item item)
     {
         item.DetachFromCell();
         item.transform.SetParent(PlayerEntity.transform);
@@ -128,8 +128,8 @@ public class Inventory : MonoBehaviour, IInteractive
             }
         }
 
-        ItemEntity fromItem = from.Item;
-        ItemEntity toItem = to.Item;
+        Item fromItem = from.Item;
+        Item toItem = to.Item;
 
         if (IsDropped(from))
         {
@@ -161,7 +161,7 @@ public class Inventory : MonoBehaviour, IInteractive
         }
     }
 
-    public void Equip(ItemEntity item)
+    public void Equip(Item item)
     {
         EquipmentSlot equipmentSlot = FindItem(item);
         EquipmentSlot equippedSlot = null;
@@ -226,10 +226,10 @@ public class Inventory : MonoBehaviour, IInteractive
     private bool IsInBackpack(EquipmentSlot equipmentSlot) => backpackSlots.Contains(equipmentSlot);
     private bool IsInInventory(EquipmentSlot equipmentSlot) => IsEquipped(equipmentSlot) || IsInBackpack(equipmentSlot);
 
-    private EquipmentSlot FindItem(ItemEntity item) => allSlots.Find(slot => slot.Item == item);
+    private EquipmentSlot FindItem(Item item) => allSlots.Find(slot => slot.Item == item);
     private EquipmentSlot FindEmptyBackpackSlot() => backpackSlots.FirstOrDefault(slot => slot.Item == null);
     private bool IsEmpty(EquipmentSlot equipmentSlot) => IsEmpty(equipmentSlot.Item);
-    private bool IsEmpty(ItemEntity item) => item == null || item == PlayerEntity.defaultWeapon || item == PlayerEntity.defaultArmour;
+    private bool IsEmpty(Item item) => item == null || item == PlayerEntity.defaultWeapon || item == PlayerEntity.defaultArmour;
 
     public void TryDropEquipment(EquipmentSlot equipmentSlot)
     {

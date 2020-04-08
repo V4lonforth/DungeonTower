@@ -94,7 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1811f85edd9fbf34f9257a44a071f335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 811860787870745194}
+  icon: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}
   value: 400
   collectable: 0
-  icon: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}
   openedSprite: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}

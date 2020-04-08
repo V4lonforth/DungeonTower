@@ -7,7 +7,7 @@
     {
         TurnController.DestroyEnemy(this);
         Destroy();
-        Tower.TowerGenerator.Filler.GenerateGold(Cell);
+        Tower.TowerGenerator.LootGenerator.GenerateGold(Cell);
     }
 
     public void Aggro()

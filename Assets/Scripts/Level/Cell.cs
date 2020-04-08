@@ -4,7 +4,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public CreatureEntity CreatureEntity { get; set; }
-    public List<ItemEntity> ItemEntities { get; set; }
+    public List<Item> ItemEntities { get; set; }
 
     public Vector2Int Position { get; private set; }
     public Room Room { get; private set; }
@@ -36,7 +36,7 @@ public class Cell : MonoBehaviour
         AdjacentRooms = new List<Room>();
         ConnectedRooms = new List<Room>();
 
-        ItemEntities = new List<ItemEntity>();
+        ItemEntities = new List<Item>();
         Walls = new GameObject[Direction.DirectionsAmount];
     }
 

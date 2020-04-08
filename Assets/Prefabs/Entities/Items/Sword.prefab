@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e5a18a547574d47a07e4b331ba2c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 8336715344871862006}
+  icon: {fileID: 21300000, guid: 4d6bf396f0efac346813df53ddc53409, type: 3}
   value: 250
   collectable: 1
-  icon: {fileID: 21300000, guid: 4d6bf396f0efac346813df53ddc53409, type: 3}
+  effects: []
   damage: 5
 --- !u!212 &1443348743708174872
 SpriteRenderer:

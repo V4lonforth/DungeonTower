@@ -8,7 +8,8 @@ public class TowerGenerator : MonoBehaviour
     public Linker Linker { get; private set; }
     public Connector Connector { get; private set; }
     public Decorator Decorator { get; private set; }
-    public Filler Filler { get; private set; }
+    public Spawner Spawner { get; private set; }
+    public LootGenerator LootGenerator { get; private set; }
     public Concealer Concealer { get; private set; }
 
     private void Awake()
@@ -17,7 +18,8 @@ public class TowerGenerator : MonoBehaviour
         Linker = GetComponent<Linker>();
         Connector = GetComponent<Connector>();
         Decorator = GetComponent<Decorator>();
-        Filler = GetComponent<Filler>();
+        Spawner = GetComponent<Spawner>();
+        LootGenerator = GetComponent<LootGenerator>();
         Concealer = GetComponent<Concealer>();
     }
 
@@ -33,7 +35,8 @@ public class TowerGenerator : MonoBehaviour
         Linker.Link(tower);
         Connector.Connect(tower);
         Decorator.Decorate(tower);
-        Filler.Fill(tower);
+        Spawner.Spawn(tower);
+        LootGenerator.GenerateLoot(tower);
         Concealer.ConcealTower(tower);
     }
 }

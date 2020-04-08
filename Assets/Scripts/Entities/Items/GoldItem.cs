@@ -1,4 +1,4 @@
-﻿public class GoldItem : ItemEntity
+﻿public class GoldItem : Item
 {
     public int Amount { get; set; }
 

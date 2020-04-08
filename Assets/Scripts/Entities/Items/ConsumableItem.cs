@@ -1,4 +1,4 @@
-﻿public abstract class ConsumableItem : ItemEntity
+﻿public abstract class ConsumableItem : Item
 {
     public int uses;
 

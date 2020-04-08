@@ -15,6 +15,8 @@ public class Room : MonoBehaviour
     public bool IsRevealed { get; set; }
     public GameObject FogOfWar { get; set; }
 
+    public int Strength { get; set; }
+
     public static Room Instantiate(GameObject roomPrefab, Tower tower)
     {
         Room room = Instantiate(roomPrefab, tower.transform).GetComponent<Room>();
