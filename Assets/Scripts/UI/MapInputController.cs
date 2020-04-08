@@ -28,13 +28,20 @@ public class MapInputController : IInteractive
 
     private void Swipe(Vector2 delta)
     {
-        Vector2Int signs = new Vector2Int(delta.x >= 0 ? 1 : -1, delta.y >= 0 ? 1 : -1);
-        delta *= signs;
-        if (delta.x > delta.y)
-            signs.y = 0;
-        else
-            signs.x = 0;
-        inputController.Tower.Interact(inputController.Tower.Player.Cell.Position + signs);
+        float angle = Mathf.Atan2(delta.y, delta.x);
+        angle = (angle >= 0 ? angle : angle + Mathf.PI * 2f) * Mathf.Rad2Deg;
+        float minAngle = 360f;
+        Direction minDirection = Direction.Right;
+        foreach (Direction direction in Direction.Values)
+        {
+            float diff = Mathf.Abs(direction.Angle - angle);
+            if (diff < minAngle)
+            {
+                minAngle = diff;
+                minDirection = direction;
+            }
+        }
+        inputController.Tower.Interact(minDirection.ShiftPosition(inputController.Tower.Player.Cell.Position));
     }
 
     private void Inspect(Vector2Int towerPosition)
@@ -97,7 +104,6 @@ public class MapInputController : IInteractive
                 if (delta.sqrMagnitude > MinSwipeDistance * MinSwipeDistance)
                 {
                     swiping = true;
-                    Swipe(delta);
                 }
                 else if (hitCell)
                 {
@@ -126,7 +132,9 @@ public class MapInputController : IInteractive
                 else
                     inputController.Tower.Interact(startTowerPosition);
             }
-        }
+            else
+                Swipe(position - lastTouchPosition);
+        } 
         pressed = false;
         return true;
     }
