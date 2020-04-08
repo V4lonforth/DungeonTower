@@ -8,15 +8,7 @@ public abstract class Creature : MonoBehaviour
     public Cell Cell { get; protected set; }
     public Room Room => Cell.Room;
     public Tower Tower => Room.Tower;
-    public TurnController TurnController => Tower.TurnController;
-
-    public enum MoveState
-    {
-        PreparingMove,
-        MakingMove,
-        FinishingMove
-    }
-
+    
     public delegate void MoveEvent(Creature sender, Cell target);
     public delegate void DamageEvent(Damage damage);
 
@@ -26,6 +18,8 @@ public abstract class Creature : MonoBehaviour
     public DamageEvent AttackEvent;
     public DamageEvent PostAttackEvent;
     public DamageEvent TakeDamageEvent;
+
+    public float movementCooldown;
 
     public SpriteRenderer animatedSprite;
 
@@ -40,11 +34,7 @@ public abstract class Creature : MonoBehaviour
 
     public List<Effect> Effects { get; private set; }
 
-    public MoveState State { get; protected set; }
-    public bool IsAnimated { get; protected set; }
-
-    public bool SkipTurn { get; set; }
-    protected bool skippedTurn;
+    protected float cooldown;
 
     private AttackAnimation attackEffect;
 
@@ -75,6 +65,14 @@ public abstract class Creature : MonoBehaviour
         FacingDirection = Direction.Right;
     }
 
+    protected void Update()
+    {
+        if (cooldown > 0)
+            cooldown -= Time.deltaTime;
+        else
+            MakeMove();
+    }
+
     public void Destroy()
     {
         Destroy(gameObject);
@@ -83,12 +81,12 @@ public abstract class Creature : MonoBehaviour
 
     public virtual void MoveTo(Cell cell)
     {
+        cooldown = movementCooldown;
         if (Cell != null && Cell.Creature == this)
             Cell.Creature = null;
         cell.Creature = this;
         Cell = cell;
 
-        IsAnimated = true;
         StartCoroutine(MoveToParentCell(MovingTime));
     }
 
@@ -112,9 +110,9 @@ public abstract class Creature : MonoBehaviour
 
     protected virtual void Attack(Creature creature)
     {
-        IsAnimated = true;
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
+        cooldown = weapon.weaponItem.cooldown;
     }
 
     public void TakeDamage(Damage damage)
@@ -164,13 +162,11 @@ public abstract class Creature : MonoBehaviour
     public void FinishAttackAnimation()
     {
         attackEffect.End();
-        IsAnimated = false;
     }
 
     protected virtual void StopMoving()
     {
         transform.position = Cell.transform.position;
-        IsAnimated = false;
     }
 
     protected bool CanInteract(Cell cell)
@@ -199,27 +195,7 @@ public abstract class Creature : MonoBehaviour
 
     protected abstract void Interact(Creature creature);
 
-    public virtual void PrepareMove()
-    {
-        PrepareMoveEvent?.Invoke(this, null);
-        if (SkipTurn)
-        {
-            SkipTurn = false;
-            skippedTurn = true;
-        }
-        State = MoveState.MakingMove;
-    }
-    public virtual void MakeMove()
-    {
-        MakeMoveEvent?.Invoke(this, null);
-        State = MoveState.FinishingMove;
-    }
-    public virtual void FinishMove()
-    {
-        FinishMoveEvent?.Invoke(this, null);
-        ActiveAbility?.FinishMove();
-        State = MoveState.PreparingMove;
-    }
+    public abstract void MakeMove();
     public abstract string GetDescription();
     public abstract void Die();
 }

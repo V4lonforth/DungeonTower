@@ -17,7 +17,6 @@ public class StunAbilityEffect : Effect
 
     private void StunEvent(Creature sender, Cell target)
     {
-        sender.SkipTurn = true;
         FinishMove();
     }
 }

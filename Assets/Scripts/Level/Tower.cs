@@ -22,13 +22,9 @@ public class Tower : MonoBehaviour
     public Lava Lava { get; set; }
     public Navigator Navigator { get; set; }
 
-    public TurnController TurnController { get; private set; }
-
     private void Awake()
     {
         Lava = GetComponentInChildren<Lava>();
-        TurnController = FindObjectOfType<TurnController>();
-        TurnController.Tower = this;
         FindObjectOfType<InputController>().Tower = this;
     }
 
@@ -38,10 +34,5 @@ public class Tower : MonoBehaviour
         {
             Player.SetTarget(Cells[position.y, position.x]);
         }
-    }
-
-    public void StartLevel()
-    {
-        TurnController.StartLevel();
     }
 }

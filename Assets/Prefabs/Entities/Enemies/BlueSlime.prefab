@@ -709,11 +709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e5a18a547574d47a07e4b331ba2c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
+  icon: {fileID: 0}
   value: 0
   collectable: 0
-  icon: {fileID: 0}
   effects: []
   damage: 4
+  cooldown: 1
 --- !u!1 &8787994068666033464
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff04d71c5e7f0e41a5f839c05f514cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementCooldown: 1
   animatedSprite: {fileID: 8324871000630338348}
   health:
     health:
@@ -877,3 +880,4 @@ MonoBehaviour:
     weaponItem: {fileID: 4737108766465745898}
     text: {fileID: 3531329454006696648}
   strength: 300
+  wakeUpCooldown: 1

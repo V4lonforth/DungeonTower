@@ -1,11 +1,11 @@
 ﻿public class Enemy : Creature
 {
     public int strength;
+    public float wakeUpCooldown;
     private bool aggroed;
 
     public override void Die()
     {
-        TurnController.DestroyEnemy(this);
         Destroy();
         Tower.TowerGenerator.LootGenerator.GenerateGold(Cell);
     }
@@ -15,38 +15,25 @@
         if (!aggroed)
         {
             aggroed = true;
-            SkipTurn = true;
+            cooldown = wakeUpCooldown;
         }
+    }
+
+    protected new void Update()
+    {
+        if (aggroed)
+            base.Update();
     }
 
     public override void MakeMove()
     {
-        base.MakeMove();
-        if (!aggroed)
-            return;
-        if (skippedTurn)
-        {
-            skippedTurn = false;
-            return;
-        }
-
         foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
         {
             Cell cell = Cell.ConnectedCells[direction];
-            if (cell.Creature is Player player)
+            if (!(cell.Creature is Enemy))
             {
                 MakeMove(cell);
                 break;
-            }
-            else
-            {
-                if (cell.Creature is Enemy enemy)
-                    TurnController.ForceMove(enemy);
-                if (!(cell.Creature is Enemy))
-                {
-                    MakeMove(cell);
-                    break;
-                }
             }
         }
     }

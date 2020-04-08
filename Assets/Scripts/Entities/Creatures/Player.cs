@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -39,7 +38,6 @@ public class Player : Creature
         defaultArmour?.Use(this);
 
         CheckCell();
-        Tower.StartLevel();
     }
 
     public override void Die()
@@ -50,15 +48,7 @@ public class Player : Creature
     public override void MoveTo(Cell cell)
     {
         InputController.Inventory.HideDrop();
-        CheckNearbyEnemies();
         base.MoveTo(cell);
-    }
-
-    protected override IEnumerator MoveToParentCell(float movingTimeLeft)
-    {
-        while (TurnController.CurrentlyAnimated)
-            yield return null;
-        yield return base.MoveToParentCell(movingTimeLeft);
     }
 
     private void CheckCell()
@@ -80,13 +70,6 @@ public class Player : Creature
             }
     }
 
-    private void CheckNearbyEnemies()
-    {
-        foreach (Cell cell in Cell.ConnectedCells)
-            if (cell && cell.Creature is Enemy enemy)
-                TurnController.ForceMove(enemy);
-    }
-
     protected override void Interact(Creature creature)
     {
         if (creature is Enemy enemy)
@@ -95,8 +78,7 @@ public class Player : Creature
 
     public void SetTarget(Cell cell)
     {
-        if (TurnController.AbleToMakeMove)
-            Target = cell;
+        Target = cell;
     }
 
     protected override bool MakeMove(Cell cell)
@@ -104,6 +86,7 @@ public class Player : Creature
         if (base.MakeMove(cell))
         {
             cell.Room.AggroEnemies();
+            CheckCell();
             return true;
         }
         return false;
@@ -111,15 +94,11 @@ public class Player : Creature
 
     public override void MakeMove()
     {
-        if (MakeMove(Target))
-            base.MakeMove();
-    }
-    
-    public override void FinishMove()
-    {
-        base.FinishMove();
-        CheckCell();
-        Target = null;
+        if (Target != null)
+        {
+            MakeMove(Target);
+            Target = null;
+        }
     }
 
     public override string GetDescription()
