@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Decorator : MonoBehaviour
@@ -126,7 +125,7 @@ public class Decorator : MonoBehaviour
     {
         decorated[cell.Position.y, cell.Position.x] = true;
         Instantiate(backgroundPrefab, cell.transform);
-        foreach (Direction direction in Direction.Values)
+        foreach (Direction direction in Direction.Straights)
         {
             if (cell.AdjacentCells[direction] is null || !decorated[cell.AdjacentCells[direction].Position.y, cell.AdjacentCells[direction].Position.x])
             {
@@ -181,7 +180,7 @@ public class Decorator : MonoBehaviour
                         key += 1;
 
                     if (platforms.TryGetValue(key, out GameObject gameObject))
-                        Instantiate(gameObject, cell.transform).transform.position += (Vector3)(direction.Rotation2 / 2f);
+                        Instantiate(gameObject, cell.transform).transform.position += (Vector3)(direction.UnitVector / 2f);
                 }
             }
         }

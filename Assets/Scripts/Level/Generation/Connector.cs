@@ -15,7 +15,11 @@ public class Connector : MonoBehaviour
 
     private void ConnectRooms(Room first, Room second, int width)
     {
-        if (first.ConnectedRooms.Count > 1)
+        if (first.ConnectedRooms.Contains(second))
+        {
+            return;
+        }
+        /*if (first.ConnectedRooms.Count > 1)
         {
             int minLevel = Mathf.Min(first.LowestLevel, second.LowestLevel);
             int maxLevel = Mathf.Max(first.HighestLevel, second.HighestLevel);
@@ -50,12 +54,12 @@ public class Connector : MonoBehaviour
                         break;
                 }
             }
-        }
+        }*/
 
         List<Cell> adjacentCells = first.Cells.FindAll(cell => cell.AdjacentRooms.Contains(second));
 
         Cell firstCell = adjacentCells[Random.Range(0, adjacentCells.Count)];
-        foreach (Direction direction in Direction.Values)
+        foreach (Direction direction in Direction.Straights)
             if (!(firstCell.AdjacentCells[direction] is null) && ReferenceEquals(firstCell.AdjacentCells[direction].Room, second))
             {
                 ConnectCells(firstCell, firstCell.AdjacentCells[direction], direction);

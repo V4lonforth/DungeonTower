@@ -39,13 +39,13 @@ public class Builder : MonoBehaviour
 
     private float GetChance(int cellsGenerated, int maxCellsCount, int absentCellCount)
     {
-        return (1 - (float)cellsGenerated / maxCellsCount) * (Direction.DirectionsAmount - absentCellCount) / 2f;
+        return (1 - (float)cellsGenerated / maxCellsCount) * (Direction.DirectionsAmount - absentCellCount) / 4f;
     }
 
     private List<Direction> FindAbsentCellDirections(Cell[,] cells, Vector2Int position)
     {
         List<Direction> directions = new List<Direction>();
-        foreach (Direction direction in Direction.Values)
+        foreach (Direction direction in Direction.Straights)
         {
             Vector2Int shiftedPosition = direction.ShiftPosition(position);
             if (MathHelper.InRange(shiftedPosition, size) && cells[shiftedPosition.y, shiftedPosition.x] is null)

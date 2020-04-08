@@ -1,56 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Direction
 {
-    public static readonly List<Direction> Values = new List<Direction>(DirectionsAmount);
+    public static readonly Direction Right = new Direction(0, 0f, new Vector2Int(1, 0), 4);
+    public static readonly Direction TopRight = new Direction(1, 45f, new Vector2Int(1, 1), 5);
+    public static readonly Direction Top = new Direction(2, 90f, new Vector2Int(0, 1), 6);
+    public static readonly Direction TopLeft = new Direction(3, 135f, new Vector2Int(-1, 1), 7);
+    public static readonly Direction Left = new Direction(4, 180f, new Vector2Int(-1, 0), 0);
+    public static readonly Direction BottomLeft = new Direction(5, 225f, new Vector2Int(-1, -1), 1);
+    public static readonly Direction Bottom = new Direction(6, 270f, new Vector2Int(0, -1), 2);
+    public static readonly Direction BottomRight = new Direction(7, 315f, new Vector2Int(1, -1), 3);
 
-    public static readonly Direction Bottom = new Direction(0);
-    public static readonly Direction Left = new Direction(1);
-    public static readonly Direction Right = new Direction(2);
-    public static readonly Direction Top = new Direction(3);
+    public static readonly Direction[] Values = new Direction[] { Right, TopRight, Top, TopLeft, Left, BottomLeft, Bottom, BottomRight };
+    public static readonly Direction[] Straights = new Direction[] { Right, Top, Left, Bottom };
+    public static readonly Direction[] Diagonals = new Direction[] { TopRight, TopLeft, BottomLeft, BottomRight };
 
-    public const int DirectionsAmount = 4;
+    public int Value { get; private set; }
+    public float Angle { get; private set; }
+    public Vector2Int Shift { get; private set; }
+    public Vector2 UnitVector { get; private set; }
+    public Direction Opposite => Values[oppositeValue];
 
-    private readonly int value;
+    private int oppositeValue;
 
-    private static Func<Vector2Int, Vector2Int>[] shiftingFunctions = new Func<Vector2Int, Vector2Int>[]
+    public const int DirectionsAmount = 8;
+    public const int StraightsAmount = 4;
+    public const int DiagonalsAmount = 4;
+
+    private Direction(int value, float angle, Vector2Int shift, int opposite)
     {
-        pos => new Vector2Int(pos.x, pos.y - 1),
-        pos => new Vector2Int(pos.x - 1, pos.y),
-        pos => new Vector2Int(pos.x + 1, pos.y),
-        pos => new Vector2Int(pos.x, pos.y + 1)
-    };
-
-    public Direction Opposite => DirectionsAmount - (value + 1);
-    public float Rotation
-    {
-        get
-        {
-            if (value == Right) return 0f;
-            if (value == Top) return 90f;
-            if (value == Left) return 180f;
-            if (value == Bottom) return 270f;
-            return 0f;
-        }
-    }
-    public Vector2 Rotation2
-    {
-        get
-        {
-            if (value == Right) return Vector2.right;
-            if (value == Top) return Vector2.up;
-            if (value == Left) return Vector2.left;
-            if (value == Bottom) return Vector2.down;
-            return Vector2.right;
-        }
+        Value = value;
+        Angle = angle;
+        Shift = shift;
+        UnitVector = Shift;
+        oppositeValue = opposite;
     }
 
-    public Direction(int value)
+    public Vector2Int ShiftPosition(Vector2Int pos)
     {
-        this.value = value;
-        Values.Add(this);
+        return pos + Shift;
     }
 
     public static implicit operator Direction(int value)
@@ -59,11 +48,6 @@ public class Direction
     }
     public static implicit operator int(Direction value)
     {
-        return value.value;
-    }
-
-    public Vector2Int ShiftPosition(Vector2Int pos)
-    {
-        return shiftingFunctions[value](pos);
+        return value.Value;
     }
 }

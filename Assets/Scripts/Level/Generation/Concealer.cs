@@ -35,7 +35,7 @@ public class Concealer : MonoBehaviour
     {
         fogOfWarShapes = new Dictionary<int, FogOfWarShape>(16)
         {
-            { 0b1111, new FogOfWarShape(fogOfWarSprites[5], Direction.Right) },
+            //{ 0b1111, new FogOfWarShape(fogOfWarSprites[5], Direction.Right) },
 
             { 0b0001, new FogOfWarShape(fogOfWarSprites[1], Direction.Top) },
             { 0b0010, new FogOfWarShape(fogOfWarSprites[1], Direction.Right) },

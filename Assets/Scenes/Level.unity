@@ -1798,7 +1798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 5, y: 100}
-  maxRoomSize: 10
+  maxRoomSize: 15
   cellPrefab: {fileID: 4624443636631225018, guid: 84a028374b832b346b050b8e0f6590ca,
     type: 3}
   roomPrefab: {fileID: 3431831565356500941, guid: ceec28e8b50a7ca429ce74a2dad76efc,
@@ -1984,7 +1984,6 @@ MonoBehaviour:
   - {fileID: 9000610249593974655, guid: b5cc31b943c7b604aa60e6677dbc4e05, type: 3}
   - {fileID: 2057407542763337001, guid: b5cc31b943c7b604aa60e6677dbc4e05, type: 3}
   - {fileID: 6623981353048158438, guid: b5cc31b943c7b604aa60e6677dbc4e05, type: 3}
-  - {fileID: 7638207526081734886, guid: b5cc31b943c7b604aa60e6677dbc4e05, type: 3}
 --- !u!1 &1592942527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,7 +2154,6 @@ GameObject:
   - component: {fileID: 1887216167}
   - component: {fileID: 1887216166}
   - component: {fileID: 1887216165}
-  - component: {fileID: 1887216168}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -2202,18 +2200,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1887216168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887216164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4b970dff486bf4b922e70a08c4b0e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1902109696
 GameObject:
   m_ObjectHideFlags: 0

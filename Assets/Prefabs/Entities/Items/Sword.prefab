@@ -50,6 +50,7 @@ MonoBehaviour:
   collectable: 1
   effects: []
   damage: 5
+  cooldown: 0.8
 --- !u!212 &1443348743708174872
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -145,14 +145,14 @@ public abstract class Creature : MonoBehaviour
         float time = attackTimeLeft;
         while (time > 0f)
         {
-            animatedSprite.transform.position += (Vector3)(direction.Rotation2 * (AttackMovingSpeed * Time.deltaTime));
+            animatedSprite.transform.position += (Vector3)(direction.UnitVector * (AttackMovingSpeed * Time.deltaTime));
             time -= Time.deltaTime;
             yield return null;
         }
         time = attackTimeLeft;
         while (time > 0f)
         {
-            animatedSprite.transform.position -= (Vector3)(direction.Rotation2 * (AttackMovingSpeed * Time.deltaTime));
+            animatedSprite.transform.position -= (Vector3)(direction.UnitVector * (AttackMovingSpeed * Time.deltaTime));
             time -= Time.deltaTime;
             yield return null;
         }
