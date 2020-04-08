@@ -6,11 +6,11 @@ public class ShieldBashActivity : ActiveAbility
 
     protected override void Activate(Cell cell)
     {
-        Instantiate(stunEffect).ApplyEffect(cell.CreatureEntity);
+        Instantiate(stunEffect).ApplyEffect(cell.Creature);
     }
 
     public override bool CanTarget(Cell cell)
     {
-        return base.CanTarget(cell) && CreatureEntity.Cell.ConnectedCells.Contains(cell) && cell.CreatureEntity is EnemyEntity;
+        return base.CanTarget(cell) && Creature.Cell.ConnectedCells.Contains(cell) && cell.Creature is Enemy;
     }
 }

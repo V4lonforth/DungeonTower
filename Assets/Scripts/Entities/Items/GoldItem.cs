@@ -2,7 +2,7 @@
 {
     public int Amount { get; set; }
 
-    public override void Use(PlayerEntity player)
+    public override void Use(Player player)
     {
         player.InputController.Inventory.Gold += Amount;
         Destroy();

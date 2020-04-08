@@ -2,7 +2,7 @@
 {
     public float healStrength;
 
-    public override void Use(PlayerEntity player)
+    public override void Use(Player player)
     {
         base.Use(player);
         player.health.health.Heal(healStrength);

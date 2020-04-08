@@ -16,7 +16,7 @@ public class Tower : MonoBehaviour
     public Vector2Int Size { get; set; }
     public Room[] Rooms { get; set; }
     public Cell[,] Cells { get; set; }
-    public PlayerEntity Player { get; set; }
+    public Player Player { get; set; }
 
     public TowerGenerator TowerGenerator { get; set; }
     public Lava Lava { get; set; }

@@ -49,8 +49,8 @@ public class LootGenerator : MonoBehaviour
     public int GenerateGold(Cell cell)
     {
         int amount = Random.Range(8, 14);
-        foreach (Item itemEntity in cell.ItemEntities)
-            if (itemEntity is GoldItem goldItem)
+        foreach (Item item in cell.Items)
+            if (item is GoldItem goldItem)
             {
                 goldItem.Amount += amount;
                 return goldItem.value;

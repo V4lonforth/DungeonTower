@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerEntity : CreatureEntity
+public class Player : Creature
 {
     public WeaponItem defaultWeapon;
     public ArmorItem defaultArmour;
@@ -14,9 +14,9 @@ public class PlayerEntity : CreatureEntity
     public Cell Target { get; private set; }
     public bool ReadyToMakeMove => Target != null && CanInteract(Target);
 
-    public static PlayerEntity Instantiate(GameObject prefab, Cell cell, Text goldText)
+    public static Player Instantiate(GameObject prefab, Cell cell, Text goldText)
     {
-        PlayerEntity player = (PlayerEntity)Instantiate(prefab, cell).GetComponent<Entity>();
+        Player player = (Player)Instantiate(prefab, cell).GetComponent<Creature>();
         player.InputController.Inventory.SetText(goldText);
         return player;
     }
@@ -28,8 +28,8 @@ public class PlayerEntity : CreatureEntity
         Camera.main.GetComponent<CameraFollower>().followedObject = transform;
 
         InputController = FindObjectOfType<InputController>();
-        InputController.PlayerEntity = this;
-        InputController.Inventory.PlayerEntity = this;
+        InputController.Player = this;
+        InputController.Inventory.Player = this;
         InputController.AbilityController.SetAbility(ActiveAbility);
     }
 
@@ -67,13 +67,13 @@ public class PlayerEntity : CreatureEntity
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
         CollectGold();
-        InputController.Inventory.ShowDrop(Cell.ItemEntities);
+        InputController.Inventory.ShowDrop(Cell.Items);
     }
 
     private void CollectGold()
     {
-        for (int i = 0; i < Cell.ItemEntities.Count; i++)
-            if (Cell.ItemEntities[i] is GoldItem gold)
+        for (int i = 0; i < Cell.Items.Count; i++)
+            if (Cell.Items[i] is GoldItem gold)
             {
                 gold.Use(this);
                 i--;
@@ -83,13 +83,13 @@ public class PlayerEntity : CreatureEntity
     private void CheckNearbyEnemies()
     {
         foreach (Cell cell in Cell.ConnectedCells)
-            if (cell && cell.CreatureEntity is EnemyEntity enemy)
+            if (cell && cell.Creature is Enemy enemy)
                 TurnController.ForceMove(enemy);
     }
 
-    protected override void Interact(CreatureEntity creature)
+    protected override void Interact(Creature creature)
     {
-        if (creature is EnemyEntity enemy)
+        if (creature is Enemy enemy)
             Attack(enemy);
     }
 

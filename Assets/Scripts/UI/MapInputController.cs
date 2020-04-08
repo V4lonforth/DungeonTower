@@ -41,16 +41,16 @@ public class MapInputController : IInteractive
     {
         inspecting = true;
         Cell cell = inputController.Tower[towerPosition];
-        Entity entity = cell.CreatureEntity;
-        if (entity == null)
+        Creature creature = cell.Creature;
+        if (creature == null)
         {
-            if (cell.ItemEntities.Count > 0)
-                inputController.Tower.TowerGenerator.inspector.ShowText(cell.ItemEntities[0].GetDescription());
+            if (cell.Items.Count > 0)
+                inputController.Tower.TowerGenerator.inspector.ShowText(cell.Items[0].GetDescription());
             else
                 inputController.Tower.TowerGenerator.inspector.ShowEmpty();
         }
         else
-            inputController.Tower.TowerGenerator.inspector.ShowText(entity.GetDescription());
+            inputController.Tower.TowerGenerator.inspector.ShowText(creature.GetDescription());
     }
 
     private void StopInspecting()
@@ -121,7 +121,7 @@ public class MapInputController : IInteractive
                 StopInspecting();
             else if (!swiping)
             {
-                if (inputController.PlayerEntity.SelectedAbility == null)
+                if (inputController.Player.SelectedAbility == null)
                     inputController.Tower.Interact(inputController.Tower.Player.Cell.Position);
                 else
                     inputController.Tower.Interact(startTowerPosition);

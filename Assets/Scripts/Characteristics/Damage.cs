@@ -4,10 +4,10 @@
     public int DamageDealt { get; set; }
     public int DamageLeft { get; set; }
     public DamageType Type { get; set; }
-    public CreatureEntity Attacker { get; set; }
-    public CreatureEntity Target { get; set; }
+    public Creature Attacker { get; set; }
+    public Creature Target { get; set; }
 
-    public Damage(int damage, DamageType type, CreatureEntity sender, CreatureEntity target)
+    public Damage(int damage, DamageType type, Creature sender, Creature target)
     {
         StartDamage = DamageLeft = damage;
         Type = type;

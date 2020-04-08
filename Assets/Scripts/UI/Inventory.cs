@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public EquipmentSlot[] dropSlots;
 
-    public PlayerEntity PlayerEntity { get; set; }
+    public Player Player { get; set; }
 
     public int Gold
     {
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour, IInteractive
         }
     }
 
-    private List<Item> droppedItemEntities;
+    private List<Item> droppedItems;
     private List<EquipmentSlot> allSlots;
 
     private int gold;
@@ -59,23 +59,23 @@ public class Inventory : MonoBehaviour, IInteractive
             goldText.text = Gold.ToString();
     }
 
-    public void ShowDrop(List<Item> itemEntities, int offset = 0)
+    public void ShowDrop(List<Item> items, int offset = 0)
     {
         HideDrop();
-        if (itemEntities.Count == 0)
+        if (items.Count == 0)
             return;
-        if (itemEntities.Count == 1)
-            itemEntities[0].GetComponent<SpriteRenderer>().enabled = true;
+        if (items.Count == 1)
+            items[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        itemEntities = new List<Item>(itemEntities);
-        itemEntities.RemoveAll(itemEntity => itemEntity is ChestItem chest && chest.Opened);
-        droppedItemEntities = itemEntities;
-        dropTransform.anchoredPosition = new Vector2(dropOffset - dropsInterval * Mathf.Min(itemEntities.Count, dropSlots.Length), 0);
+        items = new List<Item>(items);
+        items.RemoveAll(item => item is ChestItem chest && chest.Opened);
+        droppedItems = items;
+        dropTransform.anchoredPosition = new Vector2(dropOffset - dropsInterval * Mathf.Min(items.Count, dropSlots.Length), 0);
         dropTransform.gameObject.SetActive(true);
 
-        for (int i = 0; i + offset < itemEntities.Count && i < dropSlots.Length; i++)
+        for (int i = 0; i + offset < items.Count && i < dropSlots.Length; i++)
         {
-            dropSlots[i].Show(itemEntities[i + offset]);
+            dropSlots[i].Show(items[i + offset]);
         }
     }
 
@@ -89,7 +89,7 @@ public class Inventory : MonoBehaviour, IInteractive
     private void Attach(Item item)
     {
         item.DetachFromCell();
-        item.transform.SetParent(PlayerEntity.transform);
+        item.transform.SetParent(Player.transform);
         item.gameObject.SetActive(false);
     }
     private void Detach(EquipmentSlot equipmentSlot)
@@ -97,7 +97,7 @@ public class Inventory : MonoBehaviour, IInteractive
         if (!IsEmpty(equipmentSlot))
         {
             equipmentSlot.Item.gameObject.SetActive(true);
-            equipmentSlot.Item.AttachToCell(PlayerEntity.Cell);
+            equipmentSlot.Item.AttachToCell(Player.Cell);
             equipmentSlot.Item.DetachFromEquipmentSlot();
             equipmentSlot.DetachItem();
         }
@@ -106,7 +106,7 @@ public class Inventory : MonoBehaviour, IInteractive
     private void RemoveFromDrop(EquipmentSlot equipmentSlot)
     {
         HideDrop();
-        ShowDrop(PlayerEntity.Cell.ItemEntities);
+        ShowDrop(Player.Cell.Items);
     }
 
     private void DragEquipment(EquipmentSlot from, EquipmentSlot to)
@@ -142,7 +142,7 @@ public class Inventory : MonoBehaviour, IInteractive
             Detach(from);
         }
         to.Show(fromItem);
-        if (toItem == null || toItem == PlayerEntity.defaultWeapon || toItem == PlayerEntity.defaultArmour)
+        if (toItem == null || toItem == Player.defaultWeapon || toItem == Player.defaultArmour)
         {
             if (IsDropped(from))
                 RemoveFromDrop(from);
@@ -155,9 +155,9 @@ public class Inventory : MonoBehaviour, IInteractive
         if (from.Item == null)
         {
             if (IsEquippedArmor(from))
-                Equip(PlayerEntity.defaultArmour);
+                Equip(Player.defaultArmour);
             else if (IsEquippedWeapon(from))
-                Equip(PlayerEntity.defaultWeapon);
+                Equip(Player.defaultWeapon);
         }
     }
 
@@ -167,12 +167,12 @@ public class Inventory : MonoBehaviour, IInteractive
         EquipmentSlot equippedSlot = null;
         if (item is WeaponItem weapon)
         {
-            PlayerEntity.weapon.Equip(weapon);
+            Player.weapon.Equip(weapon);
             equippedSlot = weaponSlot;
         }
         else if (item is ArmorItem armor)
         {
-            PlayerEntity.armor.Equip(armor);
+            Player.armor.Equip(armor);
             equippedSlot = armorSlot;
         }
         if (equipmentSlot == null)
@@ -183,7 +183,7 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Press(Vector2 position, int id)
     {
-        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+        if (!Player.Tower.TurnController.AbleToMakeMove)
             return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && !IsEmpty(equipmentSlot) && equipmentSlot.Press(position, id))
@@ -193,7 +193,7 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Hold(Vector2 position, int id)
     {
-        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+        if (!Player.Tower.TurnController.AbleToMakeMove)
             return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && equipmentSlot.Hold(position, id))
@@ -203,7 +203,7 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public bool Release(Vector2 position, int id)
     {
-        if (!PlayerEntity.Tower.TurnController.AbleToMakeMove)
+        if (!Player.Tower.TurnController.AbleToMakeMove)
             return false;
         foreach (EquipmentSlot equipmentSlot in allSlots)
             if (equipmentSlot.Active && equipmentSlot.Release(position, id))
@@ -229,7 +229,7 @@ public class Inventory : MonoBehaviour, IInteractive
     private EquipmentSlot FindItem(Item item) => allSlots.Find(slot => slot.Item == item);
     private EquipmentSlot FindEmptyBackpackSlot() => backpackSlots.FirstOrDefault(slot => slot.Item == null);
     private bool IsEmpty(EquipmentSlot equipmentSlot) => IsEmpty(equipmentSlot.Item);
-    private bool IsEmpty(Item item) => item == null || item == PlayerEntity.defaultWeapon || item == PlayerEntity.defaultArmour;
+    private bool IsEmpty(Item item) => item == null || item == Player.defaultWeapon || item == Player.defaultArmour;
 
     public void TryDropEquipment(EquipmentSlot equipmentSlot)
     {
@@ -239,18 +239,18 @@ public class Inventory : MonoBehaviour, IInteractive
 
             if (IsEquippedArmor(equipmentSlot))
             {
-                if (PlayerEntity.defaultArmour == null)
+                if (Player.defaultArmour == null)
                 {
                     armorSlot.Hide();
-                    PlayerEntity.armor.Unequip();
+                    Player.armor.Unequip();
                 }
                 else
-                    Equip(PlayerEntity.defaultArmour);
+                    Equip(Player.defaultArmour);
             }
             else if (IsEquippedWeapon(equipmentSlot))
-                Equip(PlayerEntity.defaultWeapon);
+                Equip(Player.defaultWeapon);
 
-            ShowDrop(PlayerEntity.Cell.ItemEntities);
+            ShowDrop(Player.Cell.Items);
         }
     }
 
@@ -303,9 +303,9 @@ public class Inventory : MonoBehaviour, IInteractive
             if (equipmentSlot.Item.collectable)
                 TryPutInInventory(equipmentSlot);
             else
-                equipmentSlot.Item.Use(PlayerEntity);
+                equipmentSlot.Item.Use(Player);
         }
         else if (IsInBackpack(equipmentSlot))
-            equipmentSlot.Item.Use(PlayerEntity);
+            equipmentSlot.Item.Use(Player);
     }
 }

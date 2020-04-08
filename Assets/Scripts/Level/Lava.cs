@@ -35,7 +35,7 @@ public class Lava : MonoBehaviour
     private void CheckCreatures(int y)
     {
         for (int x = 0; x < tower.Size.x; x++)
-            if (tower[y, x].CreatureEntity is CreatureEntity creature)
+            if (tower[y, x].Creature is Creature creature)
                 creature.Die();
     }
 

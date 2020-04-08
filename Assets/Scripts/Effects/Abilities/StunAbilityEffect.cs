@@ -3,19 +3,19 @@
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/StunAbilityEffect", order = 1)]
 public class StunAbilityEffect : Effect
 {
-    public override void ApplyEffect(CreatureEntity creatureEntity)
+    public override void ApplyEffect(Creature creature)
     {
-        base.ApplyEffect(creatureEntity);
-        creatureEntity.PrepareMoveEvent += StunEvent;
+        base.ApplyEffect(creature);
+        creature.PrepareMoveEvent += StunEvent;
     }
 
-    public override void RemoveEffect(CreatureEntity creatureEntity)
+    public override void RemoveEffect(Creature creature)
     {
-        base.RemoveEffect(creatureEntity);
-        creatureEntity.PrepareMoveEvent -= StunEvent;
+        base.RemoveEffect(creature);
+        creature.PrepareMoveEvent -= StunEvent;
     }
 
-    private void StunEvent(CreatureEntity sender, Cell target)
+    private void StunEvent(Creature sender, Cell target)
     {
         sender.SkipTurn = true;
         FinishMove();

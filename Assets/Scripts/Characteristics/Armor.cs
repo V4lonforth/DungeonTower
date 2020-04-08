@@ -10,23 +10,23 @@ public class Armor
     public bool Equipped => armorItem != null;
     public bool Destroyed => !Equipped || armorItem.armor.Destroyed;
 
-    private CreatureEntity parent;
+    private Creature parent;
 
-    public void Awake(CreatureEntity creatureEntity)
+    public void Awake(Creature creature)
     {
-        parent = creatureEntity;
+        parent = creature;
         if (armorItem != null)
             Equip(armorItem);
     }
 
     public void Break()
     {
-        if (parent is PlayerEntity playerEntity)
+        if (parent is Player player)
         {
-            if (armorItem != playerEntity.defaultArmour)
+            if (armorItem != player.defaultArmour)
             {
                 armorItem.Destroy();
-                playerEntity.InputController.Inventory.Equip(playerEntity.defaultArmour);
+                player.InputController.Inventory.Equip(player.defaultArmour);
             }
         }
     }

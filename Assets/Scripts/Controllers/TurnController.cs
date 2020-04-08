@@ -22,17 +22,17 @@ public class TurnController : MonoBehaviour
 
     private MoveState turnState;
 
-    private List<CreatureEntity> enemiesPreparingMove;
-    private List<CreatureEntity> enemiesMakingMove;
-    private List<CreatureEntity> enemiesFinishingMove;
+    private List<Creature> enemiesPreparingMove;
+    private List<Creature> enemiesMakingMove;
+    private List<Creature> enemiesFinishingMove;
 
     private Dictionary<MoveState, Action> turnActions;
 
     private void Awake()
     {
-        enemiesPreparingMove = new List<CreatureEntity>();
-        enemiesMakingMove = new List<CreatureEntity>();
-        enemiesFinishingMove = new List<CreatureEntity>();
+        enemiesPreparingMove = new List<Creature>();
+        enemiesMakingMove = new List<Creature>();
+        enemiesFinishingMove = new List<Creature>();
 
         turnActions = new Dictionary<MoveState, Action>()
         {
@@ -62,7 +62,7 @@ public class TurnController : MonoBehaviour
     {
         turnState = MoveState.PlayerPreparingMove;
         foreach (Cell cell in Tower.Cells)
-            if (cell.CreatureEntity is EnemyEntity enemy)
+            if (cell.Creature is Enemy enemy)
                 enemiesPreparingMove.Add(enemy);
     }
     private void PreparePlayerMove()
@@ -90,7 +90,7 @@ public class TurnController : MonoBehaviour
     private void PrepareEnemiesMove()
     {
         turnState = MoveState.EnemiesMakingMove;
-        foreach (CreatureEntity creature in enemiesPreparingMove)
+        foreach (Creature creature in enemiesPreparingMove)
         {
             creature.PrepareMove();
             enemiesMakingMove.Add(creature);
@@ -100,9 +100,9 @@ public class TurnController : MonoBehaviour
     private void MakeEnemiesMove()
     {
         turnState = MoveState.EnemiesFinishingMove;
-        foreach (CreatureEntity creature in enemiesMakingMove)
+        foreach (Creature creature in enemiesMakingMove)
         {
-            if (creature.State == CreatureEntity.MoveState.MakingMove)
+            if (creature.State == Creature.MoveState.MakingMove)
             {
                 creature.MakeMove();
                 enemiesFinishingMove.Add(creature);
@@ -135,21 +135,21 @@ public class TurnController : MonoBehaviour
             }
     }
 
-    public void ForceMove(EnemyEntity enemyEntity)
+    public void ForceMove(Enemy enemy)
     {
-        if (enemiesPreparingMove.Remove(enemyEntity))
-            enemyEntity.PrepareMove();
-        if (enemyEntity.State == CreatureEntity.MoveState.MakingMove)
+        if (enemiesPreparingMove.Remove(enemy))
+            enemy.PrepareMove();
+        if (enemy.State == Creature.MoveState.MakingMove)
         {
-            enemyEntity.MakeMove();
-            enemiesFinishingMove.Add(enemyEntity);
+            enemy.MakeMove();
+            enemiesFinishingMove.Add(enemy);
         }
     }
 
-    public void DestroyEnemy(EnemyEntity enemyEntity)
+    public void DestroyEnemy(Enemy enemy)
     {
-        enemiesPreparingMove.Remove(enemyEntity);
-        enemiesMakingMove.Remove(enemyEntity);
-        enemiesFinishingMove.Remove(enemyEntity);
+        enemiesPreparingMove.Remove(enemy);
+        enemiesMakingMove.Remove(enemy);
+        enemiesFinishingMove.Remove(enemy);
     }
 }

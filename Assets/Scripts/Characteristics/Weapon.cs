@@ -8,21 +8,21 @@ public class Weapon
 
     public TextMeshPro text;
 
-    private CreatureEntity parent;
+    private Creature parent;
 
-    public void Awake(CreatureEntity creatureEntity)
+    public void Awake(Creature creature)
     {
-        parent = creatureEntity;
+        parent = creature;
         if (weaponItem != null)
             Equip(weaponItem);
     }
 
-    private Damage GetDamage(CreatureEntity target)
+    private Damage GetDamage(Creature target)
     {
         return new Damage(weaponItem.damage, DamageType.Physical, parent, target);
     }
 
-    public void Attack(CreatureEntity creature)
+    public void Attack(Creature creature)
     {
         Damage damage = GetDamage(creature);
         parent.AttackEvent?.Invoke(damage);

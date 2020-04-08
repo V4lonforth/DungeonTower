@@ -2,7 +2,7 @@
 {
     public int uses;
 
-    public override void Use(PlayerEntity player)
+    public override void Use(Player player)
     {
         uses--;
         if (uses <= 0)

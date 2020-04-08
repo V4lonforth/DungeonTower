@@ -5,16 +5,16 @@ public class BlockDamagePassiveEffect : Effect
 {
     public float probability;
 
-    public override void ApplyEffect(CreatureEntity creatureEntity)
+    public override void ApplyEffect(Creature creature)
     {
-        base.ApplyEffect(creatureEntity);
-        creatureEntity.TakeDamageEvent += BlockDamage;
+        base.ApplyEffect(creature);
+        creature.TakeDamageEvent += BlockDamage;
         
     }
-    public override void RemoveEffect(CreatureEntity creatureEntity)
+    public override void RemoveEffect(Creature creature)
     {
-        base.RemoveEffect(creatureEntity);
-        creatureEntity.TakeDamageEvent -= BlockDamage;
+        base.RemoveEffect(creature);
+        creature.TakeDamageEvent -= BlockDamage;
     }
 
     private void BlockDamage(Damage damage)

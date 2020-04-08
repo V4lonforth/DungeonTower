@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class CreatureEntity : Entity
+public abstract class Creature : MonoBehaviour
 {
+    public Cell Cell { get; protected set; }
+    public Room Room => Cell.Room;
+    public Tower Tower => Room.Tower;
+    public TurnController TurnController => Tower.TurnController;
+
     public enum MoveState
     {
         PreparingMove,
@@ -12,7 +17,7 @@ public abstract class CreatureEntity : Entity
         FinishingMove
     }
 
-    public delegate void MoveEvent(CreatureEntity sender, Cell target);
+    public delegate void MoveEvent(Creature sender, Cell target);
     public delegate void DamageEvent(Damage damage);
 
     public MoveEvent PrepareMoveEvent;
@@ -46,12 +51,13 @@ public abstract class CreatureEntity : Entity
     private const float MovingTime = 0.1f;
     private const float AttackTime = 0.075f;
     private const float AttackMovingSpeed = 3f;
-
-    public new static CreatureEntity Instantiate(GameObject prefab, Cell cell)
+    
+    public static Creature Instantiate(GameObject prefab, Cell cell)
     {
-        CreatureEntity entity = (CreatureEntity)Entity.Instantiate(prefab, cell);
-        cell.CreatureEntity = entity;
-        return entity;
+        Creature creature = Instantiate(prefab, cell.transform).GetComponent<Creature>();
+        creature.Cell = cell;
+        cell.Creature = creature;
+        return creature;
     }
 
     protected void Awake()
@@ -69,17 +75,17 @@ public abstract class CreatureEntity : Entity
         FacingDirection = Direction.Right;
     }
 
-    public override void Destroy()
+    public void Destroy()
     {
-        base.Destroy();
-        Cell.CreatureEntity = null;
+        Destroy(gameObject);
+        Cell.Creature = null;
     }
 
     public virtual void MoveTo(Cell cell)
     {
-        if (Cell != null && Cell.CreatureEntity == this)
-            Cell.CreatureEntity = null;
-        cell.CreatureEntity = this;
+        if (Cell != null && Cell.Creature == this)
+            Cell.Creature = null;
+        cell.Creature = this;
         Cell = cell;
 
         IsAnimated = true;
@@ -104,7 +110,7 @@ public abstract class CreatureEntity : Entity
         }
     }
 
-    protected virtual void Attack(CreatureEntity creature)
+    protected virtual void Attack(Creature creature)
     {
         IsAnimated = true;
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
@@ -182,16 +188,16 @@ public abstract class CreatureEntity : Entity
             Cell.OpenDoor(cell);
             if (SelectedAbility != null)
                 SelectedAbility.Use(cell);
-            else if (cell.CreatureEntity is null)
+            else if (cell.Creature is null)
                 MoveTo(cell);
             else
-                Interact(cell.CreatureEntity);
+                Interact(cell.Creature);
             return true;
         }
         return false;
     }
 
-    protected abstract void Interact(CreatureEntity creature);
+    protected abstract void Interact(Creature creature);
 
     public virtual void PrepareMove()
     {
@@ -214,5 +220,6 @@ public abstract class CreatureEntity : Entity
         ActiveAbility?.FinishMove();
         State = MoveState.PreparingMove;
     }
+    public abstract string GetDescription();
     public abstract void Die();
 }

@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour, IInteractive
     public AbilityController AbilityController { get; private set; }
 
     public Tower Tower { get; set; }
-    public PlayerEntity PlayerEntity { get; set; }
+    public Player Player { get; set; }
 
     private void Awake()
     {

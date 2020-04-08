@@ -10,18 +10,18 @@ public abstract class Item : MonoBehaviour
     public int value;
     public bool collectable;
 
-    public static Item Instantiate(Item item, Cell cell)
+    public static Item Instantiate(Item itemPrefab, Cell cell)
     {
-        Item entity = Instantiate(item.prefab, cell.transform).GetComponent<Item>();
-        entity.Cell = cell;
-        cell.ItemEntities.Add(entity);
-        return entity;
+        Item item = Instantiate(itemPrefab.prefab, cell.transform).GetComponent<Item>();
+        item.Cell = cell;
+        cell.Items.Add(item);
+        return item;
     }
 
     public void Destroy()
     {
         Destroy(gameObject);
-        Cell?.ItemEntities.Remove(this);
+        Cell?.Items.Remove(this);
         EquipmentSlot?.DetachItem();
     }
 
@@ -41,7 +41,7 @@ public abstract class Item : MonoBehaviour
 
     public void AttachToCell(Cell cell)
     {
-        cell.ItemEntities.Add(this);
+        cell.Items.Add(this);
         Cell = cell;
         transform.SetParent(cell.transform);
         transform.position = cell.transform.position;
@@ -51,11 +51,11 @@ public abstract class Item : MonoBehaviour
     {
         if (Cell != null)
         {
-            Cell.ItemEntities.Remove(this);
+            Cell.Items.Remove(this);
             Cell = null;
         }
     }
 
-    public abstract void Use(PlayerEntity player);
+    public abstract void Use(Player player);
     public abstract string GetDescription();
 }

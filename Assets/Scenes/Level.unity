@@ -1776,6 +1776,7 @@ GameObject:
   - component: {fileID: 1555518223}
   - component: {fileID: 1555518222}
   - component: {fileID: 1555518226}
+  - component: {fileID: 1555518227}
   - component: {fileID: 1555518228}
   m_Layer: 0
   m_Name: TowerGenerator
@@ -1915,16 +1916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldText: {fileID: 529740889}
-  armorItems:
-  - {fileID: 5563039525762108147, guid: ee0a1ffe7950d064181010dc8f09fee6, type: 3}
-  potionItems:
-  - {fileID: 4594997411175087559, guid: 9551d37c2d1b9cb498ac22828c1765fb, type: 3}
-  weaponItems:
-  - {fileID: 8336715344871862006, guid: d219141b4ae42fd439f78d681674975e, type: 3}
-  goldItems:
-  - {fileID: 5658968545976273666, guid: 4749884089040114985b0d9579c48398, type: 3}
-  chestItems:
-  - {fileID: 811860787870745194, guid: 73743375378d6da4ca071b3244745624, type: 3}
   enemyGroups:
     enemyGroups:
     - weight: 1
@@ -1939,6 +1930,28 @@ MonoBehaviour:
         weight: 1
   playerPrefab: {fileID: 1677155915308444074, guid: a04e4ae77b45c0940b1315bafb07a7c3,
     type: 3}
+--- !u!114 &1555518227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555518219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c96e7e1a0657d4cbec54140da5d8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorItems:
+  - {fileID: 3424625144400802962, guid: ee0a1ffe7950d064181010dc8f09fee6, type: 3}
+  weaponItems:
+  - {fileID: 2554363320370677883, guid: d219141b4ae42fd439f78d681674975e, type: 3}
+  potionItems:
+  - {fileID: 6816704319335838144, guid: 9551d37c2d1b9cb498ac22828c1765fb, type: 3}
+  goldItems:
+  - {fileID: 6083529626753099133, guid: 4749884089040114985b0d9579c48398, type: 3}
+  chestItems:
+  - {fileID: 6257736942724893710, guid: 73743375378d6da4ca071b3244745624, type: 3}
 --- !u!114 &1555518228
 MonoBehaviour:
   m_ObjectHideFlags: 0

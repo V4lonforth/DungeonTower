@@ -5,16 +5,16 @@ public class FireWeaponEffect : Effect
 {
     public int extraDamage;
 
-    public override void ApplyEffect(CreatureEntity creatureEntity)
+    public override void ApplyEffect(Creature creature)
     {
-        base.ApplyEffect(creatureEntity);
-        creatureEntity.AttackEvent += AttackEffect;
+        base.ApplyEffect(creature);
+        creature.AttackEvent += AttackEffect;
     }
 
-    public override void RemoveEffect(CreatureEntity creatureEntity)
+    public override void RemoveEffect(Creature creature)
     {
-        base.RemoveEffect(creatureEntity);
-        creatureEntity.AttackEvent -= AttackEffect;
+        base.RemoveEffect(creature);
+        creature.AttackEvent -= AttackEffect;
     }
 
     private void AttackEffect(Damage damage)

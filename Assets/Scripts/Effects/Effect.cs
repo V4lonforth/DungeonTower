@@ -5,15 +5,15 @@ public abstract class Effect : ScriptableObject
     public bool canExpire;
     public int timeToExpire;
 
-    protected CreatureEntity creatureEntity;
+    protected Creature creature;
 
-    public virtual void ApplyEffect(CreatureEntity creatureEntity)
+    public virtual void ApplyEffect(Creature creature)
     {
-        this.creatureEntity = creatureEntity;
+        this.creature = creature;
     }
-    public virtual void RemoveEffect(CreatureEntity creatureEntity)
+    public virtual void RemoveEffect(Creature creature)
     {
-        creatureEntity.Effects.Remove(this);
+        creature.Effects.Remove(this);
     }
 
     protected void FinishMove()
@@ -22,7 +22,7 @@ public abstract class Effect : ScriptableObject
         {
             timeToExpire--;
             if (timeToExpire <= 0)
-                RemoveEffect(creatureEntity);
+                RemoveEffect(creature);
         }
     }
 }

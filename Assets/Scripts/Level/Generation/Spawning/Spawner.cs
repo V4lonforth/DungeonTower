@@ -41,11 +41,11 @@ public class Spawner : MonoBehaviour
 
     public int GenerateEnemy(GameObject enemy, Cell cell)
     {
-        return ((EnemyEntity)CreatureEntity.Instantiate(enemy, cell)).strength;
+        return ((Enemy)Creature.Instantiate(enemy, cell)).strength;
     }
 
-    public PlayerEntity GeneratePlayer(Cell cell)
+    public Player GeneratePlayer(Cell cell)
     {
-        return PlayerEntity.Instantiate(playerPrefab, cell, goldText);
+        return Player.Instantiate(playerPrefab, cell, goldText);
     }
 }

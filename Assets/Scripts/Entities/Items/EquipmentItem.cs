@@ -6,24 +6,24 @@ public abstract class EquipmentItem : Item
 
     public static WeaponItem Instantiate(EquipmentItem equipmentItem, Cell cell)
     {
-        WeaponItem entity = (WeaponItem)Item.Instantiate(equipmentItem, cell);
-        for (int i = 0; i < entity.effects.Count; i++)
-            entity.effects[i] = Instantiate(entity.effects[i]);
-        return entity;
+        WeaponItem weapon = (WeaponItem)Item.Instantiate(equipmentItem, cell);
+        for (int i = 0; i < weapon.effects.Count; i++)
+            weapon.effects[i] = Instantiate(weapon.effects[i]);
+        return weapon;
     }
 
-    public void Equip(CreatureEntity creatureEntity)
+    public void Equip(Creature creature)
     {
         foreach (Effect effect in effects)
-            effect.ApplyEffect(creatureEntity);
+            effect.ApplyEffect(creature);
     }
-    public void Unequip(CreatureEntity creatureEntity)
+    public void Unequip(Creature creature)
     {
         foreach (Effect effect in effects)
-            effect.RemoveEffect(creatureEntity);
+            effect.RemoveEffect(creature);
     }
 
-    public override void Use(PlayerEntity player)
+    public override void Use(Player player)
     {
         player.InputController.Inventory.Equip(this);
     }

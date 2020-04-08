@@ -5,15 +5,15 @@ public abstract class ActiveAbility : MonoBehaviour
     public bool targetRequired;
     public int cooldown;
 
-    public bool Selected => CreatureEntity.SelectedAbility == this;
+    public bool Selected => Creature.SelectedAbility == this;
     public bool Recharged => turnsToRecharge <= 0;
-    public CreatureEntity CreatureEntity { get; private set; }
+    public Creature Creature { get; private set; }
 
     private int turnsToRecharge;
 
     protected void Awake()
     {
-        CreatureEntity = GetComponent<CreatureEntity>();
+        Creature = GetComponent<Creature>();
     }
 
     public void FinishMove()
@@ -24,13 +24,13 @@ public abstract class ActiveAbility : MonoBehaviour
 
     public void SelectAbility()
     {
-        if (CreatureEntity.SelectedAbility != null)
+        if (Creature.SelectedAbility != null)
             DeselectAbility();
-        CreatureEntity.SelectedAbility = this;
+        Creature.SelectedAbility = this;
     }
     public void DeselectAbility()
     {
-        CreatureEntity.SelectedAbility = null;
+        Creature.SelectedAbility = null;
     }
 
     public bool Use(Cell cell)

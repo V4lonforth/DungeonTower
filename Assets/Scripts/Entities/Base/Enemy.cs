@@ -1,4 +1,4 @@
-﻿public class EnemyEntity : CreatureEntity
+﻿public class Enemy : Creature
 {
     public int strength;
     private bool aggroed;
@@ -33,16 +33,16 @@
         foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
         {
             Cell cell = Cell.ConnectedCells[direction];
-            if (cell.CreatureEntity is PlayerEntity player)
+            if (cell.Creature is Player player)
             {
                 MakeMove(cell);
                 break;
             }
             else
             {
-                if (cell.CreatureEntity is EnemyEntity enemy)
+                if (cell.Creature is Enemy enemy)
                     TurnController.ForceMove(enemy);
-                if (!(cell.CreatureEntity is EnemyEntity))
+                if (!(cell.Creature is Enemy))
                 {
                     MakeMove(cell);
                     break;
@@ -51,7 +51,7 @@
         }
     }
 
-    protected override void Interact(CreatureEntity creature)
+    protected override void Interact(Creature creature)
     {
         Attack(creature);
     }

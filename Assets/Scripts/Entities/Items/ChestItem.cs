@@ -11,7 +11,7 @@ public class ChestItem : Item
         return "Chest";
     }
 
-    public override void Use(PlayerEntity player)
+    public override void Use(Player player)
     {
         if (!Opened)
         {
@@ -24,9 +24,9 @@ public class ChestItem : Item
                 contentValue -= player.Tower.TowerGenerator.LootGenerator.GenerateItem(Cell, false);
             }
 
-            foreach (Item itemEntity in Cell.ItemEntities)
-                if (itemEntity != this)
-                    itemEntity.GetComponent<SpriteRenderer>().enabled = false;
+            foreach (Item item in Cell.Items)
+                if (item != this)
+                    item.GetComponent<SpriteRenderer>().enabled = false;
 
             player.SetTarget(player.Cell);
         }

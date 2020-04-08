@@ -14,6 +14,6 @@ public class EnemyGroup
 
     public GameObject GetRandomEnemy(int strength)
     {
-        return MathHelper.GetRandomElement(enemies.FindAll(element => element.element.GetComponent<EnemyEntity>().strength <= strength), enemy => enemy.weight)?.element;
+        return MathHelper.GetRandomElement(enemies.FindAll(element => element.element.GetComponent<Enemy>().strength <= strength), enemy => enemy.weight)?.element;
     }
 }
