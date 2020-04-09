@@ -35,6 +35,7 @@ public class MapInputController : IInteractive
         foreach (Direction direction in Direction.Values)
         {
             float diff = Mathf.Abs(direction.Angle - angle);
+            diff = diff > 180 ? 360 - diff : diff;
             if (diff < minAngle)
             {
                 minAngle = diff;
