@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class Linker : MonoBehaviour
 {
@@ -39,10 +40,13 @@ public class Linker : MonoBehaviour
         first.AdjacentRooms.Add(second.Room);
         second.AdjacentRooms.Add(first.Room);
 
-        if (!first.Room.AdjacentRooms.Contains(second.Room))
-            first.Room.AdjacentRooms.Add(second.Room);
-        if (!second.Room.AdjacentRooms.Contains(first.Room))
-            second.Room.AdjacentRooms.Add(first.Room);
+        if (Direction.Straights.Contains(direction))
+        {
+            if (!first.Room.AdjacentRooms.Contains(second.Room))
+                first.Room.AdjacentRooms.Add(second.Room);
+            if (!second.Room.AdjacentRooms.Contains(first.Room))
+                second.Room.AdjacentRooms.Add(first.Room);
+        }
     }
 
     public void UnlinkCell(Cell cell)
