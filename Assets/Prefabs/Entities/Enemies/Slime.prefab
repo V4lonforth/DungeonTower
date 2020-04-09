@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff04d71c5e7f0e41a5f839c05f514cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementCooldown: 1
+  movementCooldown: 0.75
   animatedSprite: {fileID: 2318149054017695747}
   health:
     health:

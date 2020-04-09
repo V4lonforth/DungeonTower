@@ -40,7 +40,7 @@
             if (!(cell.Creature is Enemy))
             {
                 MakeMove(cell);
-                break;
+                return;
             }
         }
         SetCooldown(wakeUpCooldown);
