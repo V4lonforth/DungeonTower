@@ -1798,7 +1798,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 5, y: 100}
-  maxRoomSize: 15
+  maxRoomSize: 12
+  minRoomSize: 4
   cellPrefab: {fileID: 4624443636631225018, guid: 84a028374b832b346b050b8e0f6590ca,
     type: 3}
   roomPrefab: {fileID: 3431831565356500941, guid: ceec28e8b50a7ca429ce74a2dad76efc,

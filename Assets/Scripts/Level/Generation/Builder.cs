@@ -5,6 +5,7 @@ public class Builder : MonoBehaviour
 {
     public Vector2Int size;
     public int maxRoomSize;
+    public int minRoomSize;
 
     public GameObject cellPrefab;
     public GameObject roomPrefab;
@@ -16,60 +17,51 @@ public class Builder : MonoBehaviour
 
         Cell[,] cells = new Cell[size.y, size.x];
         List<Room> roomList = new List<Room>();
-
-        for (Vector2Int pos = Vector2Int.zero; pos.x < size.x; pos.x++)
-            for (pos.y = 0; pos.y < size.y; pos.y++)
-                if (cells[pos.y, pos.x] is null)
-                    roomList.Add(CreateRoom(cells, tower, pos));
-
         tower.Cells = cells;
-        tower.Rooms = roomList.ToArray();
         tower.Size = size;
+
+        for (Vector2Int pos = Vector2Int.zero; pos.y < size.y; pos.y++)
+            for (pos.x = 0; pos.x < size.x; pos.x++)
+                if (cells[pos.y, pos.x] is null)
+                    roomList.Add(CreateRoom(tower, pos, Random.Range(minRoomSize, maxRoomSize + 1)));
+
+        tower.Rooms = roomList.ToArray();
         tower.Navigator = new Navigator(tower);
 
         return tower;
     }
 
-    private Room CreateRoom(Cell[,] cells, Tower tower, Vector2Int position)
+    private Room CreateRoom(Tower tower, Vector2Int position, int maxSize)
     {
         Room room = Room.Instantiate(roomPrefab, tower);
-        CreateCell(cells, room, position, 0, maxRoomSize);
+        List<Vector2Int> surroundings = new List<Vector2Int>();
+        AddCell(tower, room, position, surroundings);
+        int currentSize = 1;
+        while (currentSize < maxSize && surroundings.Count > 0)
+        {
+            SortSurroundings(surroundings, position);
+            int index = 0;
+            Vector2Int newPosition = surroundings[index];
+            surroundings.RemoveAt(index);
+            AddCell(tower, room, newPosition, surroundings);
+            currentSize++;
+        }
         return room;
     }
 
-    private float GetChance(int cellsGenerated, int maxCellsCount, int absentCellCount)
+    private void SortSurroundings(List<Vector2Int> surroundings, Vector2Int center)
     {
-        return (1 - (float)cellsGenerated / maxCellsCount) * (Direction.DirectionsAmount - absentCellCount) / 4f;
+        surroundings.Sort((a, b) => Mathf.Max(a.x - center.x, a.y - center.y).CompareTo(Mathf.Max(b.x - center.x, b.y - center.y)));
     }
 
-    private List<Direction> FindAbsentCellDirections(Cell[,] cells, Vector2Int position)
+    private void AddCell(Tower tower, Room room, Vector2Int position, List<Vector2Int> surroundings)
     {
-        List<Direction> directions = new List<Direction>();
-        foreach (Direction direction in Direction.Straights)
+        tower[position] = Cell.Instantiate(cellPrefab, room, position);
+        foreach (Direction direction in Direction.Values)
         {
             Vector2Int shiftedPosition = direction.ShiftPosition(position);
-            if (MathHelper.InRange(shiftedPosition, size) && cells[shiftedPosition.y, shiftedPosition.x] is null)
-                directions.Add(direction);
+            if (MathHelper.InRange(shiftedPosition, tower.Size) && tower[shiftedPosition] == null && !surroundings.Contains(shiftedPosition))
+                surroundings.Add(shiftedPosition);
         }
-        return directions;
-    }
-
-    private int CreateCell(Cell[,] cells, Room room, Vector2Int position, int cellsGenerated, int maxCellsCount)
-    {
-        List<Direction> absentCellDirections = FindAbsentCellDirections(cells, position);
-        float rand = Random.Range(0f, 1f);
-        if (rand <= GetChance(cellsGenerated, maxCellsCount, absentCellDirections.Count))
-        {
-            cells[position.y, position.x] = Cell.Instantiate(cellPrefab, room, position);
-            int localCellsGenerated = 1;
-            foreach (Direction direction in absentCellDirections)
-            {
-                Vector2Int shiftedPosition = direction.ShiftPosition(position);
-                if (MathHelper.InRange(shiftedPosition, size) && cells[shiftedPosition.y, shiftedPosition.x] == null)
-                    localCellsGenerated += CreateCell(cells, room, shiftedPosition, cellsGenerated + localCellsGenerated, maxCellsCount);
-            }
-            return localCellsGenerated;
-        }
-        return 0;
     }
 }
