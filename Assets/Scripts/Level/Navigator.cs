@@ -90,7 +90,6 @@ public class Navigator
             Vector2Int offsetA = a.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
             Vector2Int offsetB = b.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
             return offsetA.sqrMagnitude.CompareTo(offsetB.sqrMagnitude);
-            //return (Mathf.Abs(offsetB.x) + Mathf.Abs(offsetB.y)).CompareTo(Mathf.Abs(offsetA.x) + Mathf.Abs(offsetA.y));
         });
         return directions;
     }

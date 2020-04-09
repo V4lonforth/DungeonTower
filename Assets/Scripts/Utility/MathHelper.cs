@@ -5,6 +5,8 @@ using UnityEngine;
 
 public static class MathHelper
 {
+    public const int PixelsInUnit = 32;
+
     public static bool InRange(Vector2Int value, Vector2Int max)
     {
         return InRange(value, Vector2Int.zero, max);

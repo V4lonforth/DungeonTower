@@ -4,6 +4,12 @@
     public float wakeUpCooldown;
     private bool aggroed;
 
+    protected new void Awake()
+    {
+        base.Awake();
+        ChargeBar.Hide();
+    }
+
     public override void Die()
     {
         Destroy();
@@ -14,8 +20,9 @@
     {
         if (!aggroed)
         {
+            ChargeBar.Show();
             aggroed = true;
-            cooldown = wakeUpCooldown;
+            SetCooldown(wakeUpCooldown);
         }
     }
 
@@ -36,6 +43,7 @@
                 break;
             }
         }
+        SetCooldown(wakeUpCooldown);
     }
 
     protected override void Interact(Creature creature)

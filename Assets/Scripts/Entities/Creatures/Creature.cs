@@ -27,6 +27,7 @@ public abstract class Creature : MonoBehaviour
     public Armor armor;
     public Weapon weapon;
     
+    public ChargeBar ChargeBar { get; private set; }
     public Direction FacingDirection { get; private set; }
 
     public ActiveAbility ActiveAbility { get; private set; }
@@ -34,7 +35,8 @@ public abstract class Creature : MonoBehaviour
 
     public List<Effect> Effects { get; private set; }
 
-    protected float cooldown;
+    private float cooldown;
+    private float cooldownLeft;
 
     private AttackAnimation attackEffect;
 
@@ -57,7 +59,8 @@ public abstract class Creature : MonoBehaviour
         health.Awake();
         armor.Awake(this);
         weapon.Awake(this);
-        
+
+        ChargeBar = GetComponentInChildren<ChargeBar>();
         ActiveAbility = GetComponent<ActiveAbility>();
         GetComponent<PassiveAbility>()?.effect.ApplyEffect(this);
         Effects = new List<Effect>();
@@ -67,10 +70,21 @@ public abstract class Creature : MonoBehaviour
 
     protected void Update()
     {
-        if (cooldown > 0)
-            cooldown -= Time.deltaTime;
+        if (cooldownLeft > 0)
+        {
+            cooldownLeft -= Time.deltaTime;
+            ChargeBar.Fill(1f - (cooldownLeft / cooldown));
+        }
         else
+        {
+            ChargeBar.Fill(1f);
             MakeMove();
+        }
+    }
+
+    protected void SetCooldown(float cooldown)
+    {
+        this.cooldown = cooldownLeft = cooldown;
     }
 
     public void Destroy()
@@ -81,7 +95,7 @@ public abstract class Creature : MonoBehaviour
 
     public virtual void MoveTo(Cell cell)
     {
-        cooldown = movementCooldown;
+        SetCooldown(movementCooldown);
         if (Cell != null && Cell.Creature == this)
             Cell.Creature = null;
         cell.Creature = this;
@@ -112,7 +126,7 @@ public abstract class Creature : MonoBehaviour
     {
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
-        cooldown = weapon.weaponItem.cooldown;
+        SetCooldown(weapon.weaponItem.cooldown);
     }
 
     public void TakeDamage(Damage damage)
