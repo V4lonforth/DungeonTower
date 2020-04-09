@@ -53,7 +53,16 @@ public class Cell : MonoBehaviour
         if (cell.Room != Room)
         {
             Direction direction = GetDirectionToCell(cell);
-            Walls[direction].GetComponent<Door>().Open(direction);
+            if (Walls[direction] != null)
+                Walls[direction].GetComponent<Door>().Open(direction);
+            else if (Walls[direction.Clockwise] != null && ConnectedCells[direction.Clockwise] != null)
+                Walls[direction.Clockwise].GetComponent<Door>().Open(direction.Clockwise);
+            else if (Walls[direction.Counterclockwise] != null && ConnectedCells[direction.Counterclockwise] != null)
+                Walls[direction.Counterclockwise].GetComponent<Door>().Open(direction.Counterclockwise);
+            else if (cell.Walls[direction.Opposite.Clockwise] != null && cell.ConnectedCells[direction.Opposite.Clockwise] != null)
+                cell.Walls[direction.Opposite.Clockwise].GetComponent<Door>().Open(direction.Clockwise);
+            else if (cell.Walls[direction.Opposite.Counterclockwise] != null && cell.ConnectedCells[direction.Opposite.Counterclockwise] != null)
+                cell.Walls[direction.Opposite.Counterclockwise].GetComponent<Door>().Open(direction.Counterclockwise);
         }
     }
 }
