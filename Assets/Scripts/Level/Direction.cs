@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Direction
 {
@@ -21,6 +20,8 @@ public class Direction
     public Vector2Int Shift { get; private set; }
     public Vector2 UnitVector { get; private set; }
     public Direction Opposite => Values[oppositeValue];
+    public Direction Clockwise => Values[(Value - 1 + DirectionsAmount) % DirectionsAmount];
+    public Direction Counterclockwise => Values[(Value + 1) % DirectionsAmount];
 
     private int oppositeValue;
 
