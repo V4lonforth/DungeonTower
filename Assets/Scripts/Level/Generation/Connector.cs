@@ -67,7 +67,7 @@ public class Connector : MonoBehaviour
     {
         Cell[] lowestCells = new Cell[width];
         foreach (Cell cell in room.Cells)
-            if (MathHelper.InRange(cell.Position.x, width) && (!lowestCells[cell.Position.x] || lowestCells[cell.Position.x].Position.y > cell.Position.y))
+            if (MathHelper.InRange(cell.Position.x, width) && (lowestCells[cell.Position.x] == null || lowestCells[cell.Position.x].Position.y > cell.Position.y))
                 lowestCells[cell.Position.x] = cell;
         return lowestCells;
     }
@@ -75,7 +75,7 @@ public class Connector : MonoBehaviour
     {
         Cell[] highestCells = new Cell[width];
         foreach (Cell cell in room.Cells)
-            if (MathHelper.InRange(cell.Position.x, width) && (!highestCells[cell.Position.x] || highestCells[cell.Position.x].Position.y < cell.Position.y))
+            if (MathHelper.InRange(cell.Position.x, width) && (highestCells[cell.Position.x] == null || highestCells[cell.Position.x].Position.y < cell.Position.y))
                 highestCells[cell.Position.x] = cell;
         return highestCells;
     }

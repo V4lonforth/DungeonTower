@@ -31,7 +31,7 @@ public class Navigator
         seen[startCell.Position.y, startCell.Position.x] = true;
         Queue<Cell> queue = new Queue<Cell>();
         foreach (Direction direction in Direction.Values)
-            if (startCell.ConnectedCells[direction])
+            if (startCell.ConnectedCells[direction] != null)
                 queue.Enqueue(startCell.ConnectedCells[direction]);
 
         while (queue.Count > 0)
@@ -43,7 +43,7 @@ public class Navigator
             int minDistance = int.MaxValue;
             foreach (Cell connectedCell in cell.ConnectedCells)
             {
-                if (connectedCell)
+                if (connectedCell != null)
                 {
                     if (seen[connectedCell.Position.y, connectedCell.Position.x])
                     {
@@ -70,7 +70,7 @@ public class Navigator
         foreach (Direction direction in Direction.Values)
         {
             Cell connectedCell = cell.ConnectedCells[direction];
-            if (connectedCell && distance[cell.Position.y, cell.Position.x] > distance[connectedCell.Position.y, connectedCell.Position.x])
+            if (connectedCell != null && distance[cell.Position.y, cell.Position.x] > distance[connectedCell.Position.y, connectedCell.Position.x])
                 return direction;
         }
         return Direction.Top;
@@ -82,13 +82,13 @@ public class Navigator
         foreach (Direction direction in Direction.Values)
         {
             Cell connectedCell = cell.ConnectedCells[direction];
-            if (connectedCell && distance[cell.Position.y, cell.Position.x] > distance[connectedCell.Position.y, connectedCell.Position.x])
+            if (connectedCell != null && distance[cell.Position.y, cell.Position.x] > distance[connectedCell.Position.y, connectedCell.Position.x])
                 directions.Add(direction);
         }
         directions.Sort((a, b) =>
         {
-            Vector2Int offsetA = a.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
-            Vector2Int offsetB = b.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
+            Vector2Int offsetA = a.ShiftPosition(cell.Position2) - tower.Player.Cell.Position2;
+            Vector2Int offsetB = b.ShiftPosition(cell.Position2) - tower.Player.Cell.Position2;
             return offsetA.sqrMagnitude.CompareTo(offsetB.sqrMagnitude);
         });
         return directions;

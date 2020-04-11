@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [Serializable]
 public class RoomDecorations
 {
-    public List<WeightedGameObject> backgroundWalls;
-    public List<WeightedGameObject> horizontalWalls;
-    public List<WeightedGameObject> verticalWalls;
-    public List<WeightedGameObject> connectorWalls;
+    public TileBase floorTile;
+    public TileBase wallTile;
+    public TileBase rightDoorTile;
+    public TileBase leftDoorTile;
+    public TileBase bothDoorsTile;
 
-    public static GameObject GetGameObject(List<WeightedGameObject> weightedGameObjects)
-    {
-        return MathHelper.GetRandomElement(weightedGameObjects, weightedGameObject => weightedGameObject.weight).element;
-    }
+    public TileBase wallTransparentTile;
+
+    public TileBase rightDoorTransparentTile;
+    public TileBase leftDoorTransparentTile;
+    public TileBase bothDoorsTransparentTile;
 }

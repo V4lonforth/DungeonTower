@@ -48,7 +48,17 @@ public class Player : Creature
     public override void MoveTo(Cell cell)
     {
         InputController.Inventory.HideDrop();
+        CheckWallsTransparency(cell);
         base.MoveTo(cell);
+    }
+
+    private void CheckWallsTransparency(Cell cell)
+    {
+        if (cell.Room != Cell.Room)
+        {
+            Tower.TowerGenerator.Decorator.DecorateWalls(Cell.Room, true);
+            Tower.TowerGenerator.Decorator.DecorateWalls(cell.Room, false);
+        }
     }
 
     private void CheckCell()

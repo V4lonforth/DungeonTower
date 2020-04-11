@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class Tower
 {
     public Cell this[Vector2Int pos]
     {
@@ -13,19 +14,22 @@ public class Tower : MonoBehaviour
         set => Cells[y, x] = value;
     }
 
-    public Vector2Int Size { get; set; }
-    public Room[] Rooms { get; set; }
-    public Cell[,] Cells { get; set; }
+    public Vector2Int Size { get; private set; }
+    public List<Room> Rooms { get; private set; }
+    public Cell[,] Cells { get; private set; }
+
     public Player Player { get; set; }
 
-    public TowerGenerator TowerGenerator { get; set; }
-    public Lava Lava { get; set; }
-    public Navigator Navigator { get; set; }
+    public TowerGenerator TowerGenerator { get; private set; }
+    public Navigator Navigator { get; private set; }
 
-    private void Awake()
+    public Tower(Vector2Int size, TowerGenerator towerGenerator)
     {
-        Lava = GetComponentInChildren<Lava>();
-        FindObjectOfType<InputController>().Tower = this;
+        Cells = new Cell[size.y, size.x];
+        Rooms = new List<Room>();
+        Size = size;
+        Navigator = new Navigator(this);
+        TowerGenerator = towerGenerator;
     }
 
     public void Interact(Vector2Int position)

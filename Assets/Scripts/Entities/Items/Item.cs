@@ -12,7 +12,8 @@ public abstract class Item : MonoBehaviour
 
     public static Item Instantiate(Item itemPrefab, Cell cell)
     {
-        Item item = Instantiate(itemPrefab.prefab, cell.transform).GetComponent<Item>();
+        Item item = Instantiate(itemPrefab.prefab).GetComponent<Item>();
+        item.transform.position = cell.WorldPosition;
         item.Cell = cell;
         cell.Items.Add(item);
         return item;
@@ -43,8 +44,8 @@ public abstract class Item : MonoBehaviour
     {
         cell.Items.Add(this);
         Cell = cell;
-        transform.SetParent(cell.transform);
-        transform.position = cell.transform.position;
+        //transform.SetParent(cell.transform);
+        transform.position = cell.WorldPosition;
     }
 
     public void DetachFromCell()

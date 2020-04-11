@@ -46,7 +46,8 @@ public abstract class Creature : MonoBehaviour
     
     public static Creature Instantiate(GameObject prefab, Cell cell)
     {
-        Creature creature = Instantiate(prefab, cell.transform).GetComponent<Creature>();
+        Creature creature = Instantiate(prefab).GetComponent<Creature>();
+        creature.transform.position = cell.WorldPosition;
         creature.Cell = cell;
         cell.Creature = creature;
         return creature;
@@ -115,7 +116,7 @@ public abstract class Creature : MonoBehaviour
             }
             else
             {
-                transform.position += (Cell.transform.position - transform.position) * (Time.deltaTime / movingTimeLeft);
+                transform.position += (Cell.WorldPosition - transform.position) * (Time.deltaTime / movingTimeLeft);
                 movingTimeLeft -= Time.deltaTime;
                 yield return null;
             }
@@ -125,7 +126,7 @@ public abstract class Creature : MonoBehaviour
     protected virtual void Attack(Creature creature)
     {
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
-        attackEffect?.Attack(creature.transform.position, () => weapon.Attack(creature));
+        attackEffect?.Attack(creature.Cell.WorldPosition, () => weapon.Attack(creature));
         SetCooldown(weapon.weaponItem.cooldown);
     }
 
@@ -170,7 +171,7 @@ public abstract class Creature : MonoBehaviour
             time -= Time.deltaTime;
             yield return null;
         }
-        animatedSprite.transform.position = Cell.transform.position;
+        animatedSprite.transform.position = Cell.WorldPosition;
     }
 
     public void FinishAttackAnimation()
@@ -180,7 +181,7 @@ public abstract class Creature : MonoBehaviour
 
     protected virtual void StopMoving()
     {
-        transform.position = Cell.transform.position;
+        transform.position = Cell.WorldPosition;
     }
 
     protected bool CanInteract(Cell cell)

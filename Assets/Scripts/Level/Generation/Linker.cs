@@ -5,8 +5,6 @@ public class Linker : MonoBehaviour
 {
     public void Link(Tower tower)
     {
-        tower.Lava.Linker = this;
-        
         for (Vector2Int pos = Vector2Int.zero; pos.x < tower.Size.x; pos.x++)
             for (pos.y = 0; pos.y < tower.Size.y; pos.y++)
                 foreach (Direction direction in Direction.Values)
@@ -53,9 +51,9 @@ public class Linker : MonoBehaviour
     {
         foreach (Direction direction in Direction.Values)
         {
-            if (cell.AdjacentCells[direction])
+            if (cell.AdjacentCells[direction] != null)
                 cell.AdjacentCells[direction].AdjacentCells[direction.Opposite] = null;
-            if (cell.ConnectedCells[direction])
+            if (cell.ConnectedCells[direction] != null)
                 cell.ConnectedCells[direction].ConnectedCells[direction.Opposite] = null;
         }
     }

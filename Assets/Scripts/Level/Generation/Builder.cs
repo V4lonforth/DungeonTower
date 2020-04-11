@@ -7,33 +7,21 @@ public class Builder : MonoBehaviour
     public int maxRoomSize;
     public int minRoomSize;
 
-    public GameObject cellPrefab;
-    public GameObject roomPrefab;
-    public GameObject towerPrefab;
-
-    public Tower Build()
+    public Tower Build(TowerGenerator towerGenerator)
     {
-        Tower tower = Instantiate(towerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Tower>();
-
-        Cell[,] cells = new Cell[size.y, size.x];
-        List<Room> roomList = new List<Room>();
-        tower.Cells = cells;
-        tower.Size = size;
+        Tower tower = new Tower(size, towerGenerator);
 
         for (Vector2Int pos = Vector2Int.zero; pos.y < size.y; pos.y++)
             for (pos.x = 0; pos.x < size.x; pos.x++)
-                if (cells[pos.y, pos.x] is null)
-                    roomList.Add(CreateRoom(tower, pos, Random.Range(minRoomSize, maxRoomSize + 1)));
-
-        tower.Rooms = roomList.ToArray();
-        tower.Navigator = new Navigator(tower);
+                if (tower[pos] is null)
+                    tower.Rooms.Add(CreateRoom(tower, pos, Random.Range(minRoomSize, maxRoomSize + 1)));
 
         return tower;
     }
 
     private Room CreateRoom(Tower tower, Vector2Int position, int maxSize)
     {
-        Room room = Room.Instantiate(roomPrefab, tower);
+        Room room = new Room(tower);
         List<Vector2Int> surroundings = new List<Vector2Int>();
         AddCell(tower, room, position, surroundings);
         int currentSize = 1;
@@ -56,7 +44,8 @@ public class Builder : MonoBehaviour
 
     private void AddCell(Tower tower, Room room, Vector2Int position, List<Vector2Int> surroundings)
     {
-        tower[position] = Cell.Instantiate(cellPrefab, room, position);
+        tower[position] = new Cell(room, new Vector3Int(position.x, position.y, room.Number));
+        room.AddCell(tower[position]);
         foreach (Direction direction in Direction.Values)
         {
             Vector2Int shiftedPosition = direction.ShiftPosition(position);

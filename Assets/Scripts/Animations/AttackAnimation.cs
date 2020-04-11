@@ -18,7 +18,7 @@ public class AttackAnimation : MonoBehaviour
     public void Attack(Vector3 position, Action action)
     {
         transform.position = position;
-        transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0, 4) * 90f);
+        //transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0, 4) * 90f);
         gameObject.SetActive(true);
         animator.SetTrigger("Attack");
 

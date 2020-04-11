@@ -30,8 +30,8 @@ public class TowerGenerator : MonoBehaviour
 
     public void Generate()
     {
-        Tower tower = Builder.Build();
-        tower.TowerGenerator = this;
+        Tower tower = Builder.Build(this);
+        FindObjectOfType<InputController>().Tower = tower;
         Linker.Link(tower);
         Connector.Connect(tower);
         Decorator.Decorate(tower);
