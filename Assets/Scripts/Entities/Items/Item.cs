@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-public abstract class Item : MonoBehaviour
+public abstract class Item : Entity
 {
-    public Cell Cell { get; private set; }
     public EquipmentSlot EquipmentSlot { get; private set; }
 
     public GameObject prefab;
@@ -12,16 +11,14 @@ public abstract class Item : MonoBehaviour
 
     public static Item Instantiate(Item itemPrefab, Cell cell)
     {
-        Item item = Instantiate(itemPrefab.prefab).GetComponent<Item>();
-        item.transform.position = cell.WorldPosition;
-        item.Cell = cell;
+        Item item = Instantiate(itemPrefab.prefab, cell).GetComponent<Item>();
         cell.Items.Add(item);
         return item;
     }
 
-    public void Destroy()
+    public override void Destroy()
     {
-        Destroy(gameObject);
+        base.Destroy();
         Cell?.Items.Remove(this);
         EquipmentSlot?.DetachItem();
     }
@@ -44,7 +41,6 @@ public abstract class Item : MonoBehaviour
     {
         cell.Items.Add(this);
         Cell = cell;
-        //transform.SetParent(cell.transform);
         transform.position = cell.WorldPosition;
     }
 
@@ -58,5 +54,4 @@ public abstract class Item : MonoBehaviour
     }
 
     public abstract void Use(Player player);
-    public abstract string GetDescription();
 }

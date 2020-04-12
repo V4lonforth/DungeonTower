@@ -44,7 +44,7 @@ public class Builder : MonoBehaviour
 
     private void AddCell(Tower tower, Room room, Vector2Int position, List<Vector2Int> surroundings)
     {
-        tower[position] = new Cell(room, new Vector3Int(position.x, position.y, room.Number));
+        tower[position] = new Cell(room, position);
         room.AddCell(tower[position]);
         foreach (Direction direction in Direction.Values)
         {

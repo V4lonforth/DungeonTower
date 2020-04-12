@@ -9,9 +9,9 @@ public class Cell
     public Room Room { get; private set; }
     public Tower Tower => Room.Tower;
 
-    public Vector3Int Position { get; private set; }
-    public Vector2Int Position2 => (Vector2Int)Position;
-    public Vector3 WorldPosition => Tower.TowerGenerator.Decorator.floorTilemap.CellToWorld(Position);
+    public Vector2Int Position { get; private set; }
+    public Vector3Int Position3 => (Vector3Int)Position;
+    public Vector3 WorldPosition => Tower.TowerGenerator.Decorator.floorTilemap.CellToWorld(Position3);
 
     public Cell[] ConnectedCells { get; private set; }
     public Cell[] AdjacentCells { get; private set; }
@@ -21,7 +21,7 @@ public class Cell
 
     public GameObject[] Walls { get; private set; }
 
-    public Cell(Room room, Vector3Int position)
+    public Cell(Room room, Vector2Int position)
     {
         Room = room;
         Position = position;

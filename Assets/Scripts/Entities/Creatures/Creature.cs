@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class Creature : MonoBehaviour
+public abstract class Creature : Entity
 {
-    public Cell Cell { get; protected set; }
-    public Room Room => Cell.Room;
-    public Tower Tower => Room.Tower;
-    
     public delegate void MoveEvent(Creature sender, Cell target);
     public delegate void DamageEvent(Damage damage);
 
@@ -44,11 +40,9 @@ public abstract class Creature : MonoBehaviour
     private const float AttackTime = 0.075f;
     private const float AttackMovingSpeed = 3f;
     
-    public static Creature Instantiate(GameObject prefab, Cell cell)
+    public static new Creature Instantiate(GameObject prefab, Cell cell)
     {
-        Creature creature = Instantiate(prefab).GetComponent<Creature>();
-        creature.transform.position = cell.WorldPosition;
-        creature.Cell = cell;
+        Creature creature = Entity.Instantiate(prefab, cell).GetComponent<Creature>();
         cell.Creature = creature;
         return creature;
     }
@@ -88,9 +82,9 @@ public abstract class Creature : MonoBehaviour
         this.cooldown = cooldownLeft = cooldown;
     }
 
-    public void Destroy()
+    public override void Destroy()
     {
-        Destroy(gameObject);
+        base.Destroy();
         Cell.Creature = null;
     }
 
@@ -211,6 +205,5 @@ public abstract class Creature : MonoBehaviour
     protected abstract void Interact(Creature creature);
 
     public abstract void MakeMove();
-    public abstract string GetDescription();
     public abstract void Die();
 }

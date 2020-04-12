@@ -6,8 +6,6 @@ public class Room
     public Tower Tower { get; private set; }
     public List<Cell> Cells { get; private set; }
 
-    public int Number { get; private set; }
-
     public int LowestLevel { get; private set; }
     public int HighestLevel { get; private set; }
 
@@ -22,7 +20,6 @@ public class Room
     public Room(Tower tower)
     {
         Tower = tower;
-        Number = tower.Rooms.Count;
 
         Cells = new List<Cell>();
 

@@ -630,7 +630,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.444444
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1476,7 +1476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1447996018
 Transform:
   m_ObjectHideFlags: 0
@@ -1841,19 +1841,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultRoom:
     floorTile: {fileID: 11400000, guid: 91bd2969b7fc68a47b7eab5c9b33609b, type: 2}
-    wallTile: {fileID: 11400000, guid: f9ac9f4c98a75a545889a590c6b25058, type: 2}
-    rightDoorTile: {fileID: 11400000, guid: 1f08d1e2ec28b134c80e59673ac977a3, type: 2}
-    leftDoorTile: {fileID: 11400000, guid: 66e4da21b6fe38246b74ffe6a894c7bd, type: 2}
-    bothDoorsTile: {fileID: 11400000, guid: 00980556c33e7a24bbbabd9cede06bd5, type: 2}
-    wallTransparentTile: {fileID: 11400000, guid: d3c86534a12bcd2479962aad4897c087,
+    leftWallTile: {fileID: 11400000, guid: 765d2694abcdb984a96d58ee236742d6, type: 2}
+    rightWallTile: {fileID: 11400000, guid: d35a9d77c190b6c4b9b427c53a296455, type: 2}
+    leftWallTransparentTile: {fileID: 11400000, guid: cab9ca6eec6bfb942bdabe89ca78e126,
       type: 2}
-    rightDoorTransparentTile: {fileID: 11400000, guid: cb6ed6188743bbe4a99845000a8ac06e,
+    rightWallTransparentTile: {fileID: 11400000, guid: 647115dcd6893834fa372cb9d5bac861,
       type: 2}
-    leftDoorTransparentTile: {fileID: 11400000, guid: f1614333f6a84964ca553b6deb6c6287,
+    leftDoorTile: {fileID: 11400000, guid: 69ae5c72109be384c8e709ab79b667cb, type: 2}
+    rightDoorTile: {fileID: 11400000, guid: b42179eaaeec0734caaaf8f6914679eb, type: 2}
+    leftDoorTransparentTile: {fileID: 11400000, guid: b36c894c8bcd15242914b34a5d049203,
       type: 2}
-    bothDoorsTransparentTile: {fileID: 11400000, guid: b451296adcd117043b02370c9322b8ac,
+    rightDoorTransparentTile: {fileID: 11400000, guid: bfa1e94eb476e9843b581464c08ff3f8,
       type: 2}
-  emptyWallTile: {fileID: 11400000, guid: bb723989b9c677c4a9cbb31b38ff82ee, type: 2}
   floorTilemap: {fileID: 1908125451}
   wallsTilemap: {fileID: 1760720114}
 --- !u!114 &1555518223

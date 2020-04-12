@@ -1,16 +1,7 @@
 fileFormatVersion: 2
-guid: 9f6230d7b4180f34a812bc789cb95e75
+guid: 7bda76381a99ead43a52caa0e5205ff1
 TextureImporter:
   internalIDToNameTable:
-  - first:
-      213: -3218248262026354849
-    second: VerticalWall
-  - first:
-      213: 2551541108661590903
-    second: HorizontalWall
-  - first:
-      213: 7846705445857682787
-    second: ConnectorWall
   - first:
       213: -3218248262026354849
     second: Walls_0
@@ -21,14 +12,20 @@ TextureImporter:
       213: -5675400335168754034
     second: Walls_2
   - first:
-      213: 7846705445857682787
-    second: Walls_0
+      213: 8296322472478124191
+    second: Walls_3
   - first:
-      213: 6412296329979213086
-    second: Walls_1
+      213: 7317334631700292629
+    second: Walls_4
   - first:
-      213: 2298699378903864076
-    second: Walls_2
+      213: 2420863537438956345
+    second: Walls_5
+  - first:
+      213: -14520863135872570
+    second: Walls_6
+  - first:
+      213: -7366180687131401920
+    second: Walls_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -139,8 +136,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3656875870915ec60800000000000000
-      internalID: 7846705445857682787
+      spriteID: f5f96e6b14c7653d0800000000000000
+      internalID: -3218248262026354849
       vertices: []
       indices: 
       edges: []
@@ -160,8 +157,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e15b3fec98d0df850800000000000000
-      internalID: 6412296329979213086
+      spriteID: 77b9493ae15e86320800000000000000
+      internalID: 2551541108661590903
       vertices: []
       indices: 
       edges: []
@@ -181,8 +178,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c03d9f4f7ee96ef10800000000000000
-      internalID: 2298699378903864076
+      spriteID: e8e2228f67dec31b0800000000000000
+      internalID: -5675400335168754034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f98262a3555722370800000000000000
+      internalID: 8296322472478124191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 514e82124156c8560800000000000000
+      internalID: 7317334631700292629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93b9ebe9f82a89120800000000000000
+      internalID: 2420863537438956345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c944f61a596ccff0800000000000000
+      internalID: -14520863135872570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 041a03851b116c990800000000000000
+      internalID: -7366180687131401920
       vertices: []
       indices: 
       edges: []

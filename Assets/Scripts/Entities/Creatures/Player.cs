@@ -56,8 +56,8 @@ public class Player : Creature
     {
         if (cell.Room != Cell.Room)
         {
-            Tower.TowerGenerator.Decorator.DecorateWalls(Cell.Room, true);
-            Tower.TowerGenerator.Decorator.DecorateWalls(cell.Room, false);
+            Tower.TowerGenerator.Decorator.SetVisibility(Cell.Room, true);
+            Tower.TowerGenerator.Decorator.SetVisibility(cell.Room, false);
         }
     }
 

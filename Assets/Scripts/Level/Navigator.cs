@@ -87,8 +87,8 @@ public class Navigator
         }
         directions.Sort((a, b) =>
         {
-            Vector2Int offsetA = a.ShiftPosition(cell.Position2) - tower.Player.Cell.Position2;
-            Vector2Int offsetB = b.ShiftPosition(cell.Position2) - tower.Player.Cell.Position2;
+            Vector2Int offsetA = a.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
+            Vector2Int offsetB = b.ShiftPosition(cell.Position) - tower.Player.Cell.Position;
             return offsetA.sqrMagnitude.CompareTo(offsetB.sqrMagnitude);
         });
         return directions;

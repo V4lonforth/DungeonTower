@@ -5,14 +5,16 @@ using UnityEngine.Tilemaps;
 public class RoomDecorations
 {
     public TileBase floorTile;
-    public TileBase wallTile;
-    public TileBase rightDoorTile;
+
+    public TileBase leftWallTile;
+    public TileBase rightWallTile;
+
+    public TileBase leftWallTransparentTile;
+    public TileBase rightWallTransparentTile;
+
     public TileBase leftDoorTile;
-    public TileBase bothDoorsTile;
+    public TileBase rightDoorTile;
 
-    public TileBase wallTransparentTile;
-
-    public TileBase rightDoorTransparentTile;
     public TileBase leftDoorTransparentTile;
-    public TileBase bothDoorsTransparentTile;
+    public TileBase rightDoorTransparentTile;
 }

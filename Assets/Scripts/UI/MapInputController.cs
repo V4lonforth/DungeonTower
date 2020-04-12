@@ -42,7 +42,7 @@ public class MapInputController : IInteractive
                 minDirection = direction;
             }
         }
-        inputController.Tower.Interact(minDirection.ShiftPosition(inputController.Tower.Player.Cell.Position2));
+        inputController.Tower.Interact(minDirection.ShiftPosition(inputController.Tower.Player.Cell.Position));
     }
 
     private void Inspect(Vector2Int towerPosition)
@@ -129,7 +129,7 @@ public class MapInputController : IInteractive
             else if (!swiping)
             {
                 if (inputController.Player.SelectedAbility == null)
-                    inputController.Tower.Interact(inputController.Tower.Player.Cell.Position2);
+                    inputController.Tower.Interact(inputController.Tower.Player.Cell.Position);
                 else
                     inputController.Tower.Interact(startTowerPosition);
             }
