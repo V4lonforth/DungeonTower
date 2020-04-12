@@ -39,14 +39,22 @@ public class Concealer : MonoBehaviour
     private void Conceal(Entity entity)
     {
         if (entity != null)
+        {
             foreach (SpriteRenderer spriteRenderer in entity.GetComponentsInChildren<SpriteRenderer>())
                 spriteRenderer.enabled = false;
+            foreach (MeshRenderer meshRenderer in entity.GetComponentsInChildren<MeshRenderer>())
+                meshRenderer.enabled = false;
+        }
     }
     private void Reveal(Entity entity)
     {
         if (entity != null)
+        {
             foreach (SpriteRenderer spriteRenderer in entity.GetComponentsInChildren<SpriteRenderer>())
                 spriteRenderer.enabled = true;
+            foreach (MeshRenderer meshRenderer in entity.GetComponentsInChildren<MeshRenderer>())
+                meshRenderer.enabled = true;
+        }
     }
 
     private void RevealRoom(Room room)

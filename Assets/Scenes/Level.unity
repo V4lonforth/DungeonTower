@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f14cec154cbf64f9ae64ded4733b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellAmount: 5
+  cellAmount: 4
 --- !u!1 &529740887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1529,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1841,17 +1841,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultRoom:
     floorTile: {fileID: 11400000, guid: 91bd2969b7fc68a47b7eab5c9b33609b, type: 2}
-    leftWallTile: {fileID: 11400000, guid: 765d2694abcdb984a96d58ee236742d6, type: 2}
-    rightWallTile: {fileID: 11400000, guid: d35a9d77c190b6c4b9b427c53a296455, type: 2}
-    leftWallTransparentTile: {fileID: 11400000, guid: cab9ca6eec6bfb942bdabe89ca78e126,
+    leftWallTile: {fileID: 11400000, guid: d35a9d77c190b6c4b9b427c53a296455, type: 2}
+    rightWallTile: {fileID: 11400000, guid: 765d2694abcdb984a96d58ee236742d6, type: 2}
+    leftWallTransparentTile: {fileID: 11400000, guid: 647115dcd6893834fa372cb9d5bac861,
       type: 2}
-    rightWallTransparentTile: {fileID: 11400000, guid: 647115dcd6893834fa372cb9d5bac861,
+    rightWallTransparentTile: {fileID: 11400000, guid: cab9ca6eec6bfb942bdabe89ca78e126,
       type: 2}
-    leftDoorTile: {fileID: 11400000, guid: 69ae5c72109be384c8e709ab79b667cb, type: 2}
-    rightDoorTile: {fileID: 11400000, guid: b42179eaaeec0734caaaf8f6914679eb, type: 2}
-    leftDoorTransparentTile: {fileID: 11400000, guid: b36c894c8bcd15242914b34a5d049203,
+    leftDoorTile: {fileID: 11400000, guid: b42179eaaeec0734caaaf8f6914679eb, type: 2}
+    rightDoorTile: {fileID: 11400000, guid: 69ae5c72109be384c8e709ab79b667cb, type: 2}
+    leftDoorTransparentTile: {fileID: 11400000, guid: bfa1e94eb476e9843b581464c08ff3f8,
       type: 2}
-    rightDoorTransparentTile: {fileID: 11400000, guid: bfa1e94eb476e9843b581464c08ff3f8,
+    rightDoorTransparentTile: {fileID: 11400000, guid: b36c894c8bcd15242914b34a5d049203,
       type: 2}
   floorTilemap: {fileID: 1908125451}
   wallsTilemap: {fileID: 1760720114}
