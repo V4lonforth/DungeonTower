@@ -120,7 +120,7 @@ public abstract class Creature : Entity
     protected virtual void Attack(Creature creature)
     {
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
-        attackEffect?.Attack(creature.Cell.WorldPosition, () => weapon.Attack(creature));
+        attackEffect?.Attack(creature.transform, () => weapon.Attack(creature));
         SetCooldown(weapon.weaponItem.cooldown);
     }
 

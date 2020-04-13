@@ -5,20 +5,25 @@ public class AttackAnimation : MonoBehaviour
 {
     private Animator animator;
     private Action endAttack;
+    private Transform targetTransform;
 
     private void Awake()
     {
         animator = GetComponentInParent<Animator>();
-    }
-    private void Start()
-    {
         gameObject.SetActive(false);
     }
 
-    public void Attack(Vector3 position, Action action)
+    private void Update()
     {
-        transform.position = position;
-        //transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0, 4) * 90f);
+        if (targetTransform != null)
+            transform.position = targetTransform.position;
+    }
+
+    public void Attack(Transform target, Action action)
+    {
+        targetTransform = target;
+        transform.position = targetTransform.position;
+
         gameObject.SetActive(true);
         animator.SetTrigger("Attack");
 
@@ -27,6 +32,7 @@ public class AttackAnimation : MonoBehaviour
 
     public void End()
     {
+        targetTransform = null;
         gameObject.SetActive(false);
         endAttack?.Invoke();
         endAttack = null;
