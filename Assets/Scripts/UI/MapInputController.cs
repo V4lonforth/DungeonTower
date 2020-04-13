@@ -128,9 +128,7 @@ public class MapInputController : IInteractive
                 StopInspecting();
             else if (!swiping)
             {
-                if (inputController.Player.SelectedAbility == null)
-                    inputController.Tower.Interact(inputController.Tower.Player.Cell.Position);
-                else
+                if (inputController.Player.SelectedAbility != null)
                     inputController.Tower.Interact(startTowerPosition);
             }
             else
@@ -142,7 +140,6 @@ public class MapInputController : IInteractive
 
     private Vector2Int WorldToTowerPoint(Vector2 position)
     {
-        //position = position - (Vector2)inputController.Tower.transform.position;
         return new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y));
     }
 }
