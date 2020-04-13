@@ -89,7 +89,6 @@ public class Inventory : MonoBehaviour, IInteractive
     private void Attach(Item item)
     {
         item.DetachFromCell();
-        item.transform.SetParent(Player.transform);
         item.gameObject.SetActive(false);
     }
     private void Detach(EquipmentSlot equipmentSlot)
