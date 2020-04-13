@@ -11,8 +11,8 @@ public class Builder : MonoBehaviour
     {
         Tower tower = new Tower(size, towerGenerator);
 
-        for (Vector2Int pos = Vector2Int.zero; pos.y < size.y; pos.y++)
-            for (pos.x = 0; pos.x < size.x; pos.x++)
+        for (Vector2Int pos = Vector2Int.zero; pos.x < size.x; pos.x++)
+            for (pos.y = 0; pos.y < size.y; pos.y++)
                 if (tower[pos] is null)
                     tower.Rooms.Add(CreateRoom(tower, pos, Random.Range(minRoomSize, maxRoomSize + 1)));
 
