@@ -30,6 +30,8 @@ public class Player : Creature
         InputController.Player = this;
         InputController.Inventory.Player = this;
         InputController.AbilityController.SetAbility(ActiveAbility);
+
+        energy.Rechargable = true;
     }
 
     protected void Start()
@@ -45,7 +47,7 @@ public class Player : Creature
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public override void MoveTo(Cell cell)
+    protected override void MoveTo(Cell cell)
     {
         InputController.Inventory.HideDrop();
         CheckWallsTransparency(cell);
@@ -102,11 +104,11 @@ public class Player : Creature
         return false;
     }
 
-    public override void MakeMove()
+    protected override void MakeMove()
     {
-        if (Target != null)
+        if (Target != null && !energy.Empty && MakeMove(Target))
         {
-            MakeMove(Target);
+            energy.Use();
             Target = null;
         }
     }

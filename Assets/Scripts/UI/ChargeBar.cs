@@ -4,11 +4,6 @@ public class ChargeBar : MonoBehaviour
 {
     public Transform foregroundTransform;
 
-    private void Awake()
-    {
-        Fill(0f);
-    }
-
     public void Hide()
     {
         gameObject.SetActive(false);

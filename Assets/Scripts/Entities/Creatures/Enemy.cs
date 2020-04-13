@@ -1,13 +1,18 @@
 ﻿public class Enemy : Creature
 {
     public int strength;
+
     public float wakeUpCooldown;
+    public float movementCooldown;
+    public float attackCooldown;
+
     private bool aggroed;
 
     protected new void Awake()
     {
         base.Awake();
-        ChargeBar.Hide();
+        energy.chargeBar.Hide();
+        energy.Rechargable = false;
     }
 
     public override void Die()
@@ -20,9 +25,10 @@
     {
         if (!aggroed)
         {
-            ChargeBar.Show();
             aggroed = true;
-            SetCooldown(wakeUpCooldown);
+            energy.chargeBar.Show();
+            energy.SetCooldown(wakeUpCooldown);
+            energy.Rechargable = true;
         }
     }
 
@@ -32,7 +38,7 @@
             base.Update();
     }
 
-    public override void MakeMove()
+    protected override void MakeMove()
     {
         foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
         {
@@ -43,7 +49,19 @@
                 return;
             }
         }
-        SetCooldown(wakeUpCooldown);
+        energy.SetCooldown(movementCooldown);
+    }
+
+    protected override void MoveTo(Cell cell)
+    {
+        base.MoveTo(cell);
+        energy.SetCooldown(movementCooldown);
+    }
+
+    protected override void Attack(Creature creature)
+    {
+        base.Attack(creature);
+        energy.SetCooldown(attackCooldown);
     }
 
     protected override void Interact(Creature creature)

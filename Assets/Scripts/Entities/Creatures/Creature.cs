@@ -15,24 +15,19 @@ public abstract class Creature : Entity
     public DamageEvent PostAttackEvent;
     public DamageEvent TakeDamageEvent;
 
-    public float movementCooldown;
-
     public SpriteRenderer animatedSprite;
 
     public Health health;
     public Armor armor;
     public Weapon weapon;
-    
-    public ChargeBar ChargeBar { get; private set; }
+    public Energy energy;
+
     public Direction FacingDirection { get; private set; }
 
     public ActiveAbility ActiveAbility { get; private set; }
     public ActiveAbility SelectedAbility { get; set; }
 
     public List<Effect> Effects { get; private set; }
-
-    private float cooldown;
-    private float cooldownLeft;
 
     private AttackAnimation attackEffect;
 
@@ -50,12 +45,12 @@ public abstract class Creature : Entity
     protected void Awake()
     {
         attackEffect = GetComponentInChildren<AttackAnimation>();
+        energy = GetComponent<Energy>();
 
         health.Awake();
         armor.Awake(this);
         weapon.Awake(this);
 
-        ChargeBar = GetComponentInChildren<ChargeBar>();
         ActiveAbility = GetComponent<ActiveAbility>();
         GetComponent<PassiveAbility>()?.effect.ApplyEffect(this);
         Effects = new List<Effect>();
@@ -65,32 +60,18 @@ public abstract class Creature : Entity
 
     protected void Update()
     {
-        if (cooldownLeft > 0)
-        {
-            cooldownLeft -= Time.deltaTime;
-            ChargeBar.Fill(1f - (cooldownLeft / cooldown));
-        }
-        else
-        {
-            ChargeBar.Fill(1f);
+        if (!energy.Empty)
             MakeMove();
-        }
     }
-
-    protected void SetCooldown(float cooldown)
-    {
-        this.cooldown = cooldownLeft = cooldown;
-    }
-
+    
     public override void Destroy()
     {
         base.Destroy();
         Cell.Creature = null;
     }
 
-    public virtual void MoveTo(Cell cell)
+    protected virtual void MoveTo(Cell cell)
     {
-        SetCooldown(movementCooldown);
         if (Cell != null && Cell.Creature == this)
             Cell.Creature = null;
         cell.Creature = this;
@@ -121,7 +102,6 @@ public abstract class Creature : Entity
     {
         StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
         attackEffect?.Attack(creature.transform, () => weapon.Attack(creature));
-        SetCooldown(weapon.weaponItem.cooldown);
     }
 
     public void TakeDamage(Damage damage)
@@ -204,6 +184,6 @@ public abstract class Creature : Entity
 
     protected abstract void Interact(Creature creature);
 
-    public abstract void MakeMove();
+    protected abstract void MakeMove();
     public abstract void Die();
 }
