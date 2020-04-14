@@ -73,7 +73,7 @@ public class Navigator
             if (connectedCell != null && distance[cell.Position.y, cell.Position.x] > distance[connectedCell.Position.y, connectedCell.Position.x])
                 return direction;
         }
-        return Direction.Top;
+        return Direction.TopLeft;
     }
 
     public List<Direction> GetDirections(Cell cell)

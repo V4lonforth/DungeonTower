@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
         if (!isOpened)
         {
             isOpened = true;
-            if (direction == Direction.Right || direction == Direction.Top)
+            if (direction == Direction.TopRight || direction == Direction.TopLeft)
                 spriteRenderer.sprite = opened1;
             else
                 spriteRenderer.sprite = opened2;

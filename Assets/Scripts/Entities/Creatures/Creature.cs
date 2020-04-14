@@ -55,7 +55,7 @@ public abstract class Creature : Entity
         GetComponent<PassiveAbility>()?.effect.ApplyEffect(this);
         Effects = new List<Effect>();
 
-        FacingDirection = Direction.Right;
+        FacingDirection = Direction.TopRight;
     }
 
     protected void Update()
@@ -117,15 +117,15 @@ public abstract class Creature : Entity
     private void FaceCell(Cell cell)
     {
         Direction direction = Cell.GetDirectionToCell(cell);
-        if (direction == Direction.Left)
+        if (direction == Direction.BottomLeft)
         {
             animatedSprite.flipX = true;
-            FacingDirection = Direction.Left;
+            FacingDirection = Direction.BottomLeft;
         }
-        else if (direction == Direction.Right)
+        else if (direction == Direction.TopRight)
         {
             animatedSprite.flipX = false;
-            FacingDirection = Direction.Right;
+            FacingDirection = Direction.TopRight;
         }
     }
 

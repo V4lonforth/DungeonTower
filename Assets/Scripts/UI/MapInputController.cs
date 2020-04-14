@@ -33,7 +33,7 @@ public class MapInputController : IInteractive
         float angle = Mathf.Atan2(delta.y, delta.x);
         angle = (angle >= 0 ? angle : angle + Mathf.PI * 2f) * Mathf.Rad2Deg;
         float minAngle = 360f;
-        Direction minDirection = Direction.Right;
+        Direction minDirection = Direction.TopRight;
         foreach (Direction direction in Direction.Values)
         {
             float diff = Mathf.Abs(direction.Angle - angle);

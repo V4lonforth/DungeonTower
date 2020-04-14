@@ -20,15 +20,15 @@ public class Decorator : MonoBehaviour
 
         foreach (Cell cell in room.Cells)
         {
-            if (cell.ConnectedCells[Direction.Top] == null)
-                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.Top.Shift.x, cell.Position.y + Direction.Top.Shift.y, 2), defaultRoom.rightWallTile);
-            else if (cell.ConnectedCells[Direction.Top].Room != room)
-                DecorateRightWall(cell.ConnectedCells[Direction.Top], true);
+            if (cell.ConnectedCells[Direction.TopLeft] == null)
+                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopLeft.Shift.x, cell.Position.y + Direction.TopLeft.Shift.y, 2), defaultRoom.rightWallTile);
+            else if (cell.ConnectedCells[Direction.TopLeft].Room != room)
+                DecorateRightWall(cell.ConnectedCells[Direction.TopLeft], true);
 
-            if (cell.ConnectedCells[Direction.Right] == null)
-                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.Right.Shift.x, cell.Position.y + Direction.Right.Shift.y, 1), defaultRoom.leftWallTile);
-            else if (cell.ConnectedCells[Direction.Right].Room != room)
-                DecorateLeftWall(cell.ConnectedCells[Direction.Right], true);
+            if (cell.ConnectedCells[Direction.TopRight] == null)
+                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopRight.Shift.x, cell.Position.y + Direction.TopRight.Shift.y, 1), defaultRoom.leftWallTile);
+            else if (cell.ConnectedCells[Direction.TopRight].Room != room)
+                DecorateLeftWall(cell.ConnectedCells[Direction.TopRight], true);
         }
     }
 
@@ -48,26 +48,26 @@ public class Decorator : MonoBehaviour
     {
         foreach (Cell cell in room.Cells)
         {
-            if (cell.ConnectedCells[Direction.Left] == null || cell.ConnectedCells[Direction.Left].Room != room)
+            if (cell.ConnectedCells[Direction.BottomLeft] == null || cell.ConnectedCells[Direction.BottomLeft].Room != room)
             {
                 DecorateWall(cell, visible);
-                if (cell.AdjacentCells[Direction.Left] != null)
-                    DecorateRightWall(cell.AdjacentCells[Direction.Left], visible);
+                if (cell.AdjacentCells[Direction.BottomLeft] != null)
+                    DecorateRightWall(cell.AdjacentCells[Direction.BottomLeft], visible);
             }
-            if (cell.ConnectedCells[Direction.Bottom] == null || cell.ConnectedCells[Direction.Bottom].Room != room)
+            if (cell.ConnectedCells[Direction.BottomRight] == null || cell.ConnectedCells[Direction.BottomRight].Room != room)
             {
                 DecorateWall(cell, visible);
-                if (cell.AdjacentCells[Direction.Bottom] != null)
-                    DecorateLeftWall(cell.AdjacentCells[Direction.Bottom], visible);
+                if (cell.AdjacentCells[Direction.BottomRight] != null)
+                    DecorateLeftWall(cell.AdjacentCells[Direction.BottomRight], visible);
             }
         }
     }
 
     private void DecorateLeftWall(Cell cell, bool visible)
     {
-        if (cell.ConnectedCells[Direction.Left] != null)
+        if (cell.ConnectedCells[Direction.BottomLeft] != null)
         {
-            if (cell.ConnectedCells[Direction.Left].Room != cell.Room)
+            if (cell.ConnectedCells[Direction.BottomLeft].Room != cell.Room)
                 wallsTilemap.SetTile(cell.Position3 + new Vector3Int(0, 0, 1), visible ? defaultRoom.leftDoorTile : defaultRoom.leftDoorTransparentTile);
         }
         else
@@ -75,9 +75,9 @@ public class Decorator : MonoBehaviour
     }
     private void DecorateRightWall(Cell cell, bool visible)
     {
-        if (cell.ConnectedCells[Direction.Bottom] != null)
+        if (cell.ConnectedCells[Direction.BottomRight] != null)
         {
-            if (cell.ConnectedCells[Direction.Bottom].Room != cell.Room)
+            if (cell.ConnectedCells[Direction.BottomRight].Room != cell.Room)
                 wallsTilemap.SetTile(cell.Position3 + new Vector3Int(0, 0, 2), visible ? defaultRoom.rightDoorTile : defaultRoom.rightDoorTransparentTile);
         }
         else

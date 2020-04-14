@@ -41,7 +41,7 @@ public class Cell
         foreach (Direction direction in Direction.Values)
             if (ReferenceEquals(AdjacentCells[direction], cell))
                 return direction;
-        return Direction.Bottom;
+        return Direction.BottomRight;
     }
 
     public void OpenDoor(Cell cell)
