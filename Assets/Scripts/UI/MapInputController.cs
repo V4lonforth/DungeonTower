@@ -3,6 +3,7 @@
 public class MapInputController : IInteractive
 {
     private InputController inputController;
+    private Highlighter highlighter;
 
     private bool pressed;
     private int touchId;
@@ -21,12 +22,13 @@ public class MapInputController : IInteractive
     private const float MinSwipeDistance = 4f;
     private const float MinInspectTime = 0.25f;
 
-    public MapInputController(InputController inputController)
+    public MapInputController(InputController inputController, Highlighter highlighter)
     {
         this.inputController = inputController;
+        this.highlighter = highlighter;
     }
 
-    private void Swipe(Vector2 delta)
+    private Direction GetClosestDirection(Vector2 delta)
     {
         float angle = Mathf.Atan2(delta.y, delta.x);
         angle = (angle >= 0 ? angle : angle + Mathf.PI * 2f) * Mathf.Rad2Deg;
@@ -42,7 +44,21 @@ public class MapInputController : IInteractive
                 minDirection = direction;
             }
         }
-        inputController.Tower.Interact(minDirection.ShiftPosition(inputController.Tower.Player.Cell.Position));
+        return minDirection;
+    }
+
+    private void Swipe(Vector2 delta)
+    {
+        inputController.Tower.Interact(GetClosestDirection(delta).ShiftPosition(inputController.Tower.Player.Cell.Position));
+    }
+
+    private void HighlightDirection(Vector2 delta)
+    {
+        Vector2Int cellPosition = GetClosestDirection(delta).ShiftPosition(inputController.Tower.Player.Cell.Position);
+        if (MathHelper.InRange(cellPosition, inputController.Tower.Size))
+            highlighter.Highlight(inputController.Tower[cellPosition]);
+        else
+            highlighter.ClearHighlight();
     }
 
     private void Inspect(Vector2Int towerPosition)
@@ -98,7 +114,11 @@ public class MapInputController : IInteractive
     {
         if (pressed && id == touchId)
         {
-            if (!closingInspector && !swiping && !inspecting)
+            if (swiping)
+            {
+                HighlightDirection(position - lastTouchPosition);
+            }
+            else if (!closingInspector && !inspecting)
             {
                 Vector2 delta = position - lastTouchPosition;
                 lastTouchPosition = position;
@@ -133,7 +153,8 @@ public class MapInputController : IInteractive
             }
             else
                 Swipe(position - lastTouchPosition);
-        } 
+        }
+        highlighter.ClearHighlight();
         pressed = false;
         return true;
     }

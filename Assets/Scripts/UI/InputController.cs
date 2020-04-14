@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour, IInteractive
     {
         Inventory = FindObjectOfType<Inventory>();
         AbilityController = FindObjectOfType<AbilityController>();
-        MapInputController = new MapInputController(this);
+        MapInputController = new MapInputController(this, FindObjectOfType<Highlighter>());
     }
 
     private void Update()
