@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
-public class WeightedGameObject : WeightedElement<GameObject>
+public class WeightedCreature : WeightedElement<Creature>
 {
 }

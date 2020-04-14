@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
 
     public EnemyGroups enemyGroups;
 
-    public GameObject playerPrefab;
+    public Player playerPrefab;
 
     public void Spawn(Tower tower)
     {
@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour
         while (emptyCells.Count > 0 && currentStrength < roomStrength)
         {
             int index = Random.Range(0, emptyCells.Count);
-            GameObject enemy = enemyGroup.GetRandomEnemy(roomStrength - currentStrength);
+            Creature enemy = enemyGroup.GetRandomEnemy(roomStrength - currentStrength);
             if (enemy == null)
                 break;
             currentStrength += GenerateEnemy(enemy, emptyCells[index]);
@@ -39,7 +39,7 @@ public class Spawner : MonoBehaviour
         return Random.Range(25, 75) * room.Cells.Count;
     }
 
-    public int GenerateEnemy(GameObject enemy, Cell cell)
+    public int GenerateEnemy(Creature enemy, Cell cell)
     {
         return ((Enemy)Creature.Instantiate(enemy, cell)).strength;
     }

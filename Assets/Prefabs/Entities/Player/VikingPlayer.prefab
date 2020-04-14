@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed72f71196d2bf47807f8e7ff050e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 1677155915308444074}
   animatedSprite: {fileID: 8125752860316801569}
   health:
     health:

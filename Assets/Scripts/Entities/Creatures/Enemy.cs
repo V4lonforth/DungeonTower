@@ -11,8 +11,8 @@
     protected new void Awake()
     {
         base.Awake();
-        energy.chargeBar.Hide();
-        energy.Rechargable = false;
+        Energy.chargeBar.Hide();
+        Energy.Rechargable = false;
     }
 
     public override void Die()
@@ -26,9 +26,9 @@
         if (!aggroed)
         {
             aggroed = true;
-            energy.chargeBar.Show();
-            energy.SetCooldown(wakeUpCooldown);
-            energy.Rechargable = true;
+            Energy.chargeBar.Show();
+            Energy.SetCooldown(wakeUpCooldown);
+            Energy.Rechargable = true;
         }
     }
 
@@ -49,19 +49,19 @@
                 return;
             }
         }
-        energy.SetCooldown(movementCooldown);
+        Energy.SetCooldown(movementCooldown);
     }
 
     protected override void MoveTo(Cell cell)
     {
         base.MoveTo(cell);
-        energy.SetCooldown(movementCooldown);
+        Energy.SetCooldown(movementCooldown);
     }
 
     protected override void Attack(Creature creature)
     {
         base.Attack(creature);
-        energy.SetCooldown(attackCooldown);
+        Energy.SetCooldown(attackCooldown);
     }
 
     protected override void Interact(Creature creature)

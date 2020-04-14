@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff04d71c5e7f0e41a5f839c05f514cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 3262041589394946035}
   animatedSprite: {fileID: 1298353024248523193}
   health:
     health:
@@ -422,7 +423,6 @@ MonoBehaviour:
   weapon:
     weaponItem: {fileID: 1302047210576294085}
     text: {fileID: 7110505638535703015}
-  energy: {fileID: 0}
   strength: 100
   wakeUpCooldown: 1
   movementCooldown: 0.75

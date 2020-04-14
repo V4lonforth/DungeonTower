@@ -15,12 +15,15 @@ public abstract class Creature : Entity
     public DamageEvent PostAttackEvent;
     public DamageEvent TakeDamageEvent;
 
+    public GameObject prefab;
+
     public SpriteRenderer animatedSprite;
 
     public Health health;
     public Armor armor;
     public Weapon weapon;
-    public Energy energy;
+
+    public Energy Energy { get; private set; }
 
     public Direction FacingDirection { get; private set; }
 
@@ -35,9 +38,9 @@ public abstract class Creature : Entity
     private const float AttackTime = 0.075f;
     private const float AttackMovingSpeed = 3f;
     
-    public static new Creature Instantiate(GameObject prefab, Cell cell)
+    public static Creature Instantiate(Creature creaturePrefab, Cell cell)
     {
-        Creature creature = Entity.Instantiate(prefab, cell).GetComponent<Creature>();
+        Creature creature = Instantiate(creaturePrefab.prefab, cell).GetComponent<Creature>();
         cell.Creature = creature;
         return creature;
     }
@@ -45,7 +48,7 @@ public abstract class Creature : Entity
     protected void Awake()
     {
         attackEffect = GetComponentInChildren<AttackAnimation>();
-        energy = GetComponent<Energy>();
+        Energy = GetComponent<Energy>();
 
         health.Awake();
         armor.Awake(this);
@@ -60,7 +63,7 @@ public abstract class Creature : Entity
 
     protected void Update()
     {
-        if (!energy.Empty)
+        if (!Energy.Empty)
             MakeMove();
     }
     

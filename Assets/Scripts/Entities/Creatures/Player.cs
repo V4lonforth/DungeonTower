@@ -13,9 +13,9 @@ public class Player : Creature
     public Cell Target { get; private set; }
     public bool ReadyToMakeMove => Target != null && CanInteract(Target);
 
-    public static Player Instantiate(GameObject prefab, Cell cell, Text goldText)
+    public static Player Instantiate(Player playerPrefab, Cell cell, Text goldText)
     {
-        Player player = (Player)Instantiate(prefab, cell).GetComponent<Creature>();
+        Player player = Instantiate(playerPrefab, cell).GetComponent<Player>();
         player.InputController.Inventory.SetText(goldText);
         return player;
     }
@@ -31,7 +31,7 @@ public class Player : Creature
         InputController.Inventory.Player = this;
         InputController.AbilityController.SetAbility(ActiveAbility);
 
-        energy.Rechargable = true;
+        Energy.Rechargable = true;
     }
 
     protected void Start()
@@ -106,9 +106,9 @@ public class Player : Creature
 
     protected override void MakeMove()
     {
-        if (Target != null && !energy.Empty && MakeMove(Target))
+        if (Target != null && !Energy.Empty && MakeMove(Target))
         {
-            energy.Use();
+            Energy.Use();
             Target = null;
         }
     }
