@@ -8,8 +8,11 @@ public class Decorator : MonoBehaviour
     public Tilemap floorTilemap;
     public Tilemap wallsTilemap;
 
+    private Tower tower;
+
     public void Decorate(Tower tower)
     {
+        this.tower = tower;
         DecorateRoom(tower.Rooms[0]);
     }
 
@@ -20,22 +23,26 @@ public class Decorator : MonoBehaviour
 
         foreach (Cell cell in room.Cells)
         {
-            if (cell.ConnectedCells[Direction.TopLeft] == null)
-                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopLeft.Shift.x, cell.Position.y + Direction.TopLeft.Shift.y, 2), defaultRoom.rightWallTile);
-            else if (cell.ConnectedCells[Direction.TopLeft].Room != room)
-                DecorateRightWall(cell.ConnectedCells[Direction.TopLeft], true);
+            if (!cell.Destroyed)
+            {
+                if (cell.ConnectedCells[Direction.TopLeft] == null)
+                    wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopLeft.Shift.x, cell.Position.y + Direction.TopLeft.Shift.y, 2), defaultRoom.rightWallTile);
+                else if (cell.ConnectedCells[Direction.TopLeft].Room != room)
+                    DecorateRightWall(cell.ConnectedCells[Direction.TopLeft], true);
 
-            if (cell.ConnectedCells[Direction.TopRight] == null)
-                wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopRight.Shift.x, cell.Position.y + Direction.TopRight.Shift.y, 1), defaultRoom.leftWallTile);
-            else if (cell.ConnectedCells[Direction.TopRight].Room != room)
-                DecorateLeftWall(cell.ConnectedCells[Direction.TopRight], true);
+                if (cell.ConnectedCells[Direction.TopRight] == null)
+                    wallsTilemap.SetTile(new Vector3Int(cell.Position.x + Direction.TopRight.Shift.x, cell.Position.y + Direction.TopRight.Shift.y, 1), defaultRoom.leftWallTile);
+                else if (cell.ConnectedCells[Direction.TopRight].Room != room)
+                    DecorateLeftWall(cell.ConnectedCells[Direction.TopRight], true);
+            }
         }
     }
 
     public void DecorateFloor(Room room)
     {
         foreach (Cell cell in room.Cells)
-            floorTilemap.SetTile(cell.Position3, defaultRoom.floorTile);
+            if (!cell.Destroyed)
+                floorTilemap.SetTile(cell.Position3, defaultRoom.floorTile);
     }
 
     public void DecorateWalls(Room room, bool visible)
@@ -88,18 +95,21 @@ public class Decorator : MonoBehaviour
             wallsTilemap.SetTile(cell.Position3 + new Vector3Int(0, 0, 2), visible ? defaultRoom.rightWallTile : defaultRoom.rightWallTransparentTile);
     }
 
-
     private void DecorateWall(Cell cell, bool visible)
     {
-        DecorateLeftWall(cell, visible);
-        DecorateRightWall(cell, visible);
+        if (!cell.Destroyed)
+        {
+            DecorateLeftWall(cell, visible);
+            DecorateRightWall(cell, visible);
+        }
     }
 
-    private void CheckBorders(Tower tower)
+    public void RemoveRow(int x)
     {
-        for (int i = 0; i < tower.Size.y; i++)
-            wallsTilemap.SetTile(new Vector3Int(tower.Size.x, i, 1), defaultRoom.leftWallTile);
-        for (int i = 0; i < tower.Size.x; i++)
-            wallsTilemap.SetTile(new Vector3Int(i, tower.Size.y, 2), defaultRoom.rightWallTile);
+        for (int y = 0; y <= tower.Size.y; y++)
+        {
+            wallsTilemap.SetTile(new Vector3Int(x, y, 1), null);
+            wallsTilemap.SetTile(new Vector3Int(x, y, 2), null);
+        }
     }
 }

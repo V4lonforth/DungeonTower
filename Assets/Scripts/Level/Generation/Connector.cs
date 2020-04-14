@@ -53,8 +53,8 @@ public class Connector : MonoBehaviour
         first.ConnectedCells[direction] = second;
         second.ConnectedCells[direction.Opposite] = first;
 
-        ConnectDiagonals(first, second, direction);
-        ConnectDiagonals(second, first, direction.Opposite);
+        //ConnectDiagonals(first, second, direction);
+        //ConnectDiagonals(second, first, direction.Opposite);
 
         first.Room.ConnectedRooms.Add(second.Room);
         second.Room.ConnectedRooms.Add(first.Room);

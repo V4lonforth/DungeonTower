@@ -131,6 +131,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741826
+  - first: {x: 0, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 10
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741826
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 1
@@ -154,6 +163,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 765d2694abcdb984a96d58ee236742d6, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d35a9d77c190b6c4b9b427c53a296455, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: b826a7f6bf129ea43a4da66def78e241, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: -7843702306244858081, guid: b5cc31b943c7b604aa60e6677dbc4e05,
@@ -184,8 +195,11 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -3218248262026354849, guid: 7bda76381a99ead43a52caa0e5205ff1,
       type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 4116518465287326428, guid: da6635838e5f8474b95d62e368a33885,
+      type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 10
+  - m_RefCount: 11
     m_Data:
       e00: 1
       e01: 0
@@ -204,7 +218,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 10
+  - m_RefCount: 11
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: -0.000000002742901, g: -0.000000002742901, b: -0.000000002742901,
@@ -232,7 +246,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -7, y: -4, z: 0}
-  m_Size: {x: 12, y: 7, z: 1}
+  m_Size: {x: 12, y: 8, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -292,7 +306,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0.25, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.1875, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3

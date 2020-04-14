@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Cell
 {
+    public bool Destroyed { get; set; }
+
     public Creature Creature { get; set; }
     public List<Item> Items { get; set; }
 

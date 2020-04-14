@@ -1,58 +1,51 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Lava : MonoBehaviour
 {
-    public GameObject lavaPrefab;
-    public int startTurnsToRise;
-    public int turnsToRise;
+    public Tilemap lavaTilemap;
+    public TileBase lavaTile;
+    public float startTimeToRise;
+    public float timeToRise;
 
-    public Linker Linker { get; set; }
-
-    private int turnsToRiseLeft;
+    private float timeToRiseLeft;
     private int currentLevel;
 
-    private Tower tower;
+    public Tower Tower { get; set; }
 
     private void Awake()
     {
-        turnsToRiseLeft = startTurnsToRise;
-        tower = GetComponentInParent<Tower>();
+        timeToRiseLeft = startTimeToRise;
     }
 
-    public void FinishMove()
+    private void Update()
     {
-        turnsToRiseLeft -= 1;
-        if (turnsToRiseLeft <= 0)
+        timeToRiseLeft -= Time.deltaTime;
+        if (timeToRiseLeft <= 0f)
         {
-            turnsToRiseLeft += turnsToRise;
+            timeToRiseLeft += timeToRise;
             CheckCreatures(currentLevel);
+            Tower.TowerGenerator.Decorator.RemoveRow(currentLevel);
+            Tower.TowerGenerator.Linker.RemoveRow(currentLevel);
             GenerateLavaRow(currentLevel);
-            UnlinkRow(currentLevel);
             currentLevel++;
         }
     }
 
-    private void CheckCreatures(int y)
+    private void CheckCreatures(int x)
     {
-        for (int x = 0; x < tower.Size.x; x++)
-            if (tower[y, x].Creature is Creature creature)
-                creature.Die();
+        for (int y = 0; y < Tower.Size.y; y++)
+        {
+            if (Tower[y, x].Creature != null)
+                Tower[y, x].Creature.Die();
+            while (Tower[y, x].Items.Count > 0)
+                Tower[y, x].Items[0].Destroy();
+        }
     }
 
-    private void UnlinkRow(int y)
+    private void GenerateLavaRow(int x)
     {
-        for (int x = 0; x < tower.Size.x; x++)
-            Linker.UnlinkCell(tower[y, x]);
-    }
-
-    private void GenerateLavaRow(int y)
-    {
-        for (int x = 0; x < tower.Size.x; x++)
-            GenerateLava(new Vector2Int(x, y));
-    }
-
-    private void GenerateLava(Vector2Int position)
-    {
-        Instantiate(lavaPrefab, transform).transform.position = (Vector2)position;
+        for (int y = 0; y < Tower.Size.y; y++)
+            lavaTilemap.SetTile(new Vector3Int(x, y, 0), lavaTile);
     }
 }

@@ -1791,6 +1791,7 @@ GameObject:
   - component: {fileID: 1555518226}
   - component: {fileID: 1555518227}
   - component: {fileID: 1555518228}
+  - component: {fileID: 1555518229}
   m_Layer: 0
   m_Name: TowerGenerator
   m_TagString: Untagged
@@ -1957,6 +1958,22 @@ MonoBehaviour:
   fogOfWarTilemap: {fileID: 1447996020}
   fogOfWarTile: {fileID: -4232653331514800782, guid: b4faa5eb215719a469555024781ea1a4,
     type: 2}
+--- !u!114 &1555518229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555518219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6e27b07b158224287daf0d16bc9fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lavaTilemap: {fileID: 1908125451}
+  lavaTile: {fileID: 11400000, guid: b826a7f6bf129ea43a4da66def78e241, type: 2}
+  startTimeToRise: 5
+  timeToRise: 3
 --- !u!1 &1592942527
 GameObject:
   m_ObjectHideFlags: 0

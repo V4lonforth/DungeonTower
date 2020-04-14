@@ -32,6 +32,7 @@ public class TowerGenerator : MonoBehaviour
     {
         Tower tower = Builder.Build(this);
         FindObjectOfType<InputController>().Tower = tower;
+        FindObjectOfType<Lava>().Tower = tower;
         Linker.Link(tower);
         Connector.Connect(tower);
         Decorator.Decorate(tower);
