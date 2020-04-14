@@ -57,7 +57,7 @@ public class Builder : MonoBehaviour
     {
         tower[position] = new Cell(room, position);
         room.AddCell(tower[position]);
-        foreach (Direction direction in Direction.Values)
+        foreach (Direction direction in Direction.Straights)
         {
             Vector2Int shiftedPosition = direction.ShiftPosition(position);
             if (MathHelper.InRange(shiftedPosition, tower.Size) && tower[shiftedPosition] == null && !surroundings.Contains(shiftedPosition))
