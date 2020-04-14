@@ -18,7 +18,6 @@
     public override void Die()
     {
         Destroy();
-        Tower.TowerGenerator.LootGenerator.GenerateGold(Cell);
     }
 
     public void Aggro()

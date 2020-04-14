@@ -84,12 +84,15 @@ namespace UnityEditor
 
         public virtual void OnEnable()
         {
-            m_ReorderableList = new ReorderableList(tile.m_TilingRules, typeof(RuleTile.TilingRule), true, true, true, true);
-            m_ReorderableList.drawHeaderCallback = OnDrawHeader;
-            m_ReorderableList.drawElementCallback = OnDrawElement;
-            m_ReorderableList.elementHeightCallback = GetElementHeight;
-            m_ReorderableList.onChangedCallback = ListUpdated;
-            m_ReorderableList.onAddCallback = OnAddElement;
+            if (tile != null)
+            {
+                m_ReorderableList = new ReorderableList(tile.m_TilingRules, typeof(RuleTile.TilingRule), true, true, true, true);
+                m_ReorderableList.drawHeaderCallback = OnDrawHeader;
+                m_ReorderableList.drawElementCallback = OnDrawElement;
+                m_ReorderableList.elementHeightCallback = GetElementHeight;
+                m_ReorderableList.onChangedCallback = ListUpdated;
+                m_ReorderableList.onAddCallback = OnAddElement;
+            }
         }
 
         public virtual void OnDisable()

@@ -68,18 +68,7 @@ public class Player : Creature
         Tower.TowerGenerator.Concealer.RevealConnectedRooms(Cell);
         Tower.Navigator.CreateMap(Cell);
         Cell.Room.AggroEnemies();
-        CollectGold();
         InputController.Inventory.ShowDrop(Cell.Items);
-    }
-
-    private void CollectGold()
-    {
-        for (int i = 0; i < Cell.Items.Count; i++)
-            if (Cell.Items[i] is GoldItem gold)
-            {
-                gold.Use(this);
-                i--;
-            }
     }
 
     protected override void Interact(Creature creature)
