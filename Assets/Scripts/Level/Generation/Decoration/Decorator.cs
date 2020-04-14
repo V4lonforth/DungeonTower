@@ -51,13 +51,17 @@ public class Decorator : MonoBehaviour
             if (cell.ConnectedCells[Direction.BottomLeft] == null || cell.ConnectedCells[Direction.BottomLeft].Room != room)
             {
                 DecorateWall(cell, visible);
-                if (cell.AdjacentCells[Direction.BottomLeft] != null)
+                if (cell.AdjacentCells[Direction.BottomLeft] != null && (cell.AdjacentCells[Direction.BottomLeft].Room.IsRevealed || 
+                    (cell.AdjacentCells[Direction.BottomLeft].AdjacentCells[Direction.BottomRight] != null &&
+                    cell.AdjacentCells[Direction.BottomLeft].AdjacentCells[Direction.BottomRight].Room.IsRevealed)))
                     DecorateRightWall(cell.AdjacentCells[Direction.BottomLeft], visible);
             }
             if (cell.ConnectedCells[Direction.BottomRight] == null || cell.ConnectedCells[Direction.BottomRight].Room != room)
             {
                 DecorateWall(cell, visible);
-                if (cell.AdjacentCells[Direction.BottomRight] != null)
+                if (cell.AdjacentCells[Direction.BottomRight] != null && (cell.AdjacentCells[Direction.BottomRight].Room.IsRevealed ||
+                    (cell.AdjacentCells[Direction.BottomRight].AdjacentCells[Direction.BottomLeft] != null &&
+                    cell.AdjacentCells[Direction.BottomRight].AdjacentCells[Direction.BottomLeft].Room.IsRevealed)))
                     DecorateLeftWall(cell.AdjacentCells[Direction.BottomRight], visible);
             }
         }
