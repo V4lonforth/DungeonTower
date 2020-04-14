@@ -7,6 +7,8 @@ public class Builder : MonoBehaviour
     public int maxRoomSize;
     public int minRoomSize;
 
+    public float squareness;
+
     public Tower Build(TowerGenerator towerGenerator)
     {
         Tower tower = new Tower(size, towerGenerator);
@@ -28,7 +30,7 @@ public class Builder : MonoBehaviour
         while (currentSize < maxSize && surroundings.Count > 0)
         {
             SortSurroundings(surroundings, position);
-            int index = 0;
+            int index = GetIndex(surroundings.Count);
             Vector2Int newPosition = surroundings[index];
             surroundings.RemoveAt(index);
             AddCell(tower, room, newPosition, surroundings);
@@ -40,6 +42,15 @@ public class Builder : MonoBehaviour
     private void SortSurroundings(List<Vector2Int> surroundings, Vector2Int center)
     {
         surroundings.Sort((a, b) => Mathf.Max(a.x - center.x, a.y - center.y).CompareTo(Mathf.Max(b.x - center.x, b.y - center.y)));
+    }
+
+    private int GetIndex(int size)
+    {
+        float value = Mathf.Pow(Random.Range(0f, 1f), squareness);
+        for (int i = 0; i < size; i++)
+            if (value < (float)(i + 1) / size)
+                return i;
+        return size - 1;
     }
 
     private void AddCell(Tower tower, Room room, Vector2Int position, List<Vector2Int> surroundings)
