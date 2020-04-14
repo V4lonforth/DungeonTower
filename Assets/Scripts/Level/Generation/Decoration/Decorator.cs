@@ -11,7 +11,6 @@ public class Decorator : MonoBehaviour
     public void Decorate(Tower tower)
     {
         DecorateRoom(tower.Rooms[0]);
-        SetVisibility(tower.Rooms[0], false);
     }
 
     public void DecorateRoom(Room room)

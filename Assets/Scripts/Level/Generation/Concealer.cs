@@ -21,6 +21,7 @@ public class Concealer : MonoBehaviour
             Conceal(cell);
 
         RevealRoom(tower.Rooms[0]);
+        tower.TowerGenerator.Decorator.SetVisibility(tower.Rooms[0], false);
     }
 
     public void Conceal(Cell cell)
