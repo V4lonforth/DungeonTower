@@ -30,7 +30,7 @@ public class Direction
     public const int DirectionsAmount = 8;
     public const int StraightsAmount = 4;
     public const int DiagonalsAmount = 4;
-    public const float CellRatio = 0.5f;
+    public const float CellRatio = 0.625f;
 
     private Direction(int value, float angle, Vector2Int shift, Vector2 unitVector, int opposite)
     {
