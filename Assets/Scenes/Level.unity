@@ -1813,6 +1813,7 @@ MonoBehaviour:
   size: {x: 100, y: 7}
   maxRoomSize: 12
   minRoomSize: 4
+  squareness: 8
 --- !u!4 &1555518221
 Transform:
   m_ObjectHideFlags: 0
