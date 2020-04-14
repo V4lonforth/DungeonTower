@@ -89,7 +89,7 @@ public class MapInputController : IInteractive
             return false;
 
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, Camera.main.nearClipPlane)) + new Vector3(0.5f, 0.5f, 0f);
-        Vector2Int towerPosition = WorldToTowerPoint(worldPosition);
+        Vector2Int towerPosition = inputController.Tower.WorldToTowerPoint(worldPosition);
 
         hitCell = MathHelper.InRange(towerPosition, inputController.Tower.Size) && inputController.Tower[towerPosition].Room.IsRevealed;
         pressed = true;
@@ -157,10 +157,5 @@ public class MapInputController : IInteractive
         highlighter.ClearHighlight();
         pressed = false;
         return true;
-    }
-
-    private Vector2Int WorldToTowerPoint(Vector2 position)
-    {
-        return new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y));
     }
 }

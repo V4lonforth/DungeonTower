@@ -39,4 +39,9 @@ public class Tower
             Player.SetTarget(Cells[position.y, position.x]);
         }
     }
+
+    public Vector2Int WorldToTowerPoint(Vector2 position)
+    {
+        return (Vector2Int)TowerGenerator.Decorator.floorTilemap.WorldToCell(position - Vector2.one / 2f);
+    }
 }
