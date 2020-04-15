@@ -37,7 +37,7 @@ public class Lava : MonoBehaviour
         for (int y = 0; y < Tower.Size.y; y++)
         {
             if (Tower[y, x].Creature != null)
-                Tower[y, x].Creature.Die();
+                Tower[y, x].Creature.Destroy();
             while (Tower[y, x].Items.Count > 0)
                 Tower[y, x].Items[0].Destroy();
         }

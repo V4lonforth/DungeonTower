@@ -17,6 +17,7 @@
 
     public override void Die()
     {
+        Tower.Favor.AddFavor(this);
         Destroy();
     }
 

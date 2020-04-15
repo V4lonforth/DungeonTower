@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Player : Creature
 {
@@ -12,14 +11,7 @@ public class Player : Creature
 
     public Cell Target { get; private set; }
     public bool ReadyToMakeMove => Target != null && CanInteract(Target);
-
-    public static Player Instantiate(Player playerPrefab, Cell cell, Text goldText)
-    {
-        Player player = Instantiate(playerPrefab, cell).GetComponent<Player>();
-        player.InputController.Inventory.SetText(goldText);
-        return player;
-    }
-
+    
     protected new void Awake()
     {
         base.Awake();

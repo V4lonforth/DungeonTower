@@ -46,6 +46,6 @@ public class Spawner : MonoBehaviour
 
     public Player GeneratePlayer(Cell cell)
     {
-        return Player.Instantiate(playerPrefab, cell, goldText);
+        return (Player)Creature.Instantiate(playerPrefab, cell);
     }
 }

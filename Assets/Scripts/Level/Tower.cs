@@ -22,14 +22,16 @@ public class Tower
 
     public TowerGenerator TowerGenerator { get; private set; }
     public Navigator Navigator { get; private set; }
+    public Favor Favor { get; private set; }
 
-    public Tower(Vector2Int size, TowerGenerator towerGenerator)
+    public Tower(Vector2Int size, TowerGenerator towerGenerator, Favor favor)
     {
         Cells = new Cell[size.y, size.x];
         Rooms = new List<Room>();
         Size = size;
         Navigator = new Navigator(this);
         TowerGenerator = towerGenerator;
+        Favor = favor;
     }
 
     public void Interact(Vector2Int position)

@@ -11,7 +11,7 @@ public class Builder : MonoBehaviour
 
     public Tower Build(TowerGenerator towerGenerator)
     {
-        Tower tower = new Tower(size, towerGenerator);
+        Tower tower = new Tower(size, towerGenerator, FindObjectOfType<Favor>());
 
         for (Vector2Int pos = Vector2Int.zero; pos.x < size.x; pos.x++)
             for (pos.y = 0; pos.y < size.y; pos.y++)

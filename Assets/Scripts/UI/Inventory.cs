@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour, IInteractive
 {
@@ -18,21 +17,8 @@ public class Inventory : MonoBehaviour, IInteractive
 
     public Player Player { get; set; }
 
-    public int Gold
-    {
-        get => gold;
-        set
-        {
-            gold = value;
-            UpdateText();
-        }
-    }
-
     private List<Item> droppedItems;
     private List<EquipmentSlot> allSlots;
-
-    private int gold;
-    private Text goldText;
 
     private const int BackpackSize = 3;
 
@@ -45,18 +31,6 @@ public class Inventory : MonoBehaviour, IInteractive
         allSlots.Add(armorSlot);
         allSlots.AddRange(backpackSlots);
         allSlots.AddRange(dropSlots);
-    }
-
-    public void SetText(Text goldText)
-    {
-        this.goldText = goldText;
-        UpdateText();
-    }
-
-    private void UpdateText()
-    {
-        if (goldText != null)
-            goldText.text = Gold.ToString();
     }
 
     public void ShowDrop(List<Item> items, int offset = 0)

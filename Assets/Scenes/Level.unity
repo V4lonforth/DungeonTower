@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 529740890}
   - component: {fileID: 529740889}
   m_Layer: 5
-  m_Name: GoldText
+  m_Name: FavorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9150943, g: 0.8311403, b: 0, a: 1}
+  m_Color: {r: 0.9137255, g: 0.1844789, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1939,8 +1939,6 @@ MonoBehaviour:
   - {fileID: 2554363320370677883, guid: d219141b4ae42fd439f78d681674975e, type: 3}
   potionItems:
   - {fileID: 6816704319335838144, guid: 9551d37c2d1b9cb498ac22828c1765fb, type: 3}
-  goldItems:
-  - {fileID: 6083529626753099133, guid: 4749884089040114985b0d9579c48398, type: 3}
   chestItems:
   - {fileID: 6257736942724893710, guid: 73743375378d6da4ca071b3244745624, type: 3}
 --- !u!114 &1555518228
@@ -2367,6 +2365,7 @@ GameObject:
   - component: {fileID: 1887216166}
   - component: {fileID: 1887216165}
   - component: {fileID: 1887216168}
+  - component: {fileID: 1887216169}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -2428,6 +2427,21 @@ MonoBehaviour:
   floorTilemap: {fileID: 1908125451}
   highlightedTile: {fileID: 11400000, guid: 7810b9e4a8053684b8567411589553be, type: 2}
   height: -1
+--- !u!114 &1887216169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887216164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e5a6acf6c0d17244be4bd33220a8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  favorText: {fileID: 529740889}
+  timeToStartReducing: 2
+  reducingSpeed: 10
 --- !u!1 &1902109696
 GameObject:
   m_ObjectHideFlags: 0
