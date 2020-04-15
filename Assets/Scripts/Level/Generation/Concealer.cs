@@ -21,7 +21,7 @@ public class Concealer : MonoBehaviour
             Conceal(cell);
 
         RevealRoom(tower.Rooms[0]);
-        tower.TowerGenerator.Decorator.SetVisibility(tower.Rooms[0], false);
+        tower.TowerGenerator.Painter.SetVisibility(tower.Rooms[0], false);
     }
 
     public void Conceal(Cell cell)
@@ -68,7 +68,7 @@ public class Concealer : MonoBehaviour
             Reveal(cell);
         }
 
-        tower.TowerGenerator.Decorator.DecorateRoom(room);
+        tower.TowerGenerator.Painter.PaintRoom(room);
     }
 
     public void RevealConnectedRooms(Cell cell)
@@ -81,6 +81,6 @@ public class Concealer : MonoBehaviour
                 RevealRoom(connectedCell.Room);
             }
         if (changed)
-            tower.TowerGenerator.Decorator.SetVisibility(cell.Room, false);
+            tower.TowerGenerator.Painter.SetVisibility(cell.Room, false);
     }
 }

@@ -6,6 +6,8 @@ public abstract class Entity : MonoBehaviour
     public Room Room => Cell.Room;
     public Tower Tower => Room.Tower;
 
+    public GameObject prefab;
+
     public static Entity Instantiate(GameObject prefab, Cell cell)
     {
         Entity entity = Instantiate(prefab).GetComponent<Entity>();

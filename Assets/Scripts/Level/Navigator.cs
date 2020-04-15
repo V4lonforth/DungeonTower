@@ -43,7 +43,7 @@ public class Navigator
             int minDistance = int.MaxValue;
             foreach (Cell connectedCell in cell.ConnectedCells)
             {
-                if (connectedCell != null)
+                if (connectedCell != null && !connectedCell.Destroyed)
                 {
                     if (seen[connectedCell.Position.y, connectedCell.Position.x])
                     {

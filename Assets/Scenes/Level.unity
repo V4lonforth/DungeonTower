@@ -1857,6 +1857,8 @@ MonoBehaviour:
       type: 2}
   floorTilemap: {fileID: 1908125451}
   wallsTilemap: {fileID: 1760720114}
+  altar: {fileID: 5337580982427916158, guid: c0d56dbc974598d4c9498af382b6ad5d, type: 3}
+  altarSpawnChance: 1
 --- !u!114 &1555518223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,8 +1941,6 @@ MonoBehaviour:
   - {fileID: 2554363320370677883, guid: d219141b4ae42fd439f78d681674975e, type: 3}
   potionItems:
   - {fileID: 6816704319335838144, guid: 9551d37c2d1b9cb498ac22828c1765fb, type: 3}
-  chestItems:
-  - {fileID: 6257736942724893710, guid: 73743375378d6da4ca071b3244745624, type: 3}
 --- !u!114 &1555518228
 MonoBehaviour:
   m_ObjectHideFlags: 0

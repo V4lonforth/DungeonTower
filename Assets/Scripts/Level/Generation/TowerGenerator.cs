@@ -7,7 +7,7 @@ public class TowerGenerator : MonoBehaviour
     public Builder Builder { get; private set; }
     public Linker Linker { get; private set; }
     public Connector Connector { get; private set; }
-    public Decorator Decorator { get; private set; }
+    public Painter Painter { get; private set; }
     public Spawner Spawner { get; private set; }
     public LootGenerator LootGenerator { get; private set; }
     public Concealer Concealer { get; private set; }
@@ -17,7 +17,7 @@ public class TowerGenerator : MonoBehaviour
         Builder = GetComponent<Builder>();
         Linker = GetComponent<Linker>();
         Connector = GetComponent<Connector>();
-        Decorator = GetComponent<Decorator>();
+        Painter = GetComponent<Painter>();
         Spawner = GetComponent<Spawner>();
         LootGenerator = GetComponent<LootGenerator>();
         Concealer = GetComponent<Concealer>();
@@ -35,7 +35,7 @@ public class TowerGenerator : MonoBehaviour
         FindObjectOfType<Lava>().Tower = tower;
         Linker.Link(tower);
         Connector.Connect(tower);
-        Decorator.Decorate(tower);
+        Painter.Paint(tower);
         Spawner.Spawn(tower);
         LootGenerator.GenerateLoot(tower);
         Concealer.ConcealTower(tower);

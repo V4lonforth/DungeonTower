@@ -25,7 +25,7 @@ public class Lava : MonoBehaviour
         {
             timeToRiseLeft += timeToRise;
             CheckCreatures(currentLevel);
-            Tower.TowerGenerator.Decorator.RemoveRow(currentLevel);
+            Tower.TowerGenerator.Painter.RemoveRow(currentLevel);
             Tower.TowerGenerator.Linker.RemoveRow(currentLevel);
             GenerateLavaRow(currentLevel);
             currentLevel++;

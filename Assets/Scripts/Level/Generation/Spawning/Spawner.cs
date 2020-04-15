@@ -14,12 +14,13 @@ public class Spawner : MonoBehaviour
     public void Spawn(Tower tower)
     {
         foreach (Room room in tower.Rooms.Skip(1))
-            room.Strength = GenerateMonsters(new List<Cell>(room.Cells), CalculateRoomStrength(room));
+            room.Strength = GenerateMonsters(room, CalculateRoomStrength(room));
         tower.Player = GeneratePlayer(tower[0, 0]);
     }
 
-    private int GenerateMonsters(List<Cell> emptyCells, int roomStrength)
+    private int GenerateMonsters(Room room, int roomStrength)
     {
+        List<Cell> emptyCells = room.Cells.FindAll(cell => cell.Furniture == null);
         EnemyGroup enemyGroup = enemyGroups.GetRandomEnemyGroup(emptyCells.Count, roomStrength);
         int currentStrength = 0;
         while (emptyCells.Count > 0 && currentStrength < roomStrength)

@@ -20,7 +20,6 @@ public class Linker : MonoBehaviour
                         else
                             AdjoinCells(tower[pos], tower[shiftedPos], direction);
                     }
-
                 }
     }
 
@@ -48,6 +47,16 @@ public class Linker : MonoBehaviour
             if (!second.Room.AdjacentRooms.Contains(first.Room))
                 second.Room.AdjacentRooms.Add(first.Room);
         }
+    }
+
+    public void UnlinkCell(Cell cell)
+    {
+        foreach (Direction direction in Direction.Values)
+            if (cell.ConnectedCells[direction] != null)
+            {
+                cell.ConnectedCells[direction].ConnectedCells[direction.Opposite] = null;
+                cell.ConnectedCells[direction] = null;
+            }
     }
 
     public void RemoveRow(int x)

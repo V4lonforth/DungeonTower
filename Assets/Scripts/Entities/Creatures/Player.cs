@@ -36,7 +36,13 @@ public class Player : Creature
 
     public override void Die()
     {
+        Destroy();
+    }
+
+    public override void Destroy()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        base.Destroy();
     }
 
     protected override void MoveTo(Cell cell)
@@ -50,8 +56,8 @@ public class Player : Creature
     {
         if (cell.Room != Cell.Room)
         {
-            Tower.TowerGenerator.Decorator.SetVisibility(Cell.Room, true);
-            Tower.TowerGenerator.Decorator.SetVisibility(cell.Room, false);
+            Tower.TowerGenerator.Painter.SetVisibility(Cell.Room, true);
+            Tower.TowerGenerator.Painter.SetVisibility(cell.Room, false);
         }
     }
 

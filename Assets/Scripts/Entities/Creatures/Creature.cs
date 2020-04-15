@@ -15,8 +15,6 @@ public abstract class Creature : Entity
     public DamageEvent PostAttackEvent;
     public DamageEvent TakeDamageEvent;
 
-    public GameObject prefab;
-
     public SpriteRenderer animatedSprite;
 
     public Health health;
@@ -41,7 +39,7 @@ public abstract class Creature : Entity
     public static Creature Instantiate(Creature creaturePrefab, Cell cell)
     {
         Creature creature = Instantiate(creaturePrefab.prefab, cell).GetComponent<Creature>();
-        cell.Creature = creature;
+        cell.Entity = creature;
         return creature;
     }
 
@@ -70,14 +68,14 @@ public abstract class Creature : Entity
     public override void Destroy()
     {
         base.Destroy();
-        Cell.Creature = null;
+        Cell.Entity = null;
     }
 
     protected virtual void MoveTo(Cell cell)
     {
         if (Cell != null && Cell.Creature == this)
-            Cell.Creature = null;
-        cell.Creature = this;
+            Cell.Entity = null;
+        cell.Entity = this;
         Cell = cell;
 
         StartCoroutine(MoveToParentCell(MovingTime));

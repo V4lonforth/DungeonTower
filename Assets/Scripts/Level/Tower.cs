@@ -44,6 +44,6 @@ public class Tower
 
     public Vector2Int WorldToTowerPoint(Vector2 position)
     {
-        return (Vector2Int)TowerGenerator.Decorator.floorTilemap.WorldToCell(position - Vector2.one / 2f);
+        return (Vector2Int)TowerGenerator.Painter.floorTilemap.WorldToCell(position - Vector2.one / 2f);
     }
 }

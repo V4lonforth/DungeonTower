@@ -4,7 +4,6 @@ public abstract class Item : Entity
 {
     public EquipmentSlot EquipmentSlot { get; private set; }
 
-    public GameObject prefab;
     public Sprite icon;
     public int value;
     public bool collectable;

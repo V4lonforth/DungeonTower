@@ -7,9 +7,8 @@ public class LootGenerator : MonoBehaviour
     public List<Item> armorItems;
     public List<Item> weaponItems;
     public List<Item> potionItems;
-    public List<Item> chestItems;
 
-    public int GenerateItem(Cell cell, bool chestAllowed = true)
+    public int GenerateItem(Cell cell)
     {
         float value = Random.Range(0f, 1f);
         if (value < 0.03f)
@@ -18,8 +17,6 @@ public class LootGenerator : MonoBehaviour
             return GenerateItem(GetRandomItem(potionItems), cell);
         else if (value < 0.09f)
             return GenerateItem(GetRandomItem(armorItems), cell);
-        else if (chestAllowed && value < 0.15f)
-            return GenerateItem(GetRandomItem(chestItems), cell);
         return 0;
     }
 
@@ -36,6 +33,12 @@ public class LootGenerator : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public List<Item> GenerateItems(int value, int maxItems)
+    {
+
+        return null;
     }
 
     public int GenerateItem(Item item, Cell cell)

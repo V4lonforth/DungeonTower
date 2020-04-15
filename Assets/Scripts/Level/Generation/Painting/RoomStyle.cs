@@ -2,7 +2,7 @@
 using UnityEngine.Tilemaps;
 
 [Serializable]
-public class RoomDecorations
+public class RoomStyle
 {
     public TileBase floorTile;
 

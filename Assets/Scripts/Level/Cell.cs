@@ -5,7 +5,9 @@ public class Cell
 {
     public bool Destroyed { get; set; }
 
-    public Creature Creature { get; set; }
+    public Entity Entity { get; set; }
+    public Creature Creature => Entity as Creature;
+    public Furniture Furniture => Entity as Furniture;
     public List<Item> Items { get; set; }
 
     public Room Room { get; private set; }
@@ -13,7 +15,7 @@ public class Cell
 
     public Vector2Int Position { get; private set; }
     public Vector3Int Position3 => (Vector3Int)Position;
-    public Vector3 WorldPosition => Tower.TowerGenerator.Decorator.floorTilemap.CellToWorld(Position3);
+    public Vector3 WorldPosition => Tower.TowerGenerator.Painter.floorTilemap.CellToWorld(Position3);
 
     public Cell[] ConnectedCells { get; private set; }
     public Cell[] AdjacentCells { get; private set; }
