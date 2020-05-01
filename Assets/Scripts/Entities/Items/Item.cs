@@ -2,45 +2,36 @@
 
 public abstract class Item : Entity
 {
-    public EquipmentSlot EquipmentSlot { get; private set; }
-
     public Sprite icon;
     public int value;
-    public bool collectable;
 
-    public static Item Instantiate(Item itemPrefab, Cell cell)
+    public Slot Slot { get; protected set; }
+
+    public static Item CreateInstance(Item itemPrefab, Cell cell)
     {
-        Item item = Instantiate(itemPrefab.prefab, cell).GetComponent<Item>();
+        Item item = (Item)CreateInstance(itemPrefab.prefab, cell);
         cell.Items.Add(item);
         return item;
     }
 
-    public override void Destroy()
+    public static Item CreateInstance(Item itemPrefab, Slot slot)
     {
-        base.Destroy();
-        Cell?.Items.Remove(this);
-        EquipmentSlot?.DetachItem();
+        Item item = Instantiate(itemPrefab.prefab).GetComponent<Item>();
+        item.Slot = slot;
+        slot.AttachItem(item);
+        return item;
     }
 
-    public void AttachToEquipmentSlot(EquipmentSlot equipmentSlot)
+    public void Attach(Cell cell)
     {
-        EquipmentSlot = equipmentSlot;
-    }
-
-    public void DetachFromEquipmentSlot()
-    {
-        if (EquipmentSlot != null)
-        {
-            EquipmentSlot.DetachItem();
-            EquipmentSlot = null;
-        }
-    }
-
-    public void AttachToCell(Cell cell)
-    {
-        cell.Items.Add(this);
         Cell = cell;
-        transform.position = cell.WorldPosition;
+        Cell.Entity = this;
+        transform.position = Cell.WorldPosition;
+    }
+
+    public void Attach(Slot slot)
+    {
+        Slot = slot;
     }
 
     public void DetachFromCell()
@@ -50,6 +41,21 @@ public abstract class Item : Entity
             Cell.Items.Remove(this);
             Cell = null;
         }
+    }
+
+    public void DetachFromSlot()
+    {
+        if (Slot != null)
+        {
+            Slot = null;
+        }
+    }
+
+    public override void Destroy()
+    {
+        base.Destroy();
+        Cell?.Items.Remove(this);
+        Slot?.DetachItem();
     }
 
     public abstract void Use(Player player);

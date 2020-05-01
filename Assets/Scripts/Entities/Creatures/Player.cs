@@ -1,107 +1,72 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : Creature
 {
-    public WeaponItem defaultWeapon;
-    public ArmorItem defaultArmour;
+    public int energyToMove;
+    public int energyToAttack;
 
-    public InputController InputController { get; private set; }
     public Inventory Inventory { get; private set; }
 
-    public Cell Target { get; private set; }
-    public bool ReadyToMakeMove => Target != null && CanInteract(Target);
-    
+    private Energy energy;
+
     protected new void Awake()
     {
         base.Awake();
-
-        Camera.main.GetComponent<CameraFollower>().followedObject = transform;
-
-        InputController = FindObjectOfType<InputController>();
-        InputController.Player = this;
-        InputController.Inventory.Player = this;
-        InputController.AbilityController.SetAbility(ActiveAbility);
-
-        Energy.Rechargable = true;
+        energy = GetComponent<Energy>();
+        Camera.main.GetComponent<CameraHelper>().followedObject = transform;
+        Inventory = FindObjectOfType<Inventory>();
     }
 
-    protected void Start()
+    public bool TryMakeMove(Target target)
     {
-        defaultWeapon?.Use(this);
-        defaultArmour?.Use(this);
-
-        CheckCell();
-    }
-
-    public override void Die()
-    {
-        Destroy();
-    }
-
-    public override void Destroy()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        base.Destroy();
-    }
-
-    protected override void MoveTo(Cell cell)
-    {
-        InputController.Inventory.HideDrop();
-        CheckWallsTransparency(cell);
-        base.MoveTo(cell);
-    }
-
-    private void CheckWallsTransparency(Cell cell)
-    {
-        if (cell.Room != Cell.Room)
+        if (CanMove(target))
         {
-            Tower.TowerGenerator.Painter.SetVisibility(Cell.Room, true);
-            Tower.TowerGenerator.Painter.SetVisibility(cell.Room, false);
+            if (energy.TryReduceEnergy(energyToMove))
+            {
+                MakeMove(MoveTo, target);
+                return true;
+            }
         }
-    }
-
-    private void CheckCell()
-    {
-        Tower.TowerGenerator.Concealer.RevealConnectedRooms(Cell);
-        Tower.Navigator.CreateMap(Cell);
-        Cell.Room.AggroEnemies();
-        InputController.Inventory.ShowDrop(Cell.Items);
-    }
-
-    protected override void Interact(Creature creature)
-    {
-        if (creature is Enemy enemy)
-            Attack(enemy);
-    }
-
-    public void SetTarget(Cell cell)
-    {
-        Target = cell;
-    }
-
-    protected override bool MakeMove(Cell cell)
-    {
-        if (base.MakeMove(cell))
+        else if (weapon.CanAttack(target))
         {
-            cell.Room.AggroEnemies();
-            CheckCell();
-            return true;
+            if (energy.TryReduceEnergy(energyToAttack))
+            {
+                MakeMove(weapon.Attack, target);
+                return true;
+            }
         }
         return false;
     }
 
-    protected override void MakeMove()
+    private void MakeMove(Action<Target> move, Target target)
     {
-        if (Target != null && !Energy.Empty && MakeMove(Target))
-        {
-            Energy.Use();
-            Target = null;
-        }
+        StartMakingMove(target.Cell);
+        move?.Invoke(target);
+        FinishMakingMove();
+    }
+
+    protected void StartMakingMove(Cell cell)
+    {
+        FaceCell(cell);
+        cell.Room.AggroEnemies();
+    }
+
+    protected void FinishMakingMove()
+    {
+        Tower.TowerGenerator.Concealer.RevealConnectedRooms(Cell);
+        Tower.Navigator.CreateMap(Cell);
+        Inventory.itemDrop.Show(Cell.Items);
     }
 
     public override string GetDescription()
     {
         return "You";
+    }
+
+    public override void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

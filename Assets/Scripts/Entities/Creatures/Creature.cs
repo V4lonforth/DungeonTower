@@ -1,94 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public abstract class Creature : Entity
 {
-    public delegate void MoveEvent(Creature sender, Cell target);
-    public delegate void DamageEvent(Damage damage);
-
-    public MoveEvent PrepareMoveEvent;
-    public MoveEvent MakeMoveEvent;
-    public MoveEvent FinishMoveEvent;
-    public DamageEvent AttackEvent;
-    public DamageEvent PostAttackEvent;
-    public DamageEvent TakeDamageEvent;
-
     public SpriteRenderer animatedSprite;
 
     public Health health;
     public Armor armor;
     public Weapon weapon;
 
-    public Energy Energy { get; private set; }
-
-    public Direction FacingDirection { get; private set; }
-
-    public ActiveAbility ActiveAbility { get; private set; }
-    public ActiveAbility SelectedAbility { get; set; }
-
     public List<Effect> Effects { get; private set; }
 
-    private AttackAnimation attackEffect;
-
     private const float MovingTime = 0.1f;
-    private const float AttackTime = 0.075f;
-    private const float AttackMovingSpeed = 3f;
-    
-    public static Creature Instantiate(Creature creaturePrefab, Cell cell)
+
+    public static Creature CreateInstance(Creature creaturePrefab, Cell cell)
     {
-        Creature creature = Instantiate(creaturePrefab.prefab, cell).GetComponent<Creature>();
+        Creature creature = (Creature)CreateInstance(creaturePrefab.prefab, cell);
         cell.Entity = creature;
         return creature;
     }
 
     protected void Awake()
     {
-        attackEffect = GetComponentInChildren<AttackAnimation>();
-        Energy = GetComponent<Energy>();
-
-        health.Awake();
-        armor.Awake(this);
-        weapon.Awake(this);
-
-        ActiveAbility = GetComponent<ActiveAbility>();
-        GetComponent<PassiveAbility>()?.effect.ApplyEffect(this);
         Effects = new List<Effect>();
 
-        FacingDirection = Direction.TopRight;
+        health.Initialize(this);
+        armor.Initialize(this);
+        weapon.Initialize(this);
     }
 
-    protected void Update()
+    protected bool CanMove(Target target)
     {
-        if (!Energy.Empty)
-            MakeMove();
+        return target.Cell != null && target.Cell.Entity == null && Cell.IsConnected(target.Cell);
     }
-    
-    public override void Destroy()
+
+    protected void MoveTo(Target target)
     {
-        base.Destroy();
+        target.Cell.Entity = this;
         Cell.Entity = null;
-    }
-
-    protected virtual void MoveTo(Cell cell)
-    {
-        if (Cell != null && Cell.Creature == this)
-            Cell.Entity = null;
-        cell.Entity = this;
-        Cell = cell;
+        Cell = target.Cell;
 
         StartCoroutine(MoveToParentCell(MovingTime));
     }
 
-    protected virtual IEnumerator MoveToParentCell(float movingTimeLeft)
+    private IEnumerator MoveToParentCell(float movingTimeLeft)
     {
         while (movingTimeLeft > 0f)
         {
             if (Time.deltaTime >= movingTimeLeft)
             {
                 movingTimeLeft = 0f;
-                StopMoving();
+                transform.position = Cell.WorldPosition;
             }
             else
             {
@@ -99,92 +62,26 @@ public abstract class Creature : Entity
         }
     }
 
-    protected virtual void Attack(Creature creature)
+    protected void FaceCell(Cell cell)
     {
-        StartCoroutine(AttackAnim(Cell.GetDirectionToCell(creature.Cell), AttackTime));
-        attackEffect?.Attack(creature.transform, () => weapon.Attack(creature));
+        Direction direction = Cell.GetDirectionToCell(cell);
+        if (90f < direction.Angle && direction.Angle < 270f)
+            animatedSprite.flipX = true;
+        else if (270f < direction.Angle && direction.Angle < 90f)
+            animatedSprite.flipX = false;
     }
 
     public void TakeDamage(Damage damage)
     {
-        TakeDamageEvent?.Invoke(damage);
         armor.TakeDamage(damage);
-        if (armor.Destroyed)
-            health.health.TakeDamage(damage);
-        if (health.health.Destroyed)
-            Die();
+        health.healthBar.TakeDamage(damage);
     }
 
-    private void FaceCell(Cell cell)
+    public override void Destroy()
     {
-        Direction direction = Cell.GetDirectionToCell(cell);
-        if (direction == Direction.BottomLeft)
-        {
-            animatedSprite.flipX = true;
-            FacingDirection = Direction.BottomLeft;
-        }
-        else if (direction == Direction.TopRight)
-        {
-            animatedSprite.flipX = false;
-            FacingDirection = Direction.TopRight;
-        }
+        base.Destroy();
+        Cell.Entity = null;
     }
 
-    protected IEnumerator AttackAnim(Direction direction, float attackTimeLeft)
-    {
-        float time = attackTimeLeft;
-        while (time > 0f)
-        {
-            animatedSprite.transform.position += (Vector3)(direction.UnitVector * (AttackMovingSpeed * Time.deltaTime));
-            time -= Time.deltaTime;
-            yield return null;
-        }
-        time = attackTimeLeft;
-        while (time > 0f)
-        {
-            animatedSprite.transform.position -= (Vector3)(direction.UnitVector * (AttackMovingSpeed * Time.deltaTime));
-            time -= Time.deltaTime;
-            yield return null;
-        }
-        animatedSprite.transform.position = Cell.WorldPosition;
-    }
-
-    public void FinishAttackAnimation()
-    {
-        attackEffect.End();
-    }
-
-    protected virtual void StopMoving()
-    {
-        transform.position = Cell.WorldPosition;
-    }
-
-    protected bool CanInteract(Cell cell)
-    {
-        if (SelectedAbility != null)
-            return SelectedAbility.CanTarget(cell);
-        return cell != null && Cell.ConnectedCells.Contains(cell) || ReferenceEquals(Cell, cell);
-    }
-
-    protected virtual bool MakeMove(Cell cell)
-    {
-        if (CanInteract(cell))
-        {
-            FaceCell(cell);
-            Cell.OpenDoor(cell);
-            if (SelectedAbility != null)
-                SelectedAbility.Use(cell);
-            else if (cell.Creature is null)
-                MoveTo(cell);
-            else
-                Interact(cell.Creature);
-            return true;
-        }
-        return false;
-    }
-
-    protected abstract void Interact(Creature creature);
-
-    protected abstract void MakeMove();
     public abstract void Die();
 }

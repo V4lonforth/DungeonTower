@@ -1,24 +1,47 @@
-﻿public class Enemy : Creature
+﻿using UnityEngine;
+
+public class Enemy : Creature
 {
     public int strength;
 
-    public float wakeUpCooldown;
-    public float movementCooldown;
-    public float attackCooldown;
+    public float timeToWakeUp;
+
+    public float attackCharge;
+    public float attackRecharge;
+
+    public float moveCharge;
+    public float moveRecharge;
+
+    public ChargeBar chargeBar;
+
+    private EnemyMoveDescription moveDescription;
+
+    private enum State { Waiting, Recharging, Charging }
+
+    private State state;
+    private float timer;
+    private float timeToRecharge;
+    private float timeToCharge;
 
     private bool aggroed;
 
-    protected new void Awake()
+    protected void Update()
     {
-        base.Awake();
-        Energy.chargeBar.Hide();
-        Energy.Rechargable = false;
-    }
-
-    public override void Die()
-    {
-        Tower.Favor.AddFavor(this);
-        Destroy();
+        timer += Time.deltaTime;
+        if (state != State.Waiting)
+        {
+            if (state == State.Recharging)
+            {
+                if (timer >= timeToRecharge)
+                    Charge();
+            }
+            if (state == State.Charging)
+            {
+                if (timer >= timeToCharge + timeToRecharge)
+                    MakeMove();
+            }
+            chargeBar.Fill(timer / (timeToCharge + timeToRecharge));
+        }
     }
 
     public void Aggro()
@@ -26,47 +49,53 @@
         if (!aggroed)
         {
             aggroed = true;
-            Energy.chargeBar.Show();
-            Energy.SetCooldown(wakeUpCooldown);
-            Energy.Rechargable = true;
+            PrepareMove();
         }
     }
 
-    protected new void Update()
+    private void MakeMove()
     {
-        if (aggroed)
-            base.Update();
+        FaceCell(moveDescription.Target.Cell);
+        if (moveDescription.CanTarget(moveDescription.Target))
+            moveDescription.MakeMove(moveDescription.Target);
+        PrepareMove();
     }
 
-    protected override void MakeMove()
+    private void Charge()
+    {
+        state = State.Charging;
+    }
+
+    private void PrepareMove()
+    {
+        timer = 0f;
+        state = State.Recharging;
+
+        if (moveDescription != null)
+            timeToRecharge = moveDescription.RechargeTime;
+        else
+            timeToRecharge = timeToWakeUp;
+
+        moveDescription = FindNextMove();
+        timeToCharge = moveDescription.ChargeTime;
+    }
+
+    protected virtual EnemyMoveDescription FindNextMove()
     {
         foreach (Direction direction in Tower.Navigator.GetDirections(Cell))
         {
             Cell cell = Cell.ConnectedCells[direction];
-            if (!(cell.Creature is Enemy))
-            {
-                MakeMove(cell);
-                return;
-            }
+            if (cell.Entity == null)
+                return new EnemyMoveDescription(attackCharge, attackRecharge, new Target(cell), MoveTo, CanMove);
+            else if (cell.Entity is Player)
+                return new EnemyMoveDescription(moveCharge, moveRecharge, new Target(cell), weapon.Attack, weapon.CanAttack);
         }
-        Energy.SetCooldown(movementCooldown);
+        return new EnemyMoveDescription(0.5f, 0.5f, new Target(Cell), target => { }, target => true);
     }
 
-    protected override void MoveTo(Cell cell)
+    public override void Die()
     {
-        base.MoveTo(cell);
-        Energy.SetCooldown(movementCooldown);
-    }
-
-    protected override void Attack(Creature creature)
-    {
-        base.Attack(creature);
-        Energy.SetCooldown(attackCooldown);
-    }
-
-    protected override void Interact(Creature creature)
-    {
-        Attack(creature);
+        Destroy();
     }
 
     public override string GetDescription()
