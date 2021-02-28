@@ -1,37 +1,50 @@
 ﻿using UnityEngine;
 
-public abstract class Item : Entity
+public abstract class Item : MonoBehaviour
 {
+    public Cell Cell { get; private set; }
+    public EquipmentSlot EquipmentSlot { get; private set; }
+
+    public GameObject prefab;
     public Sprite icon;
     public int value;
+    public bool collectable;
 
-    public Slot Slot { get; protected set; }
-
-    public static Item CreateInstance(Item itemPrefab, Cell cell)
+    public static Item Instantiate(Item itemPrefab, Cell cell)
     {
-        Item item = (Item)CreateInstance(itemPrefab.prefab, cell);
+        Item item = Instantiate(itemPrefab.prefab, cell.transform).GetComponent<Item>();
+        item.Cell = cell;
         cell.Items.Add(item);
         return item;
     }
 
-    public static Item CreateInstance(Item itemPrefab, Slot slot)
+    public void Destroy()
     {
-        Item item = Instantiate(itemPrefab.prefab).GetComponent<Item>();
-        item.Slot = slot;
-        slot.AttachItem(item);
-        return item;
+        Destroy(gameObject);
+        Cell?.Items.Remove(this);
+        EquipmentSlot?.DetachItem();
     }
 
-    public void Attach(Cell cell)
+    public void AttachToEquipmentSlot(EquipmentSlot equipmentSlot)
     {
+        EquipmentSlot = equipmentSlot;
+    }
+
+    public void DetachFromEquipmentSlot()
+    {
+        if (EquipmentSlot != null)
+        {
+            EquipmentSlot.DetachItem();
+            EquipmentSlot = null;
+        }
+    }
+
+    public void AttachToCell(Cell cell)
+    {
+        cell.Items.Add(this);
         Cell = cell;
-        Cell.Entity = this;
-        transform.position = Cell.WorldPosition;
-    }
-
-    public void Attach(Slot slot)
-    {
-        Slot = slot;
+        transform.SetParent(cell.transform);
+        transform.position = cell.transform.position;
     }
 
     public void DetachFromCell()
@@ -43,20 +56,6 @@ public abstract class Item : Entity
         }
     }
 
-    public void DetachFromSlot()
-    {
-        if (Slot != null)
-        {
-            Slot = null;
-        }
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-        Cell?.Items.Remove(this);
-        Slot?.DetachItem();
-    }
-
     public abstract void Use(Player player);
+    public abstract string GetDescription();
 }

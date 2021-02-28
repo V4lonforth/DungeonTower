@@ -11,15 +11,6 @@ TextureImporter:
   - first:
       213: -3566062403070919562
     second: VikingIdle_2
-  - first:
-      213: 6430265403368407089
-    second: VikingIdle_0
-  - first:
-      213: -3849649293737973194
-    second: VikingIdle_1
-  - first:
-      213: 7790709222003450248
-    second: VikingIdle_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -123,15 +114,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 130024bb054ec3950800000000000000
-      internalID: 6430265403368407089
+      spriteID: c2b94d7d362353c60800000000000000
+      internalID: 7797193734266067756
       vertices: []
       indices: 
       edges: []
@@ -144,15 +135,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63a2ae81d5c439ac0800000000000000
-      internalID: -3849649293737973194
+      spriteID: cb15479f9ab0262b0800000000000000
+      internalID: -5592894962578206276
       vertices: []
       indices: 
       edges: []
@@ -165,15 +156,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88120eda2c82e1c60800000000000000
-      internalID: 7790709222003450248
+      spriteID: 67cf412632dc28ec0800000000000000
+      internalID: -3566062403070919562
       vertices: []
       indices: 
       edges: []

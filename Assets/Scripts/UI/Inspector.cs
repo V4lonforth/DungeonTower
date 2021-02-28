@@ -18,11 +18,11 @@ public class Inspector : MonoBehaviour
     public void ShowText(string str)
     {
         text.text = str;
-        text.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void HideText()
     {
-        text.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

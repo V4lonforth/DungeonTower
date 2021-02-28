@@ -1,29 +1,34 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class AttackAnimation : MonoBehaviour
 {
     private Animator animator;
-    private Transform targetTransform;
+    private Action endAttack;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();    
+        animator = GetComponentInParent<Animator>();
+    }
+    private void Start()
+    {
+        gameObject.SetActive(false);
     }
 
-    private void Update()
+    public void Attack(Vector3 position, Action action)
     {
-        if (targetTransform != null)
-            transform.position = targetTransform.position;
-    }
+        transform.position = position;
+        transform.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0, 4) * 90f);
+        gameObject.SetActive(true);
+        animator.SetTrigger("Attack");
 
-    public void SetTarget(Transform target)
-    {
-        targetTransform = target;
-        transform.position = targetTransform.position;
+        endAttack = action;
     }
 
     public void End()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        endAttack?.Invoke();
+        endAttack = null;
     }
 }

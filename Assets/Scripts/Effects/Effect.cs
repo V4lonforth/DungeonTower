@@ -1,39 +1,28 @@
-﻿using System;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class Effect : MonoBehaviour
+public abstract class Effect : ScriptableObject
 {
+    public bool canExpire;
+    public int timeToExpire;
+
     protected Creature creature;
 
-    protected void Awake()
+    public virtual void ApplyEffect(Creature creature)
     {
-        if (TryGetComponent(out creature))
-        {
-            creature.Effects.Add(this);
-            ApplyEffect();
-        }
+        this.creature = creature;
     }
-
-    public Effect Apply(Creature creature)
-    {
-        Type type = GetType();
-        Effect effect = (Effect)creature.gameObject.AddComponent(type);
-
-        FieldInfo[] fields = type.GetFields();
-        foreach (FieldInfo field in fields)
-            if (field.IsPublic)
-                field.SetValue(effect, field.GetValue(this));
-
-        return effect;
-    }
-
-    public void Remove()
+    public virtual void RemoveEffect(Creature creature)
     {
         creature.Effects.Remove(this);
-        RemoveEffect();
     }
 
-    protected abstract void ApplyEffect();
-    protected abstract void RemoveEffect();
+    protected void FinishMove()
+    {
+        if (canExpire)
+        {
+            timeToExpire--;
+            if (timeToExpire <= 0)
+                RemoveEffect(creature);
+        }
+    }
 }
