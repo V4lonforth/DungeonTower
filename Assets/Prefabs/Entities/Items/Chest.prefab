@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3510689010857991317}
   - component: {fileID: 4078859688446822829}
-  - component: {fileID: 6257736942724893710}
+  - component: {fileID: 8215641340835178524}
+  - component: {fileID: 4376393299628315871}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -47,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -82,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6257736942724893710
+--- !u!114 &8215641340835178524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,11 +93,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 811860787870745194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1811f85edd9fbf34f9257a44a071f335, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b51142549166b44b567700552e1e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 811860787870745194}
-  icon: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}
-  value: 400
-  collectable: 0
-  openedSprite: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}
+  team: 0
+--- !u!114 &4376393299628315871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811860787870745194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15900517539107945840f0a73c132206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInteractions: 1
+  items:
+    weightedElements:
+    - element: {fileID: 4594997411175087559, guid: 9551d37c2d1b9cb498ac22828c1765fb,
+        type: 3}
+      weight: 1
+  openedChest: {fileID: 21300000, guid: 8d87db38a7632b3448d54b705d589b23, type: 3}

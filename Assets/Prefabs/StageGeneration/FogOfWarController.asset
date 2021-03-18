@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa228dbe84e342343b11f9a73c6fc243, type: 3}
+  m_Name: FogOfWarController
+  m_EditorClassIdentifier: 
+  fogOfWarPrefab: {fileID: 7445248187939320007, guid: 86dd73e2b88a30b4b977304c66e4e7cb,
+    type: 3}
+  fogOfWarVertical: {fileID: 3192422223703987337, guid: fcde2c299a16b4b42a68b30286a4fd03,
+    type: 3}
+  fogOfWarHorizontal: {fileID: 5147733154895184698, guid: f2815e723e4496c4597533e8d8b19cc1,
+    type: 3}
+  fogOfWarVerticalConnector: {fileID: 182869457975997693, guid: 4411088c5f1337b4c8c4ec738ecd9ce5,
+    type: 3}
+  fogOfWarHorizontalConnector: {fileID: 6221943031820415204, guid: 92649b2247073574da0dc8668a3a1676,
+    type: 3}
+  fogOfWarInnerCorner: {fileID: 2240743084724950121, guid: 81223656292fe424a957c3d0dc7e63d2,
+    type: 3}
+  fogOfWarOuterCorner: {fileID: 6327044709576071113, guid: 87f9e75fe4bb8a74d8bb79c830dabe0d,
+    type: 3}

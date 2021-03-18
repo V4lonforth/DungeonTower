@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbc67cce2b33034e99fc36fdabc49d2, type: 3}
+  m_Name: CreatureSpawner
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1677155915308444074, guid: a04e4ae77b45c0940b1315bafb07a7c3,
+    type: 3}
+  enemyPrefabs:
+    weightedElements:
+    - element: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
+        type: 3}
+      weight: 1
+  spawnChance: 0.25

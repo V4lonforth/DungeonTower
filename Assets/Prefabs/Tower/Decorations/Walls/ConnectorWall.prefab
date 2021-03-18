@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7350212077551375556}
   - component: {fileID: 7350212077551375557}
-  - component: {fileID: 1978885249126051480}
   m_Layer: 8
   m_Name: ConnectorWall
   m_TagString: Untagged
@@ -47,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,29 +83,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1978885249126051480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7350212077551375554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 5142271200000000759717ef
-  m_ShapePath:
-  - {x: -0.125, y: -0.125, z: 0}
-  - {x: 0.125, y: -0.125, z: 0}
-  - {x: 0.125, y: 0.125, z: 0}
-  - {x: -0.125, y: 0.125, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 30734

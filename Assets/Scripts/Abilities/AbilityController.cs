@@ -1,0 +1,75 @@
+﻿using DungeonTower.Controllers;
+using DungeonTower.Entity.Base;
+using DungeonTower.Entity.MoveController;
+using DungeonTower.Level.Base;
+using DungeonTower.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace DungeonTower.Abilities
+{
+    public class AbilityController : MonoBehaviour
+    {
+        [SerializeField] private AdaptivePanel abilityPanel;
+        [SerializeField] private GameObject abilityButtonPrefab;
+
+        private readonly List<AbilityButton> abilityButtons = new List<AbilityButton>();
+
+        private MoveController playerMoveController;
+        private Ability[] abilities;
+
+        private Ability selectedAbility;
+
+        private void Awake()
+        {
+            GameController.Instance.OnStageStart += StartStage;
+        }
+
+        private void StartStage(Stage stage)
+        {
+            playerMoveController = stage.PlayerEntity.GetComponent<MoveController>();
+            abilities = stage.PlayerEntity.GetComponents<Ability>();
+
+            foreach (Ability ability in abilities)
+            {
+                AbilityButton abilityButton = abilityPanel.AddElement(abilityButtonPrefab).GetComponent<AbilityButton>();
+                abilityButton.AttachAbility(ability);
+                abilityButton.OnSelect += PressAbility;
+                abilityButtons.Add(abilityButton);
+            }
+        }
+
+        private void DeselectAbility()
+        {
+            selectedAbility = null;
+            playerMoveController.DeselectAction();
+        }
+
+        private void SelectAbility(Ability ability)
+        {
+            selectedAbility = ability;
+            playerMoveController.SelectAction(ability);
+        }
+
+        private void PressAbility(Ability ability)
+        {
+            if (selectedAbility == null)
+            {
+                SelectAbility(ability);
+            }
+            else if (selectedAbility == ability)
+            {
+                DeselectAbility();
+            }
+            else
+            {
+                DeselectAbility();
+                SelectAbility(ability);
+            }
+        }
+    }
+}

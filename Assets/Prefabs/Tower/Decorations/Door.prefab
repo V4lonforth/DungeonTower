@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3492206786384624179}
   - component: {fileID: 4285035337792900285}
-  - component: {fileID: 6971600305549215678}
-  - component: {fileID: 8613772782050611102}
+  - component: {fileID: -1853729272525997337}
+  - component: {fileID: -3080567888721872343}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -48,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6971600305549215678
+--- !u!114 &-1853729272525997337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,24 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 584751161002276040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Script: {fileID: 11500000, guid: 31ffe0a7ebfa8984fb0fa36040a1c2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 5142271200000000759717ef
-  m_ShapePath:
-  - {x: -0.125, y: -0.375, z: 0}
-  - {x: 0.125, y: -0.375, z: 0}
-  - {x: 0.125, y: 0.375, z: 0}
-  - {x: -0.125, y: 0.375, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 52464
---- !u!114 &8613772782050611102
+  transparency: 1
+--- !u!114 &-3080567888721872343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 584751161002276040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe765f8707e3e654fa79134da3879223, type: 3}
+  m_Script: {fileID: 11500000, guid: be84ce28d158c2148af2b49d4fb1588b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   closed: {fileID: -2302327988271558475, guid: 5f022ddd50f4da24998cddaf5aa61af5, type: 3}

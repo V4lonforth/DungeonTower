@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3506395653784930017}
   - component: {fileID: 7520351623123940863}
-  - component: {fileID: 5049847439827514403}
-  - component: {fileID: 5878586570701876766}
+  - component: {fileID: -4892694792227138788}
+  - component: {fileID: 7499074147602167808}
   m_Layer: 0
   m_Name: Trapdoor
   m_TagString: Untagged
@@ -48,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5049847439827514403
+--- !u!114 &-4892694792227138788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,24 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1122471142970768789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Script: {fileID: 11500000, guid: 31ffe0a7ebfa8984fb0fa36040a1c2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 1
-  m_ApplyToSortingLayers: 5142271200000000759717ef
-  m_ShapePath:
-  - {x: -0.375, y: -0.125, z: 0}
-  - {x: 0.375, y: -0.125, z: 0}
-  - {x: 0.375, y: 0.125, z: 0}
-  - {x: -0.375, y: 0.125, z: 0}
-  m_ShapePathHash: 0
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 52546
---- !u!114 &5878586570701876766
+  transparency: 1
+--- !u!114 &7499074147602167808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1122471142970768789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe765f8707e3e654fa79134da3879223, type: 3}
+  m_Script: {fileID: 11500000, guid: be84ce28d158c2148af2b49d4fb1588b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   closed: {fileID: 765156946687646068, guid: 50710f8468d4cd0439096fc14f08357d, type: 3}

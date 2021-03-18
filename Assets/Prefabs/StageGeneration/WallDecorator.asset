@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33d57e5a42c58e47af2eb41e54ab24b, type: 3}
+  m_Name: WallDecorator
+  m_EditorClassIdentifier: 
+  horizontalWallPrefab: {fileID: 8104007859757771772, guid: ca0fc6a66bf49674a9c0e97015c60713,
+    type: 3}
+  verticalWallPrefab: {fileID: 7146176050538171413, guid: f907b96e9f33121419117b0861f8af98,
+    type: 3}
+  connectorWallPrefab: {fileID: 7350212077551375554, guid: 524dbcb522a4a7b4a9bfd5afbe0d3350,
+    type: 3}
+  doorPrefab: {fileID: 584751161002276040, guid: 52fa7060ae98d8840aa38204bd757de1,
+    type: 3}
+  trapdoorPrefab: {fileID: 1122471142970768789, guid: add9ec8538d3c8844bec2ab7eb81d4a6,
+    type: 3}
+  platformPrefab: {fileID: 1197052962821430929, guid: 2046306e4d886394fb64ec257f0b665a,
+    type: 3}
+  lPlatformPrefab: {fileID: 8697618640006359145, guid: 15376a04c936d424fb983b8fc99039a6,
+    type: 3}
+  rPlatformPrefab: {fileID: 2968950866798814032, guid: f9c0977f2624bf04f861098e98554b3d,
+    type: 3}
+  lrPlatformPrefab: {fileID: 2761289337498423860, guid: 738d82e7799147f4c963c760dd811f43,
+    type: 3}
