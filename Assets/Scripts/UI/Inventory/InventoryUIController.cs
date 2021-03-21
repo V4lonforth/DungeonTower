@@ -1,6 +1,8 @@
-﻿using DungeonTower.Controllers;
+﻿using DungeonTower.Abilities;
+using DungeonTower.Controllers;
 using DungeonTower.Inventory;
 using DungeonTower.Level.Base;
+using DungeonTower.Level.StageController;
 using DungeonTower.Utils;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace DungeonTower.UI.Inventory
         public Action<Slot> OnSlotSelection { get; set; }
         public Action<Slot, Slot> OnSlotSwap { get; set; }
 
+        [SerializeField] private InteractableController interactableController;
         [SerializeField] private InventoryController inventoryController;
 
         private readonly List<Slot> slots = new List<Slot>();
@@ -61,6 +64,12 @@ namespace DungeonTower.UI.Inventory
                     inventoryController.SwapItems(selectedSlot, dropSlot);
                     return;
                 }
+            }
+
+            if (interactableController.CheckDropItemPosition(position))
+            {
+                interactableController.Interact();
+                return;
             }
 
             Cell cell = stage.GetCellSafe(stage.WorldToTowerPoint(CameraController.Instance.Camera.ScreenToWorldPoint(position)));

@@ -1,21 +1,17 @@
 ﻿using DungeonTower.Controllers;
 using DungeonTower.Entity.Action;
-using DungeonTower.Entity.Base;
 using DungeonTower.Entity.MoveController;
 using DungeonTower.Level.Base;
 using DungeonTower.UI;
-using System;
+using DungeonTower.UI.ButtonPanels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace DungeonTower.Abilities
 {
     public class AbilityController : MonoBehaviour
     {
-        [SerializeField] private AdaptivePanel abilityPanel;
+        [SerializeField] private ButtonPanel abilityPanel;
         [SerializeField] private GameObject abilityButtonPrefab;
 
         private readonly List<AbilityButton> abilityButtons = new List<AbilityButton>();

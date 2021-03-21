@@ -8,9 +8,9 @@ namespace DungeonTower.UI
 {
     public class AbilityButton : MonoBehaviour
     {
-        private TouchHandler touchHandler;
+        [SerializeField] private Image abilityImage;
 
-        private Image image;
+        private TouchHandler touchHandler;
         private RectTransform rectTransform;
 
         public Ability Ability { get; private set; }
@@ -19,7 +19,6 @@ namespace DungeonTower.UI
 
         private void Awake()
         {
-            image = GetComponent<Image>();
             rectTransform = GetComponent<RectTransform>();
 
             touchHandler = new TouchHandler(layer: 100, checkHit: CheckHit, onRelease: Release, usingWorldPosition: false);
@@ -29,13 +28,13 @@ namespace DungeonTower.UI
         public void AttachAbility(Ability ability)
         {
             Ability = ability;
-            image.sprite = ability.Icon;
+            abilityImage.sprite = ability.Icon;
         }
 
         public void DetachAbility()
         {
             Ability = null;
-            image.sprite = null;
+            abilityImage.sprite = null;
         }
 
         private void Release(Vector2 position)

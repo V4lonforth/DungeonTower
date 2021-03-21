@@ -46,8 +46,7 @@ namespace DungeonTower.Entity.MoveController
 
         protected override void SelectMove()
         {
-            ActionOption actionOption = SelectActionOption();
-            OnMoveSelected?.Invoke(this, actionOption);
+            SelectMove(SelectActionOption());
         }
 
         private void Die(EntityHealth entityHealth)

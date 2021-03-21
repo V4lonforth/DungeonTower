@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 42836980}
   - component: {fileID: 42836981}
   - component: {fileID: 42836978}
+  - component: {fileID: 42836982}
   m_Layer: 5
   m_Name: AbilitiesPanel
   m_TagString: Untagged
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 42836976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e3e78565ec132499d123979fc35682, type: 3}
+  m_Script: {fileID: 11500000, guid: e3221428dcbef574498adee58b9683e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &42836979
@@ -224,6 +225,21 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &42836982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42836976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8fe101f490356043b75d3d64eed5df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityPanel: {fileID: 42836978}
+  abilityButtonPrefab: {fileID: 574795425024611771, guid: 0a87f8e321d63d046b5f715c8797c5ca,
+    type: 3}
 --- !u!1 &126363571
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 126363572}
   - component: {fileID: 126363573}
+  - component: {fileID: 126363574}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -274,6 +291,20 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &126363574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126363571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38ad82aa2b00a942857e75c6417a6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableController: {fileID: 838613191}
+  inventoryController: {fileID: 2103902739}
 --- !u!1 &206762728
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +738,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 838613186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e3e78565ec132499d123979fc35682, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cfeff88969812a48abe29dc55e1e4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &838613189
@@ -760,7 +791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e78244bb8a27e9f4a98d25711f90efb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementPrefab: {fileID: 6355522123852400827, guid: 167144c9da6b0644e91c94e047c2c82c,
+  interactableButtonPrefab: {fileID: 6355522123852400827, guid: 167144c9da6b0644e91c94e047c2c82c,
+    type: 3}
+  itemUseButtonPrefab: {fileID: 6171851637404299448, guid: af00790ea2b77bf41a3d527cc3ee2d04,
     type: 3}
 --- !u!1 &1648988779
 GameObject:
@@ -791,7 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d7e4747eb8f554e87d447303f4fa8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageSize: {x: 5, y: 50}
+  stageSize: {x: 7, y: 50}
   creatureSpawner: {fileID: 11400000, guid: d0b47fc4e09ab084c8b12d2944fbd065, type: 2}
   itemSpawner: {fileID: 11400000, guid: cc3111364e89bf445b65b291c122bb2e, type: 2}
   itemController: {fileID: 11400000, guid: 0a48765c23593ed40ba04ae4e569b885, type: 2}
@@ -829,7 +862,6 @@ GameObject:
   - component: {fileID: 1711750977}
   - component: {fileID: 1711750975}
   - component: {fileID: 1711750974}
-  - component: {fileID: 1711750979}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -865,7 +897,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711750972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb93f8a184b5d44bbeb0fa3b7dd3b55, type: 3}
+  m_Script: {fileID: 11500000, guid: ce67dc1991267014fab7e28e0e0f49e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetRectTransform: {fileID: 42836977}
@@ -878,7 +910,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711750972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e3e78565ec132499d123979fc35682, type: 3}
+  m_Script: {fileID: 11500000, guid: e3221428dcbef574498adee58b9683e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1711750976
@@ -919,19 +951,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
---- !u!114 &1711750979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711750972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38ad82aa2b00a942857e75c6417a6fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryController: {fileID: 2103902739}
 --- !u!1 &1823072451
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +999,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1823072451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb93f8a184b5d44bbeb0fa3b7dd3b55, type: 3}
+  m_Script: {fileID: 11500000, guid: ce67dc1991267014fab7e28e0e0f49e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetRectTransform: {fileID: 838613187}
@@ -993,7 +1012,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1823072451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15e3e78565ec132499d123979fc35682, type: 3}
+  m_Script: {fileID: 11500000, guid: e3221428dcbef574498adee58b9683e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1823072455
@@ -1047,7 +1066,6 @@ GameObject:
   - component: {fileID: 2103902737}
   - component: {fileID: 2103902738}
   - component: {fileID: 2103902739}
-  - component: {fileID: 2103902740}
   - component: {fileID: 2103902741}
   m_Layer: 0
   m_Name: GameController
@@ -1124,21 +1142,6 @@ MonoBehaviour:
     type: 3}
   itemController: {fileID: 11400000, guid: 0a48765c23593ed40ba04ae4e569b885, type: 2}
   maxInventorySize: 3
---- !u!114 &2103902740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103902734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8fe101f490356043b75d3d64eed5df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityPanel: {fileID: 42836978}
-  abilityButtonPrefab: {fileID: 574795425024611771, guid: 0a87f8e321d63d046b5f715c8797c5ca,
-    type: 3}
 --- !u!114 &2103902741
 MonoBehaviour:
   m_ObjectHideFlags: 0

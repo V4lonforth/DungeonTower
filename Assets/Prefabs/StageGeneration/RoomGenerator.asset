@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99784df55f6e2e644b7e99ea589a76bb, type: 3}
   m_Name: RoomGenerator
   m_EditorClassIdentifier: 
-  minSize: 3
-  maxSize: 10
+  minSize: 4
+  maxSize: 15

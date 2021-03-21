@@ -5,7 +5,7 @@ using DungeonTower.Entity.Items;
 using DungeonTower.Entity.MoveController;
 using DungeonTower.Entity.Movement;
 using DungeonTower.Level.Base;
-using DungeonTower.UI;
+using DungeonTower.UI.ButtonPanels;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +14,8 @@ namespace DungeonTower.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private AdaptivePanel inventoryPanel;
-        [SerializeField] private AdaptivePanel lootPanel;
+        [SerializeField] private ButtonPanel inventoryPanel;
+        [SerializeField] private ButtonPanel lootPanel;
 
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] private ItemController itemController;
@@ -113,7 +113,7 @@ namespace DungeonTower.Inventory
             }
         }
 
-        private Slot CreateSlot(AdaptivePanel panel, GameObject slotPrefab)
+        private Slot CreateSlot(ButtonPanel panel, GameObject slotPrefab)
         {
             Slot slot = panel.AddElement(slotPrefab).GetComponent<Slot>();
             OnSlotAdded?.Invoke(slot);

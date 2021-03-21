@@ -61,6 +61,11 @@ namespace DungeonTower.Entity.MoveController
             }
         }
 
+        public void SelectMove(ActionOption actionOption)
+        {
+            OnMoveSelected?.Invoke(this, actionOption);
+        }
+
         public void MakeMove(ActionOption actionOption)
         {
             MoveState = MoveState.MakingMove;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DungeonTower.UI
+namespace DungeonTower.UI.ButtonPanels
 {
     public class PanelAttachable : MonoBehaviour
     {

@@ -1,28 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonTower.UI
+namespace DungeonTower.UI.ButtonPanels
 {
-    public class AdaptivePanel : MonoBehaviour
+    public class ButtonPanel : MonoBehaviour
     {
         private RectTransform rectTransform;
-        private readonly List<GameObject> elemenets = new List<GameObject>();
+        public List<GameObject> Elemenets { get; } = new List<GameObject>();
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
         }
 
-        public GameObject AddElement(GameObject elementPrefab)
+        public virtual GameObject AddElement(GameObject elementPrefab)
         {
             GameObject element = Instantiate(elementPrefab, rectTransform);
-            elemenets.Add(element);
+            element.transform.SetAsFirstSibling();
+            Elemenets.Add(element);
             return element;
         }
 
-        public bool RemoveElement(GameObject gameObject)
+        public virtual bool RemoveElement(GameObject gameObject)
         {
-            if (elemenets.Remove(gameObject))
+            if (Elemenets.Remove(gameObject))
             {
                 Destroy(gameObject);
                 return true;
@@ -32,14 +33,14 @@ namespace DungeonTower.UI
 
         public void Clear()
         {
-            foreach (GameObject gameObject in elemenets)
+            foreach (GameObject gameObject in Elemenets)
                 Destroy(gameObject);
-            elemenets.Clear();
+            Elemenets.Clear();
         }
 
         public bool Contains(GameObject gameObject)
         {
-            return elemenets.Contains(gameObject);
+            return Elemenets.Contains(gameObject);
         }
     }
 }

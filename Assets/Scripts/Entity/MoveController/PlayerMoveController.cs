@@ -46,7 +46,7 @@ namespace DungeonTower.Entity.MoveController
                 if (actionOptions.Count > 0)
                 {
                     moveSelected = true;
-                    OnMoveSelected?.Invoke(this, actionOptions[0]);
+                    SelectMove(actionOptions[0]);
                 }
             }
         }
