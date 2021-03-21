@@ -180,7 +180,7 @@ MonoBehaviour:
   requiredSelection: 1
   targeting: {fileID: 11400000, guid: 34694ff7fa9c668488c4b2d59a1d5979, type: 2}
   cooldown: 3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ba6f82c610fc2b949b5803e6724fd6c3, type: 3}
   abilityEffectData: {fileID: 11400000, guid: 002df8c8a5c17a4419725661f63847ce, type: 2}
 --- !u!1 &2280690995866697862
 GameObject:

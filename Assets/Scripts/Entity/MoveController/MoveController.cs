@@ -18,6 +18,9 @@ namespace DungeonTower.Entity.MoveController
         public Action<MoveController, ActionOption> OnMoveMade { get; set; }
         public Action<MoveController> OnMoveFinished { get; set; }
 
+        public Action<MoveController, EntityAction> OnActionSelected { get; set; }
+        public Action<MoveController, EntityAction> OnActionDeselected { get; set; }
+
         public MoveState MoveState { get; private set; }
         public bool Active { get; private set; }
         public bool Sleeping { get; set; }
@@ -116,12 +119,20 @@ namespace DungeonTower.Entity.MoveController
 
         public void SelectAction(EntityAction entityAction)
         {
+            if (SelectedAction != null && SelectedAction != entityAction)
+                DeselectAction();
+
             SelectedAction = entityAction;
+            OnActionSelected?.Invoke(this, entityAction);
         }
 
         public void DeselectAction()
         {
-            SelectedAction = null;
+            if (SelectedAction != null)
+            {
+                OnActionDeselected?.Invoke(this, SelectedAction);
+                SelectedAction = null;
+            }
         }
 
         protected abstract void SelectMove();

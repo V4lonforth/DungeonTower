@@ -1048,6 +1048,7 @@ GameObject:
   - component: {fileID: 2103902738}
   - component: {fileID: 2103902739}
   - component: {fileID: 2103902740}
+  - component: {fileID: 2103902741}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1137,4 +1138,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityPanel: {fileID: 42836978}
   abilityButtonPrefab: {fileID: 574795425024611771, guid: 0a87f8e321d63d046b5f715c8797c5ca,
+    type: 3}
+--- !u!114 &2103902741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103902734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a606086d7f199ff4ab9d10088f1a7ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableHighlightPrefab: {fileID: 6316226564341618108, guid: 52ab9e78bd39d7d42961a458b7730f58,
+    type: 3}
+  unavailableHighlightPrefab: {fileID: 1818062461203296633, guid: 756bc42c9c99d1845be1eee090ae01df,
     type: 3}

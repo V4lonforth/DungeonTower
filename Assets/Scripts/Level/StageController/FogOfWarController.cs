@@ -87,7 +87,10 @@ namespace DungeonTower.Level.StageController
                 return;
 
             Destroy(fogOfWar[cell.StagePosition.y, cell.StagePosition.x]);
-            GameObject fogOfWarParent = Instantiate(new GameObject(), cell.Transform);
+            GameObject fogOfWarParent = new GameObject();
+            fogOfWarParent.transform.parent = cell.Transform;
+            fogOfWarParent.transform.localPosition = Vector3.zero;
+
             fogOfWar[cell.StagePosition.y, cell.StagePosition.x] = fogOfWarParent;
 
             if (HasFogOfWar(cell.StagePosition + Vector2Int.up))

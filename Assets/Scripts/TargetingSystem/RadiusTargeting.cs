@@ -1,4 +1,5 @@
-﻿using DungeonTower.Level.Base;
+﻿using DungeonTower.Entity.Base;
+using DungeonTower.Level.Base;
 using DungeonTower.Utils.Extensions;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,16 @@ namespace DungeonTower.TargetingSystem
     {
         [SerializeField] private int radius;
 
-        public override bool CanTarget(Cell from, Cell to)
+        public override bool CanTarget(CellEntity cellEntity, Cell target)
         {
-            return to != null && (from.StagePosition - to.StagePosition).ManhattanDistance() <= radius;
+            return target != null && (cellEntity.Cell.StagePosition - target.StagePosition).ManhattanDistance() <= radius;
         }
 
-        public override List<Cell> GetAvailableTargets(Cell from)
+        public override List<Cell> GetAvailableTargets(CellEntity cellEntity)
         {
             List<Cell> cells = new List<Cell>();
-            foreach (Cell cell in from.Stage.Cells)
-                if (CanTarget(from, cell))
+            foreach (Cell cell in cellEntity.Cell.Stage.Cells)
+                if (CanTarget(cellEntity, cell))
                     cells.Add(cell);
             return cells;
         }

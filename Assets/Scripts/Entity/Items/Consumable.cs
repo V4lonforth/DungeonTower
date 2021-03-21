@@ -1,6 +1,7 @@
 ﻿using DungeonTower.Entity.Action;
 using DungeonTower.Level.Base;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonTower.Entity.Items
@@ -23,9 +24,12 @@ namespace DungeonTower.Entity.Items
 
         public override bool CanInteract(Cell cell)
         {
-            if (lootItem.ParentEntity != null)
-                return targeting.CanTarget(lootItem.ParentEntity.Cell, cell);
-            return base.CanInteract(cell);
+            return lootItem.ParentEntity != null ? Targeting.CanTarget(lootItem.ParentEntity, cell) : base.CanInteract(cell);
+        }
+
+        public override List<Cell> GetAvailableTargets()
+        {
+            return lootItem.ParentEntity != null ? Targeting.GetAvailableTargets(lootItem.ParentEntity) : base.GetAvailableTargets();
         }
 
         public override void Interact(Cell cell)

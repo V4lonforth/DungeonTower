@@ -4,6 +4,7 @@ using DungeonTower.Level.Base;
 using DungeonTower.TargetingSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DungeonTower.Entity.Action
@@ -13,7 +14,7 @@ namespace DungeonTower.Entity.Action
     {
         [SerializeField] private int controllerPriority;
         [SerializeField] private bool requiredSelection;
-        [SerializeField] protected Targeting targeting;
+        [SerializeField] private Targeting targeting;
 
         protected CellEntity cellEntity;
         protected Stage stage;
@@ -24,6 +25,7 @@ namespace DungeonTower.Entity.Action
         public int Priority => controllerPriority;
         public bool Selected { get; private set; }
         public bool RequiredSelection => requiredSelection;
+        public Targeting Targeting => targeting;
 
         protected void Awake()
         {
@@ -33,12 +35,12 @@ namespace DungeonTower.Entity.Action
 
         public virtual bool CanInteract(Cell cell)
         {
-            return targeting.CanTarget(cellEntity.Cell, cell);
+            return targeting.CanTarget(cellEntity, cell);
         }
 
         public virtual List<Cell> GetAvailableTargets()
         {
-            return targeting.GetAvailableTargets(cellEntity.Cell);
+            return targeting.GetAvailableTargets(cellEntity);
         }
 
         public virtual void Interact(Cell cell)

@@ -1,4 +1,5 @@
-﻿using DungeonTower.Level.Base;
+﻿using DungeonTower.Entity.Base;
+using DungeonTower.Level.Base;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +8,14 @@ namespace DungeonTower.TargetingSystem
     [CreateAssetMenu(fileName = "Data", menuName = "Targeting/SelfTargeting", order = 1)]
     public class SelfTargeting : Targeting
     {
-        public override bool CanTarget(Cell from, Cell to)
+        public override bool CanTarget(CellEntity cellEntity, Cell target)
         {
-            return from == to;
+            return cellEntity.Cell == target;
         }
 
-        public override List<Cell> GetAvailableTargets(Cell from)
+        public override List<Cell> GetAvailableTargets(CellEntity cellEntity)
         {
-            return new List<Cell>() { from };
+            return new List<Cell>() { cellEntity.Cell };
         }
     }
 }

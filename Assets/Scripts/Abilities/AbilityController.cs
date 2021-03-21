@@ -1,4 +1,5 @@
 ﻿using DungeonTower.Controllers;
+using DungeonTower.Entity.Action;
 using DungeonTower.Entity.Base;
 using DungeonTower.Entity.MoveController;
 using DungeonTower.Level.Base;
@@ -32,6 +33,8 @@ namespace DungeonTower.Abilities
         private void StartStage(Stage stage)
         {
             playerMoveController = stage.PlayerEntity.GetComponent<MoveController>();
+            playerMoveController.OnActionDeselected += DeselectAbility;
+
             abilities = stage.PlayerEntity.GetComponents<Ability>();
 
             foreach (Ability ability in abilities)
@@ -43,16 +46,23 @@ namespace DungeonTower.Abilities
             }
         }
 
-        private void DeselectAbility()
+        private void DeselectAbility(MoveController moveController, EntityAction entityAction)
         {
             selectedAbility = null;
+        }
+
+        private void DeselectAbility()
+        {
             playerMoveController.DeselectAction();
         }
 
         private void SelectAbility(Ability ability)
         {
-            selectedAbility = ability;
-            playerMoveController.SelectAction(ability);
+            if (ability.Ready)
+            {
+                selectedAbility = ability;
+                playerMoveController.SelectAction(ability);
+            }
         }
 
         private void PressAbility(Ability ability)
