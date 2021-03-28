@@ -11,8 +11,9 @@ namespace DungeonTower.Entity.Health
         public int MaxHealth => maxHealth;
         public int CurrentHealth { get; private set; }
 
-        public Action<Damage, EntityHealth> OnPreDamageTaken { get; set; }
-        public Action<Damage, EntityHealth> OnPostDamageTaken { get; set; }
+        public Action<EntityHealth, Damage> OnPreDamageTaken { get; set; }
+        public Action<EntityHealth, Damage> OnPostDamageTaken { get; set; }
+        public Action<EntityHealth, int> OnHeal { get; set; }
         public Action<EntityHealth> OnHealthChanged { get; set; }
         public Action<EntityHealth> OnDeath { get; set; }
 
@@ -26,6 +27,8 @@ namespace DungeonTower.Entity.Health
             CurrentHealth += health;
             if (CurrentHealth > maxHealth)
                 CurrentHealth = maxHealth;
+
+            OnHeal?.Invoke(this, health);
             OnHealthChanged?.Invoke(this);
         }
 
@@ -37,7 +40,7 @@ namespace DungeonTower.Entity.Health
 
         public void TakeDamage(Damage damage)
         {
-            OnPreDamageTaken?.Invoke(damage, this);
+            OnPreDamageTaken?.Invoke(this, damage);
 
             if (damage.DamageLeft > 0)
             {
@@ -48,7 +51,7 @@ namespace DungeonTower.Entity.Health
                     damage.DamageLeft = -CurrentHealth;
                     CurrentHealth = 0;
 
-                    OnPostDamageTaken?.Invoke(damage, this);
+                    OnPostDamageTaken?.Invoke(this, damage);
                     OnHealthChanged?.Invoke(this);
                     Die();
                 }
@@ -57,7 +60,7 @@ namespace DungeonTower.Entity.Health
                     damage.DamageDealt += damage.DamageLeft;
                     damage.DamageLeft = 0;
 
-                    OnPostDamageTaken?.Invoke(damage, this);
+                    OnPostDamageTaken?.Invoke(this, damage);
                     OnHealthChanged?.Invoke(this);
                 }
             }
