@@ -17,7 +17,7 @@ namespace DungeonTower.UI.ButtonPanels
             {
                 if (Elemenets.Count > 0)
                 {
-                    Elemenets.Last().SetActive(false);
+                    Elemenets.Last().SetActive(true);
                 }
                 return true;
             }

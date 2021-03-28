@@ -6,7 +6,7 @@ namespace DungeonTower.UI
 {
     public class AttackBar : MonoBehaviour
     {
-        [SerializeField] private AttackController attackController;
+        [SerializeField] private EntityAttack attackController;
         [SerializeField] private TextMeshPro text;
 
         private void Awake()

@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class VampirismWeaponEffect : Effect<VampirismWeaponEffectData>
 {
-    private readonly IAttack attack;
+    private readonly EntityAttack attack;
     private readonly EntityHealth health;
 
     public VampirismWeaponEffect(VampirismWeaponEffectData data, GameObject target) : base(data, target)
     {
-        attack = target.GetComponent<IAttack>();
+        attack = target.GetComponent<EntityAttack>();
         health = target.GetComponent<EntityHealth>();
     }
 

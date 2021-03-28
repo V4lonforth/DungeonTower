@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonTower.Entity.Attack
 {
-    public class AttackController : EntityAction, IAttack
+    public class EntityAttack : EntityAction
     {
         [SerializeField] private int damage;
         [SerializeField] private DamageType damageType;
@@ -20,6 +20,8 @@ namespace DungeonTower.Entity.Attack
 
         public Action<Damage> OnPreAttack { get; set; }
         public Action<Damage> OnPostAttack { get; set; }
+
+        public Action<EntityAttack> OnDamageChanged { get; set; }
 
         public int AttackDamage => damage;
 

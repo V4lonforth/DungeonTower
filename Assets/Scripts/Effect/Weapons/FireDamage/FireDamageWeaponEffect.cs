@@ -6,11 +6,11 @@ namespace DungeonTower.Effect.Weapons.FireDamage
 {
     public class FireDamageWeaponEffect : Effect<FireDamageWeaponEffectData>
     {
-        private readonly IAttack attack;
+        private readonly EntityAttack attack;
 
         public FireDamageWeaponEffect(FireDamageWeaponEffectData data, GameObject target) : base(data, target)
         {
-            attack = target.GetComponent<IAttack>();
+            attack = target.GetComponent<EntityAttack>();
         }
 
         public override bool CanApply()
