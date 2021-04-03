@@ -24,9 +24,6 @@ namespace DungeonTower.UI
 
             EntityAttack playerAttack = stage.PlayerEntity.GetComponent<EntityAttack>();
             playerAttack.OnDamageChanged += UpdateDamage;
-
-            UpdateHealth(playerHealth);
-            UpdateDamage(playerAttack);
         }
 
         private void UpdateHealth(EntityHealth entityHealth)

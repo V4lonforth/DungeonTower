@@ -22,6 +22,11 @@ namespace DungeonTower.Entity.Health
             CurrentHealth = maxHealth;
         }
 
+        private void Start()
+        {
+            OnHealthChanged?.Invoke(this);
+        }
+
         public void RestoreHealth(int health)
         {
             CurrentHealth += health;

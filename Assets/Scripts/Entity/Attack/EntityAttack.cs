@@ -25,6 +25,11 @@ namespace DungeonTower.Entity.Attack
 
         public int AttackDamage => damage;
 
+        private void Start()
+        {
+            OnDamageChanged?.Invoke(this);
+        }
+
         public override bool CanInteract(Cell cell)
         {
             return base.CanInteract(cell) && cell.FrontEntity != null 
