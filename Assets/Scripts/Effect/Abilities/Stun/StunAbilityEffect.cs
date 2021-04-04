@@ -1,5 +1,5 @@
 ﻿using DungeonTower.Effect.Base;
-using DungeonTower.Entity.MoveController;
+using DungeonTower.Entity.MoveControllers;
 using UnityEngine;
 
 namespace DungeonTower.Effect.Abilities.Stun

@@ -114,15 +114,10 @@ namespace DungeonTower.Level.StageController
 
         public Direction GetDirectionToPlayer(Cell cell)
         {
-            foreach (Direction direction in Direction.Values)
-            {
-                Vector2Int nextPosition = direction.ShiftPosition(cell.StagePosition);
-                if (MathHelper.InRange(nextPosition, stageSize) && distance[cell.StagePosition.y, cell.StagePosition.x] > distance[nextPosition.y, nextPosition.x])
-                    return direction;
-            }
-            return Direction.Top;
+            List<Direction> directions = GetDirectionsToPlayer(cell);
+            return directions.Count > 0 ? directions[0] : null;
         }
-
+        
         public List<Direction> GetDirectionsToPlayer(Cell cell)
         {
             List<Direction> directions = new List<Direction>();
@@ -130,6 +125,18 @@ namespace DungeonTower.Level.StageController
             {
                 Vector2Int nextPosition = direction.ShiftPosition(cell.StagePosition);
                 if (MathHelper.InRange(nextPosition, stageSize) && distance[cell.StagePosition.y, cell.StagePosition.x] > distance[nextPosition.y, nextPosition.x])
+                    directions.Add(direction);
+            }
+            return directions;
+        }
+
+        public List<Direction> GetDirectionsFromPlayer(Cell cell)
+        {
+            List<Direction> directions = new List<Direction>();
+            foreach (Direction direction in Direction.Values)
+            {
+                Vector2Int nextPosition = direction.ShiftPosition(cell.StagePosition);
+                if (MathHelper.InRange(nextPosition, stageSize) && distance[cell.StagePosition.y, cell.StagePosition.x] < distance[nextPosition.y, nextPosition.x])
                     directions.Add(direction);
             }
             return directions;

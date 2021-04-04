@@ -1,4 +1,4 @@
-﻿namespace DungeonTower.Entity.MoveController
+﻿namespace DungeonTower.Entity.MoveControllers
 {
     public enum MoveState
     {

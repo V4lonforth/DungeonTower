@@ -1,9 +1,11 @@
-﻿using DungeonTower.Entity.MoveController;
-using DungeonTower.Entity.Movement;
+﻿using DungeonTower.Entity.Movement;
 using DungeonTower.Level.Base;
 using DungeonTower.Utils;
 using System;
 using System.Collections.Generic;
+using DungeonTower.Entity.Action;
+using DungeonTower.Entity.Attack;
+using DungeonTower.Entity.MoveControllers;
 
 namespace DungeonTower.Controllers
 {
@@ -12,7 +14,7 @@ namespace DungeonTower.Controllers
         public Action OnTurnStart { get; set; }
         public Action OnTurnFinish { get; set; }
 
-        private MoveController playerController;
+        public MoveController PlayerController { get; private set; }
 
         private readonly List<MoveController> registeredEnemies = new List<MoveController>();
         private readonly List<MoveController> enemiesToMove = new List<MoveController>();
@@ -60,8 +62,8 @@ namespace DungeonTower.Controllers
 
         private void StartPlayerMove()
         {
-            playerController.OnMoveSelected += CheckPlayerMove;
-            playerController.StartMove();
+            PlayerController.OnMoveSelected += CheckPlayerMove;
+            PlayerController.StartMove();
         }
 
         private void CheckPlayerMove(MoveController playerController, ActionOption actionOption)
@@ -80,8 +82,8 @@ namespace DungeonTower.Controllers
 
         private void MakePlayerMove(ActionOption actionOption)
         {
-            playerController.OnMoveFinished += FinishPlayerMove;
-            playerController.MakeMove(actionOption);
+            PlayerController.OnMoveFinished += FinishPlayerMove;
+            PlayerController.MakeMove(actionOption);
         }
 
         private void FinishPlayerMove(MoveController playerController)
@@ -127,7 +129,7 @@ namespace DungeonTower.Controllers
         {
             foreach (Direction direction in Direction.Values)
             {
-                Cell adjacentCell = stage.GetCell(playerController.CellEntity.Cell, direction);
+                Cell adjacentCell = stage.GetCell(PlayerController.CellEntity.Cell, direction);
                 if (adjacentCell != null && adjacentCell.FrontEntity != null && stage.Navigator.CheckPath(adjacentCell.FrontEntity, adjacentCell, direction.Opposite))
                 {
                     MoveController enemyController = adjacentCell.FrontEntity.GetComponent<MoveController>();
@@ -155,8 +157,21 @@ namespace DungeonTower.Controllers
         private void MakeForcedEnemiesMove(MoveController enemyController, ActionOption actionOption)
         {
             enemyController.OnMoveSelected -= MakeForcedEnemiesMove;
-            enemyController.OnMoveFinished += FinishForcedEnemyMove;
-            enemyController.MakeMove(actionOption);
+            if (actionOption?.EntityAction is EntityAttack)
+            {
+                enemyController.OnMoveFinished += FinishForcedEnemyMove;
+                enemyController.MakeMove(actionOption);
+            }
+            else
+            {
+                forcedEnemiesToMove.Remove(enemyController);
+                
+                if (forcedEnemiesToMove.Count == 0)
+                {
+                    MakePlayerMove(savedPlayerAction);
+                    savedPlayerAction = null;
+                }
+            }
         }
 
         private void FinishForcedEnemyMove(MoveController enemyController)
@@ -174,13 +189,13 @@ namespace DungeonTower.Controllers
 
         public void SetPlayer(MoveController moveController)
         {
-            playerController = moveController;
+            PlayerController = moveController;
         }
         public void RemovePlayer(MoveController moveController)
         {
-            if (moveController == playerController)
+            if (moveController == PlayerController)
             {
-                playerController = null;
+                PlayerController = null;
             }
         }
 

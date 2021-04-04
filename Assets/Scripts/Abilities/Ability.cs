@@ -1,5 +1,5 @@
 ﻿using DungeonTower.Entity.Action;
-using DungeonTower.Entity.MoveController;
+using DungeonTower.Entity.MoveControllers;
 using DungeonTower.Level.Base;
 using UnityEngine;
 

@@ -2,12 +2,12 @@
 using DungeonTower.Entity.Action;
 using DungeonTower.Entity.Base;
 using DungeonTower.Entity.Items;
-using DungeonTower.Entity.MoveController;
 using DungeonTower.Entity.Movement;
 using DungeonTower.Level.Base;
 using DungeonTower.UI.ButtonPanels;
 using System;
 using System.Collections.Generic;
+using DungeonTower.Entity.MoveControllers;
 using UnityEngine;
 
 namespace DungeonTower.Inventory

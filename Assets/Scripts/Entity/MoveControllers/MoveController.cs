@@ -5,10 +5,9 @@ using DungeonTower.Entity.CellBorder;
 using DungeonTower.Level.Base;
 using DungeonTower.Utils;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonTower.Entity.MoveController
+namespace DungeonTower.Entity.MoveControllers
 {
     [RequireComponent(typeof(CellEntity))]
     public abstract class MoveController : MonoBehaviour
@@ -27,13 +26,23 @@ namespace DungeonTower.Entity.MoveController
 
         public CellEntity CellEntity { get; private set; }
 
+        public ActionOption LockedAction { get; private set; }
         public EntityAction SelectedAction { get; private set; }
         protected Stage stage;
+
+        protected EntityAction[] entityActions;
 
         protected void Awake()
         {
             CellEntity = GetComponent<CellEntity>();
+            entityActions = GetComponents<EntityAction>();
             GameController.Instance.OnStageStart += StartStage;
+
+            foreach (MultipleTurnEntityAction action in  GetComponents<MultipleTurnEntityAction>())
+            {
+                action.OnActionLocked += LockAction;
+                action.OnActionUnlocked += UnlockAction;
+            }
         }
 
         private void StartStage(Stage stage)
@@ -95,33 +104,7 @@ namespace DungeonTower.Entity.MoveController
             if (entityController != null)
                 entityController.OnMoveFinish -= FinishMove;
         }
-
-        protected List<ActionOption> GetActionOptions(Cell target)
-        {
-            List<ActionOption> actionOptions = new List<ActionOption>();
-
-            if (SelectedAction != null)
-            {
-                if (SelectedAction.CanInteract(target))
-                {
-                    actionOptions.Add(new ActionOption(SelectedAction, target));
-                }
-            }
-            else
-            {
-                foreach (EntityAction entityController in GetComponents<EntityAction>())
-                {
-                    if (!entityController.RequiredSelection && entityController.CanInteract(target))
-                    {
-                        actionOptions.Add(new ActionOption(entityController, target));
-                    }
-                }
-            }
-
-            actionOptions.Sort((a, b) => b.EntityAction.Priority.CompareTo(a.EntityAction.Priority));
-            return actionOptions;
-        }
-
+        
         public void SelectAction(EntityAction entityAction)
         {
             if (SelectedAction != null && SelectedAction != entityAction)
@@ -138,6 +121,16 @@ namespace DungeonTower.Entity.MoveController
                 OnActionDeselected?.Invoke(this, SelectedAction);
                 SelectedAction = null;
             }
+        }
+
+        private void LockAction(ActionOption actionOption)
+        {
+            LockedAction = actionOption;
+        }
+
+        private void UnlockAction(ActionOption actionOption)
+        {
+            LockedAction = null;
         }
 
         protected abstract void SelectMove();

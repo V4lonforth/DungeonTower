@@ -19,4 +19,7 @@ MonoBehaviour:
     - element: {fileID: 3262041589394946035, guid: d7c5fa4c16461aa4995d114cf1c239e4,
         type: 3}
       weight: 1
+    - element: {fileID: 4870902079704497192, guid: 3097dd4b7abaf79468a7aaf12f6d38dd,
+        type: 3}
+      weight: 1
   spawnChance: 0.25

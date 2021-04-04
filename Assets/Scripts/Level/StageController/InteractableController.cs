@@ -2,12 +2,12 @@
 using DungeonTower.Entity.Action;
 using DungeonTower.Entity.Base;
 using DungeonTower.Entity.Interactable;
-using DungeonTower.Entity.MoveController;
 using DungeonTower.Entity.Movement;
 using DungeonTower.Level.Base;
 using DungeonTower.TargetingSystem;
 using DungeonTower.UI.ButtonPanels;
 using System.Linq;
+using DungeonTower.Entity.MoveControllers;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,4 +1,5 @@
-﻿using DungeonTower.Entity.Base;
+﻿using DungeonTower.Controllers;
+using DungeonTower.Entity.Base;
 using DungeonTower.Level.Base;
 using DungeonTower.Utils;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace DungeonTower.Entity.CellBorder
 
         public bool CanPass(CellEntity cellEntity)
         {
-            return true;
+            return isOpened || cellEntity != null && cellEntity.Team == EntityTeam.Player;
         }
 
         public void Interact(CellEntity cellEntity, Direction direction)

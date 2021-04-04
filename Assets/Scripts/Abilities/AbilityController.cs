@@ -1,10 +1,10 @@
 ﻿using DungeonTower.Controllers;
 using DungeonTower.Entity.Action;
-using DungeonTower.Entity.MoveController;
 using DungeonTower.Level.Base;
 using DungeonTower.UI;
 using DungeonTower.UI.ButtonPanels;
 using System.Collections.Generic;
+using DungeonTower.Entity.MoveControllers;
 using UnityEngine;
 
 namespace DungeonTower.Abilities

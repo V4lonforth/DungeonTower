@@ -41,7 +41,7 @@ namespace DungeonTower.Level.StageController
             foreach (Direction direction in Direction.Values)
             {
                 BorderEntity borderEntity = to.BorderEntities[direction];
-                if (borderEntity != null && borderEntity.transparency == Transparency.Peekable)
+                if (borderEntity != null && borderEntity.transparency != Transparency.Opaque)
                 {
                     Cell cell = to.Stage.GetCell(to, direction);
                     RevealRoom(cell.Room);

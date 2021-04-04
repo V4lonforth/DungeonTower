@@ -1,18 +1,21 @@
 ﻿using DungeonTower.Controllers;
-using DungeonTower.Entity.Base;
 using DungeonTower.Entity.Health;
-using DungeonTower.Level.Base;
-using DungeonTower.Utils;
+using DungeonTower.Entity.Action;
+using DungeonTower.Entity.EntityActionAIControllers;
 using System.Collections.Generic;
 
-namespace DungeonTower.Entity.MoveController
+namespace DungeonTower.Entity.MoveControllers
 {
     public class EnemyMoveController : MoveController
     {
+        private IEntityActionAIController[] aiControllers;
+        
         protected new void Awake()
         {
             base.Awake();
 
+            aiControllers = GetComponents<IEntityActionAIController>();
+            
             EntityHealth entityHealth = GetComponent<EntityHealth>();
             if (entityHealth != null)
                 entityHealth.OnDeath += Die;
@@ -26,18 +29,14 @@ namespace DungeonTower.Entity.MoveController
 
         private ActionOption SelectActionOption()
         {
-            CellEntity cellEntity = GetComponent<CellEntity>();
-            Cell currentCell = cellEntity.Cell;
-
             List<ActionOption> actionOptions = new List<ActionOption>();
-                 
-            foreach (Direction direction in stage.Navigator.GetDirectionsToPlayer(currentCell))
+            foreach (IEntityActionAIController aiController in aiControllers)
             {
-                Cell target = stage.GetCell(cellEntity.Cell, direction);
-                if (target != null)
-                    actionOptions.AddRange(GetActionOptions(target));
+                ActionOption actionOption = aiController.GetAction();
+                if (actionOption != null)
+                    actionOptions.Add(actionOption);
             }
-
+            
             actionOptions.Sort((a, b) => b.EntityAction.Priority.CompareTo(a.EntityAction.Priority));
             if (actionOptions.Count > 0)
                 return actionOptions[0];

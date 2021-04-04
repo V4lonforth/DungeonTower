@@ -4,9 +4,10 @@ using DungeonTower.Input;
 using DungeonTower.Level.Base;
 using DungeonTower.Utils;
 using System.Collections.Generic;
+using DungeonTower.Entity.Action;
 using UnityEngine;
 
-namespace DungeonTower.Entity.MoveController
+namespace DungeonTower.Entity.MoveControllers
 {
     [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(CellEntity))]
@@ -33,7 +34,7 @@ namespace DungeonTower.Entity.MoveController
             moveSelected = false;
         }
 
-        protected void CheckMove(Direction direction)
+        private void CheckMove(Direction direction)
         {
             CheckMove(stage.GetCellSafe(direction.ShiftPosition(cellEntity.Cell.StagePosition)));
         }
@@ -42,13 +43,39 @@ namespace DungeonTower.Entity.MoveController
         {
             if (!moveSelected)
             {
-                List<ActionOption> actionOptions = GetActionOptions(cell);
-                if (actionOptions.Count > 0)
+                ActionOption actionOption = GetActionOption(cell);
+                if (actionOption != null)
                 {
                     moveSelected = true;
-                    SelectMove(actionOptions[0]);
+                    SelectMove(actionOption);
                 }
             }
+        }
+        
+        private ActionOption GetActionOption(Cell target)
+        {
+            List<ActionOption> actionOptions = new List<ActionOption>();
+
+            if (SelectedAction != null)
+            {
+                if (SelectedAction.CanInteract(target))
+                {
+                    actionOptions.Add(new ActionOption(SelectedAction, target));
+                }
+            }
+            else
+            {
+                foreach (EntityAction entityController in entityActions)
+                {
+                    if (!entityController.RequiredSelection && entityController.CanInteract(target))
+                    {
+                        actionOptions.Add(new ActionOption(entityController, target));
+                    }
+                }
+            }
+
+            actionOptions.Sort((a, b) => b.EntityAction.Priority.CompareTo(a.EntityAction.Priority));
+            return actionOptions.Count > 0 ? actionOptions[0] : null;
         }
     }
 }

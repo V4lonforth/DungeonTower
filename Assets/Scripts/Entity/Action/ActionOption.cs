@@ -1,7 +1,6 @@
-﻿using DungeonTower.Entity.Action;
-using DungeonTower.Level.Base;
+﻿using DungeonTower.Level.Base;
 
-namespace DungeonTower.Entity.MoveController
+namespace DungeonTower.Entity.Action
 {
     public class ActionOption
     {

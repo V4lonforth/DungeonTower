@@ -1743,3 +1743,5 @@ MonoBehaviour:
     type: 3}
   unavailableHighlightPrefab: {fileID: 1818062461203296633, guid: 756bc42c9c99d1845be1eee090ae01df,
     type: 3}
+  dangerHighlightPrefab: {fileID: 1866843181925174410, guid: 135f2a2fadc71444289089b0b5d1fa7f,
+    type: 3}
