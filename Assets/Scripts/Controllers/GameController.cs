@@ -12,6 +12,8 @@ namespace DungeonTower.Controllers
         public Action<Stage> OnStageStart { get; set; }
         public Action<Stage> OnStageFinish { get; set; }
 
+        public Action OnGameOver { get; set; }
+
         private void Start()
         {
             Stage stage = FindObjectOfType<StageGenerator>().Generate();
@@ -22,6 +24,11 @@ namespace DungeonTower.Controllers
         {
             CurrentStage = stage;
             OnStageStart?.Invoke(stage);
+        }
+
+        public void FinishGame()
+        {
+            OnGameOver?.Invoke();
         }
     }
 }

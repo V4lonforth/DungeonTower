@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using DungeonTower.Entity.Action;
 using DungeonTower.Entity.Attack;
+using DungeonTower.Entity.Health;
 using DungeonTower.Entity.MoveControllers;
 
 namespace DungeonTower.Controllers
@@ -168,7 +169,8 @@ namespace DungeonTower.Controllers
                 
                 if (forcedEnemiesToMove.Count == 0)
                 {
-                    MakePlayerMove(savedPlayerAction);
+                    if (PlayerController != null)
+                        MakePlayerMove(savedPlayerAction);
                     savedPlayerAction = null;
                 }
             }
@@ -190,6 +192,7 @@ namespace DungeonTower.Controllers
         public void SetPlayer(MoveController moveController)
         {
             PlayerController = moveController;
+            PlayerController.GetComponent<EntityHealth>().OnDeath += FinishGame;
         }
         public void RemovePlayer(MoveController moveController)
         {
@@ -207,6 +210,11 @@ namespace DungeonTower.Controllers
         {
             enemiesToMove.Remove(moveController);
             registeredEnemies.Remove(moveController);
+        }
+
+        private void FinishGame(EntityHealth entityHealth)
+        {
+            GameController.Instance.FinishGame();
         }
     }
 }
