@@ -14,5 +14,11 @@ namespace DungeonTower.Level.Shop
             Money += money;
             OnMoneyChanged?.Invoke(Money);
         }
+
+        public void RemoveMoney(int money)
+        {
+            Money -= money;
+            OnMoneyChanged?.Invoke(Money);
+        }
     }
 }

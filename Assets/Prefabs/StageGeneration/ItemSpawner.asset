@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3670c09ac703e824dab3868bb3f8ba4a, type: 3}
   m_Name: ItemSpawner
   m_EditorClassIdentifier: 
-  chestPrefabs:
+  itemPrefabs:
     weightedElements:
-    - element: {fileID: 811860787870745194, guid: 73743375378d6da4ca071b3244745624,
+    - element: {fileID: 184537727735487777, guid: aba5c9bf656e01946b1d98d3368a4d1d,
         type: 3}
       weight: 1
-  spawnChance: 0.15
+  spawnChance: 0.05

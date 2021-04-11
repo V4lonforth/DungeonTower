@@ -7,6 +7,7 @@ using DungeonTower.Entity.Action;
 using DungeonTower.Entity.Attack;
 using DungeonTower.Entity.Health;
 using DungeonTower.Entity.MoveControllers;
+using UnityEngine;
 
 namespace DungeonTower.Controllers
 {
@@ -104,8 +105,11 @@ namespace DungeonTower.Controllers
             enemiesToMove.Sort((a, b) => stage.Navigator.GetDistanceToPlayer(a.CellEntity.Cell).CompareTo(stage.Navigator.GetDistanceToPlayer(b.CellEntity.Cell)));
             foreach (MoveController enemyController in new List<MoveController>(enemiesToMove))
             {
-                enemyController.OnMoveSelected += MakeEnemyMove;
-                enemyController.StartMove();
+                if (enemyController != null)
+                {
+                    enemyController.OnMoveSelected += MakeEnemyMove;
+                    enemyController.StartMove();
+                }
             }
         }
 
@@ -184,7 +188,8 @@ namespace DungeonTower.Controllers
 
             if (forcedEnemiesToMove.Count == 0)
             {
-                MakePlayerMove(savedPlayerAction);
+                if (PlayerController != null)
+                    MakePlayerMove(savedPlayerAction);
                 savedPlayerAction = null;
             }
         }
