@@ -2,6 +2,7 @@
 using DungeonTower.Entity.Attack;
 using DungeonTower.Entity.Health;
 using DungeonTower.Level.Base;
+using DungeonTower.Level.Shop;
 using TMPro;
 using UnityEngine;
 
@@ -11,10 +12,12 @@ namespace DungeonTower.UI
     {
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private TextMeshProUGUI damageText;
+        [SerializeField] private TextMeshProUGUI moneyText;
 
         private void Awake()
         {
             GameController.Instance.OnStageStart += StartStage;
+            MoneyController.Instance.OnMoneyChanged += UpdateMoney;
         }
 
         private void StartStage(Stage stage)
@@ -34,6 +37,11 @@ namespace DungeonTower.UI
         private void UpdateDamage(EntityAttack entityAttack)
         {
             damageText.text = entityAttack.AttackDamage.ToString();
+        }
+
+        private void UpdateMoney(int value)
+        {
+            moneyText.text = value.ToString();
         }
     }
 }

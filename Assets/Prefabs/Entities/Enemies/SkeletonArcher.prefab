@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 2524840075594362022}
   - component: {fileID: 4530013077247510536}
   - component: {fileID: 2035628773356773813}
+  - component: {fileID: 5314148887125349268}
   m_Layer: 0
   m_Name: SkeletonArcher
   m_TagString: Untagged
@@ -261,6 +262,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812520edb828470e8f2b8e1287465eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5314148887125349268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870902079704497192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac837a6097240ca8215bcece4b2d692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 20
 --- !u!1 &5483015959900494741
 GameObject:
   m_ObjectHideFlags: 0
