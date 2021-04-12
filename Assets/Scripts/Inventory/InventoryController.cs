@@ -280,5 +280,15 @@ namespace DungeonTower.Inventory
                 }
             }
         }
+
+        public void PickupItem(LootItem lootItem)
+        {
+            Slot newSlot = CreateSlot(inventoryPanel, slotPrefab);
+            inventorySlots.Add(newSlot);
+            newSlot.AttachItem(lootItem);
+            lootItem.OnItemDestroy += DeleteItem;
+            
+            itemController.PickupItem(lootItem, playerEntity.Cell, playerEntity);
+        }
     }
 }

@@ -2,7 +2,6 @@
 using DungeonTower.Entity.Attack;
 using DungeonTower.Entity.Base;
 using DungeonTower.Level.Base;
-using DungeonTower.Level.StageController;
 using UnityEngine;
 
 namespace DungeonTower.Entity.EntityActionAIControllers

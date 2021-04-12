@@ -73,8 +73,9 @@ namespace DungeonTower.Inventory
         {
             if (CanHaveItemBag(cell))
             {
-                GameObject itemBag = cell.Transform.Find(ItemBagName).gameObject;
-                Destroy(itemBag);
+                GameObject itemBag = cell.Transform.Find(ItemBagName)?.gameObject;
+                if (itemBag != null)
+                    Destroy(itemBag);
             }
         }
 

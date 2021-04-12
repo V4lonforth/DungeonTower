@@ -11,7 +11,7 @@ namespace DungeonTower.Level.Generation.Spawners
     [CreateAssetMenu(fileName = "Data", menuName = "TowerGeneration/ItemSpawner", order = 1)]
     public class ItemSpawner : ScriptableObject
     {
-        [SerializeField] private WeightedList<GameObject> chestPrefabs;
+        [SerializeField] private WeightedList<GameObject> itemPrefabs;
         [SerializeField] private float spawnChance;
 
         public void Spawn(Stage stage, ItemController itemController)
@@ -22,17 +22,17 @@ namespace DungeonTower.Level.Generation.Spawners
                 {
                     if (Random.Range(0f, 1f) <= spawnChance)
                     {
-                        SpawnChest(chestPrefabs.GetRandom(), cell, itemController);
+                        SpawnItem(itemPrefabs.GetRandom(), cell, itemController);
                     }
                 }
             }
         }
 
-        private void SpawnChest(GameObject chestPrefab, Cell cell, ItemController itemController)
+        private void SpawnItem(GameObject chestPrefab, Cell cell, ItemController itemController)
         {
             CellEntity chestEntity = Instantiate(chestPrefab, cell.Transform).GetComponent<CellEntity>();
             chestEntity.Attach(cell);
-            chestEntity.GetComponent<ChestInteractable>().Initialize(itemController);
+            chestEntity.GetComponent<ChestInteractable>()?.Initialize(itemController);
         }
     }
 }
